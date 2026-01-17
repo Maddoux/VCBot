@@ -10,7 +10,6 @@ A Discord bot for Virtual Congress server management, providing petition trackin
 - **Ping Permissions**: Control who can use @everyone and @here mentions
 - **Party Role Enforcement**: Automatically enforce party affiliation rules
 - **Bump Reminders**: Automated reminders for server bumping
-- **Page Watcher**: Monitor and track page changes
 
 ## Requirements
 
@@ -100,7 +99,6 @@ VCBot/
 ├── ping_commands.py            # Ping permission controls
 ├── party_role_enforcement.py   # Party affiliation rules
 ├── bump_commands.py            # Bump reminder system
-├── page_watcher.py            # Page monitoring
 ├── file_utils.py              # File utility functions
 └── data/                       # Data storage directory
     ├── petitions.json

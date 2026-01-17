@@ -24,7 +24,6 @@ import archive_commands
 import ping_commands
 import party_role_enforcement
 import bump_commands
-import page_watcher
 
 # =============================================================================
 # DISCORD CLIENT SETUP
@@ -180,12 +179,6 @@ async def on_ready():
             print("Bump reminders initialized")
         except Exception as e:
             print(f"Failed to initialize bump reminders: {e}")
-    
-    # Initialize page watcher (silent)
-    try:
-        page_watcher.setup_page_watcher(client)
-    except:
-        pass
     
     # Smart command sync
     print("Checking command sync...")
