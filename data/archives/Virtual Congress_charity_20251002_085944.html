@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#charity - Virtual Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.375;
+        }
+        
+        .channel-header {
+            background-color: #2f3136;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7289da;
+        }
+        
+        .channel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .channel-info {
+            color: #b9bbbe;
+            font-size: 14px;
+        }
+        
+        .messages-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .message {
+            display: flex;
+            padding: 8px 16px;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        
+        .message:hover {
+            background-color: rgba(4, 4, 5, 0.07);
+        }
+        
+        .message-avatar {
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .message-author {
+            font-weight: 500;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .message-timestamp {
+            font-size: 12px;
+            color: #72767d;
+            font-weight: 500;
+        }
+        
+        .message-text {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message-text strong {
+            font-weight: 700;
+        }
+        
+        .message-text em {
+            font-style: italic;
+        }
+        
+        .message-text u {
+            text-decoration: underline;
+        }
+        
+        .message-text del {
+            text-decoration: line-through;
+        }
+        
+        .message-text code {
+            background-color: #2f3136;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+        
+        .message-text pre {
+            background-color: #2f3136;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 4px 0;
+        }
+        
+        .message-text pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .message-text a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .attachment {
+            margin: 8px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .attachment img {
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .attachment-info {
+            padding: 8px;
+            background-color: #2f3136;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .attachment-link {
+            color: #00aff4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attachment-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+        
+        .embed {
+            max-width: 520px;
+            margin: 8px 0;
+            padding: 12px 16px;
+            background-color: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-author-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .embed-author-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .embed-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .embed-description {
+            margin-bottom: 8px;
+        }
+        
+        .embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .embed-field {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        
+        .embed-field.inline {
+            flex: 1 1 150px;
+            min-width: 150px;
+        }
+        
+        .embed-field-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .embed-field-value {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .embed-image {
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            float: right;
+            margin: 8px 0 8px 16px;
+        }
+        
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #72767d;
+        }
+        
+        .embed-footer-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .reaction {
+            background-color: rgba(79, 84, 92, 0.16);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .reaction-emoji {
+            line-height: 1;
+        }
+        
+        .reaction-count {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .message {
+                padding: 8px 8px;
+            }
+            
+            .embed {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="channel-header">
+        <div class="channel-title">#charity</div>
+        <div class="channel-info">Archived from Virtual Congress on October 02, 2025 at 08:59 AM UTC</div>
+    </div>
+    
+    <div class="messages-container">
+        
+            <div class="message" data-message-id="690331427598106674">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">03/19/2020 10:50 PM</span>
+                    </div>
+                    <div class="message-text"><a href="https://twitter.com/andrewrcamp/status/1240771634052694018?s=19" target="_blank">https://twitter.com/andrewrcamp/status/1240771634052694018?s=19</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #1da1f2;">
+            <div class="embed-author">
+                <img src="https://pbs.twimg.com/profile_images/1240644947688280064/u3oNGzJi_bigger.jpg" class="embed-author-icon">
+                <span class="embed-author-name">Andrew R. Campanella (@andrewrcamp)</span>
+            </div>
+            <div class="embed-description">If you are not facing economic hardship during this time, consider donating to support hourly and tipped workers who are really struggling right now. I donated and hope you will consider it. <a href="https://t.co/KiQBCvoM6V" target="_blank">https://t.co/KiQBCvoM6V</a></div>
+            <div class="embed-footer">
+                <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" class="embed-footer-icon">
+                <span>Twitter</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="690332768684736661">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">03/19/2020 10:55 PM</span>
+                    </div>
+                    <div class="message-text">Direct link for those that don&#x27;t use Twitter:<br><br>Help Hourly Workers During The Coronavirus Crisis <a href="https://www.gofundme.com/f/helphourlyworkers" target="_blank">https://www.gofundme.com/f/helphourlyworkers</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://www.gofundme.com/f/helphourlyworkers" target="_blank">Help Hourly Workers During The Coronavirus Crisis organized by Yash...</a></div><div class="embed-description">The coronavirus pandemic has brought the United States (and much of the w… Yashar Ali needs your support for Help Hourly Workers During The Coronavirus Crisis</div><img src="https://d2g8igdw686xgo.cloudfront.net/46244258_1584481022243233_r.jpeg" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="710660815333752943">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">05/15/2020 01:12 AM</span>
+                    </div>
+                    <div class="message-text">We are going to start utilizing this channel more. Every couple of days we are going to spotlight a new charity. <br><br>I will take recommendations from members on charities to focus on that have been rated by charity navigator. If you want a charity shown please dm their charity navigator page, a link to directly donate outside of charity navigator and a couple of paragraphs on why this charity should be posted. Non-politics charities only.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">❤️</span>
+                        <span class="reaction-count">9</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="710661483733843983">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">05/15/2020 01:15 AM</span>
+                    </div>
+                    <div class="message-text">The first charity I want to spotlight is the Oakland zoo, which is a few miles from my house. Zoo’s across the nation are having a hard time retaining skilled staff and feeding animals because of closure due to Covid-19. I’ve donated to them, they’ve cut pay of all management level workers by over 40% to provide relief to employees and animals. <br><br><a href="https://tickets.oaklandzoo.org/webstore/shop/viewItems.aspx?CG=sm6don&amp;C=donate6" target="_blank">https://tickets.oaklandzoo.org/webstore/shop/viewItems.aspx?CG=sm6don&amp;C=donate6</a></div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">😂</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="719223376492757114">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">06/07/2020 04:16 PM</span>
+                    </div>
+                    <div class="message-text">Anyone have a new charity to spotlight?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="721790519457480764">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">06/14/2020 06:17 PM</span>
+                    </div>
+                    <div class="message-text">We did receive a recommendation for our next charity.. <br>we’d like to highlight the <strong>American Foundation for Suicide Prevention.</strong><br>Remember you are never alone. VC is your family judgment free. <br><br><strong><em>If you are in crisis, please call the National Suicide Prevention Lifeline at 1-800-273-TALK (8255) or contact the Crisis Text Line by texting TALK to 741741.</strong></em><br><br>If you’d like to help by donation, please do! <br><br><a href="https://afsp.donordrive.com/index.cfm?fuseaction=donate.event&amp;eventID=1" target="_blank">https://afsp.donordrive.com/index.cfm?fuseaction=donate.event&amp;eventID=1</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-description">I&#x27;m supporting American Foundation for Suicide Prevention!</div><img src="https://assets.donordrive.com/AFSP/images/StackedLogoColor%20sm.png?v=202006091129" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="721842029809631412">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">06/14/2020 09:42 PM</span>
+                    </div>
+                    <div class="message-text">I would like to announce that &lt;@!539264464189521952&gt; has agreed to match any donation up to $5.00, just DM him your donation receipt!!!! @here</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">👍</span>
+                        <span class="reaction-count">8</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">👏</span>
+                        <span class="reaction-count">7</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="732631436288458912">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">07/14/2020 04:15 PM</span>
+                    </div>
+                    <div class="message-text">Please donate to our next charity spotlight, the Trevor Project!<br><br>Every day, LGBTQ youth in crisis reach out by calling, texting, and chatting  The Trevor Project with the hope that they can receive the support of a warm community. It is vital to our mission to make sure that Trevor volunteers can offer our support to every young person every day, every month, and all year long.<br><br>Your monthly life-saving gift today will help:<br>Train a record number of crisis counselors<br>Continue to provide all of our crisis services 24/7 AND FOR FREE — including TrevorLifeline, TrevorText, and TrevorChat<br>Expand our advocacy, research, and education efforts<br><br>Together, we can make sure that LGBTQ youth nationwide can tap into a community of resilience to know they are not alone for even a single minute.<br><br><a href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout?c_src=pride2020&amp;c_src2=headerdonatebutton" target="_blank">https://give.thetrevorproject.org/give/63307/#!/donation/checkout?c_src=pride2020&amp;c_src2=headerdonatebutton</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-description">The Trevor Project</div><img src="https://assets.classy.org/5332056/e9f2b16e-3ddb-11e8-a4ae-06befa2f53a2.png" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">❤️</span>
+                        <span class="reaction-count">17</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:lgbt_8:725196317189472287></span>
+                        <span class="reaction-count">6</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🏳️‍🌈</span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="732631690375331871">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">07/14/2020 04:16 PM</span>
+                    </div>
+                    <div class="message-text">@here</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="738639214039793734">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">07/31/2020 06:08 AM</span>
+                    </div>
+                    <div class="message-text">Hello everyone! To encourage contributions to charity, we have decided to start doing charities every two weeks. Here’s our next spotlight, the Special Olympics!<br><br>You can change the life of someone with an intellectual disability!<br><br>Special Olympics helps empower people with Down Syndrome, autism, cerebral palsy, and other intellectual disabilities, by empowering them to lead. Every gift helps athletes with ID experience the joy of sport, access basic healthcare, and gain confidence — on and off the field.<br><br>You can be a hero for the more than 5 million Special Olympics athletes — make a gift today.<br><br><br><a href="https://give.specialolympics.org/page/contribute/id-donations?source=ISadwords&amp;subsource=ID-Donations&amp;gclid=EAIaIQobChMIl5mtgej26gIVjbbICh2kCAz3EAAYASAAEgKZYvD_BwE" target="_blank">https://give.specialolympics.org/page/contribute/id-donations?source=ISadwords&amp;subsource=ID-Donations&amp;gclid=EAIaIQobChMIl5mtgej26gIVjbbICh2kCAz3EAAYASAAEgKZYvD_BwE</a></div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:hug:728292385209057301></span>
+                        <span class="reaction-count">11</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:sunglasseswhat:726481558571319327></span>
+                        <span class="reaction-count">3</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">💜</span>
+                        <span class="reaction-count">3</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:mike:698365453868728351></span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="738639291789475880">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">07/31/2020 06:08 AM</span>
+                    </div>
+                    <div class="message-text">@here</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="744186345441853553">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">08/15/2020 01:30 PM</span>
+                    </div>
+                    <div class="message-text">Hello everybody! For this next spotlight we have a charity that hits close to home for me: Autism Speaks<br><br>Autism Speaks is dedicated to promoting solutions, across the spectrum and throughout the life span, for the needs of individuals with autism and their families. We do this through advocacy and support; increasing understanding and acceptance of people with autism; and advancing research into causes and better interventions for autism spectrum disorder and related conditions.<br>​<br>​Through partnerships and collaboration, we are committed to: <br><br>​​-Increasing global understanding &amp; acceptance of people with autism<br>Being a catalyst for life-enhancing research breakthroughs<br><br>-Increasing early childhood screening &amp; timely interventions<br>Improving the transition to adulthood<br><br>-Ensuring access to reliable information &amp; services throughout the life span<br><br><a href="https://act.autismspeaks.org/site/Donation2?idb=300474114&amp;4141.donation=form1&amp;DONATION_LEVEL_ID_SELECTED=1&amp;df_id=4141&amp;mfc_pref=T&amp;idb=%5B%5BS76:idb%5D%5D" target="_blank">https://act.autismspeaks.org/site/Donation2?idb=300474114&amp;4141.donation=form1&amp;DONATION_LEVEL_ID_SELECTED=1&amp;df_id=4141&amp;mfc_pref=T&amp;idb=%5B%5BS76:idb%5D%5D</a></div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">👎</span>
+                        <span class="reaction-count">12</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="744186373786828853">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">08/15/2020 01:30 PM</span>
+                    </div>
+                    <div class="message-text">@here</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:hug:728292385209057301></span>
+                        <span class="reaction-count">10</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="761044627896795228">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/354829506114224132/3190d010d5b125f0a23467ca41562ce5.png?size=1024" alt="Jacob" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Jacob</span>
+                        <span class="message-timestamp">10/01/2020 01:59 AM</span>
+                    </div>
+                    <div class="message-text">Hello, everyone. We haven&#x27;t done one of these in a while so I thought it was time we do one again. Today, we spotlight the Fisher Center for Alzheimer&#x27;s Research Foundation:<br><br><br>&quot;The Fisher Center for Alzheimer’s Research Foundation is an organization that provides millions of dollars for novel Alzheimer’s research primarily conducted by the late Nobel Laureate Dr. Paul Greengard and his team of over 45 internationally renowned scientists at the Fisher Center lab at The Rockefeller University, plus other leading research institutes around the world. <br><br>The Fisher Center lab at The Rockefeller University is one of the largest and most modern scientific facilities in the world dedicated to solving the puzzle of Alzheimer’s disease.<br><br>Our mission is to understand the causes of Alzheimer’s disease, improve the care of people living with it, and find a cure. <br><br>Our vision is working towards a future where Alzheimer’s is nothing but a memory.&quot;<br><br><br>Please consider donating to this cause! &lt;@!307697755646722048&gt; has agreed to match any donation up to $5 if the donor sends him their donation receipt. <br><br>@here</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">👏</span>
+                        <span class="reaction-count">20</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><a:aPES_HappyClap:622096721408950295></span>
+                        <span class="reaction-count">11</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:spotify:708766075075952660></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:mike:699666500839014480></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:imvita:696054039896391792></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:flag_sr:698402454202482708></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:hhssecvita:726481434881032313></span>
+                        <span class="reaction-count">4</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:Gavel:712031635331219586></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🧾</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🛰️</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="761045313246199819">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/354829506114224132/3190d010d5b125f0a23467ca41562ce5.png?size=1024" alt="Jacob" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Jacob</span>
+                        <span class="message-timestamp">10/01/2020 02:02 AM</span>
+                    </div>
+                    <div class="message-text"><a href="https://www.alzinfo.org/" target="_blank">https://www.alzinfo.org/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;">
+            <div class="embed-author">
+                
+                <span class="embed-author-name">Alz01</span>
+            </div>
+            <div class="embed-title"><a href="https://www.alzinfo.org/" target="_blank">Home</a></div><div class="embed-description">The Fisher Center is one of the largest and most modern scientific facilities in the world dedicated to solving the puzzle of Alzheimer’s disease.</div><img src="https://alzcdn.alzinfo.org/wp-content/uploads/2014/01/ALZinfoSite01.jpg" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="767758047015337994">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">10/19/2020 02:36 PM</span>
+                    </div>
+                    <div class="message-text">The Community Food Bank of Eastern Oklahoma is a network of food pantries, soup kitchens, emergency shelters, low-income after-school programs, senior citizen centers, and veteran initiatives operating in 24 counties of Eastern Oklahoma. Collectively the food bank provides more than 460,000 meals a week. This charity serves one of the poorest areas in the United States. The charity has received a perfect score from Charity Navigator, indicating excellent efficiency in using funds for charitable functions and transparency. Third party checkers find that nearly every penny donated to the charity goes to those in need.<br><br>To incentivize donations to this charity, we are offering the VIP role for donations over $5. Send proof of a donation over $5 (you should get a receipt) to an admin and you will receive the VIP role for a month. If you donate $10 or more, you will receive the VIP role for two months. Our goal is to raise $25 for this charity in the month of October. <br><br>You can donate at the link below.<br><a href="https://okfoodbank.org/donate/" target="_blank">https://okfoodbank.org/donate/</a><br>@here</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">😮</span>
+                        <span class="reaction-count">10</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:cowboycarl:737128831600689222></span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🥵</span>
+                        <span class="reaction-count">8</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🥫</span>
+                        <span class="reaction-count">7</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">⛏️</span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:hug:728292385209057301></span>
+                        <span class="reaction-count">9</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">❤️</span>
+                        <span class="reaction-count">14</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:Invisible:728053240683561013></span>
+                        <span class="reaction-count">6</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🍞</span>
+                        <span class="reaction-count">6</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">💰</span>
+                        <span class="reaction-count">4</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🇵</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">⭕</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🇴</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🇷</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:salute:831977821999726602></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="857018468506009620">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/545473315184312330/4dc514ce1be8ae984ceeb3ee6a42f020.png?size=1024" alt="Fmr. Admin Soren Dillinger" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Fmr. Admin Soren Dillinger</span>
+                        <span class="message-timestamp">06/22/2021 10:05 PM</span>
+                    </div>
+                    <div class="message-text">@here Hello everyone, we haven’t done a charity in awhile so I felt it would be appropriate to revamp this and host a charity for <strong>The Trevor Project</strong> as we are in Pride Month. <br><br>Founded in 1998 by the creators of the Academy Award®️-winning short film TREVOR, The Trevor Project is the leading national organization providing crisis intervention and suicide prevention services to lesbian, gay, bisexual, transgender, queer &amp; questioning (LGBTQ) young people under 25.<br><br><strong>-</strong> The Trevor Project offers accredited life-saving, life-affirming programs and services to LGBTQ youth that create safe, accepting and inclusive environments over the phone, online and through text.<br><br><strong>-</strong> The Trevor Project is committed to producing innovative research that brings new knowledge and clinical implications to the field of suicidology. To accomplish this, The Trevor Project takes a two-pronged approach. <br><br>I highly encourage everyone to chip in and donate if you can. The Trevor Project does a lot of good for the LGBTQ+ community and I will personally match any and all donations up to $5 as long as you send me a receipt. <br><a href="https://give.thetrevorproject.org/give/63307/#!/donation/checkout?c_src=pride2020&amp;c_src2=headerdonatebutton" target="_blank">https://give.thetrevorproject.org/give/63307/#!/donation/checkout?c_src=pride2020&amp;c_src2=headerdonatebutton</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://give.thetrevorproject.org/give/63307/" target="_blank">The Trevor Project</a></div><div class="embed-description">{{MetaTags.description}}</div></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:salute:831977821999726602></span>
+                        <span class="reaction-count">16</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">❤️</span>
+                        <span class="reaction-count">13</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:YunoGay:739202145403928707></span>
+                        <span class="reaction-count">8</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:emoji_8:688234047201214690></span>
+                        <span class="reaction-count">7</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:PrideHeart:589321688013864980></span>
+                        <span class="reaction-count">7</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:GayPride:849704755337101343></span>
+                        <span class="reaction-count">7</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:gay:853413020079751169></span>
+                        <span class="reaction-count">9</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:trans_8:846445961004843029></span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:moralesisgay:850208668901048330></span>
+                        <span class="reaction-count">7</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:trolllesbian:776486434994389043></span>
+                        <span class="reaction-count">4</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:lgbtbipoc:755954838260547644></span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:bi_8:866129489091756032></span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                        <span class="reaction-count">3</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="904790694302978048">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/311573063235797003/2a5f1081864d1ed1e5c93059f63cfd04.png?size=1024" alt="Mr. Hull" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Mr. Hull</span>
+                        <span class="message-timestamp">11/01/2021 05:55 PM</span>
+                    </div>
+                    <div class="message-text">Hello, Virtual Pogress,<br><br>MrBeast and Mark Rober have teamed up to make a goal of removing 30,000,000 pounds of plastic from our oceans using machines, humans, etc. etc.<br><br>They have partnered with a not-for-profit to ensure that for every 1$USD donated, they can remove 1 pound of plastic.<br><br>If you want to see the video, and the huge machine, to get more information, see it here: <a href="https://www.youtube.com/watch?v=pXDx6DjNLDU" target="_blank">https://www.youtube.com/watch?v=pXDx6DjNLDU</a><br><br><br>Anyway, this is our current Charity. Donate at <a href="https://teamseas.org/" target="_blank">https://teamseas.org/</a>, and DM proof to Toward, she will be some donation  for everyone that donates and sends proof.<br><br>Let&#x27;s help clean up the oceans and make our Earth cleaner. God bless!!!</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #ff0000;">
+            <div class="embed-author">
+                
+                <span class="embed-author-name">Mark Rober</span>
+            </div>
+            <div class="embed-title"><a href="https://www.youtube.com/watch?v=pXDx6DjNLDU" target="_blank">This Robot Eats Trash #TeamSeas</a></div><div class="embed-description">Join #TeamSeas at <a href="https://TeamSeas.org" target="_blank">https://TeamSeas.org</a> (make sure you join the MarkRober team when donating)<br>$1 is one less pound of trash in the Ocean.  <br>We need to remove 30,000,000 lbs by the end of the year!!</div><img src="https://i.ytimg.com/vi/pXDx6DjNLDU/maxresdefault.jpg" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:salute:831977821999726602></span>
+                        <span class="reaction-count">13</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">👏</span>
+                        <span class="reaction-count">6</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:yeahok:726442736084975729></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="904790808505483344">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/311573063235797003/2a5f1081864d1ed1e5c93059f63cfd04.png?size=1024" alt="Mr. Hull" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Mr. Hull</span>
+                        <span class="message-timestamp">11/01/2021 05:55 PM</span>
+                    </div>
+                    <div class="message-text">(Sent on behalf on and upon the request of &lt;@!291962467838328833&gt; )</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1056705667026669568">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/307697755646722048/eba4ba4acce6e826a725f285ec02e4ac.png?size=1024" alt="Battleaxzes" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Battleaxzes</span>
+                        <span class="message-timestamp">12/25/2022 10:51 PM</span>
+                    </div>
+                    <div class="message-text">Hello everyone and Merry Christmas!!  @here <br><br>Today the admin and staff team as a whole would like to bring to you a variety of charities we hold close to our hearts, it&#x27;s the season of giving, and we&#x27;d like to ask whoever is willing and able to donate to any of the causes below. Personally I&#x27;ll be matching donations up to five dollars for any of the charities if a donor sends me their receipt. <br><br>With Hope Foundation<br>With Hope Foundation annually provides our highly successful educational programs on  Mental Health Awareness and Suicide Prevention to over 10,000 students, parents, teachers, staff, and community members.  Our programs are designed to educate, equip and empower individuals in recognizing the warning signs of suicide and to provide them with resources for critical lifesaving intervention. Additionally, we provide grief support through our Friends With Hope Suicide Bereavement Support Group. We provide individual counseling resources and referrals for individuals dealing with the traumatic loss of a loved one to suicide who are at an increased risk for depression, anxiety, PTSD, and suicide.<br><a href="https://www.withhopefoundation.org/ambers-story" target="_blank">https://www.withhopefoundation.org/ambers-story</a><br><br>Feeding America <br>Feeding America is the largest charity working to end hunger in the United States. We partner with food banks, food pantries, and local food programs to bring food to people facing hunger. We advocate for policies that create long-term solutions to hunger.<br><a href="https://give.feedingamerica.org/lH4Xa_sZL0eHIijGtjaVkw2?s_src=Y22YP1H1Z&amp;s_subsrc=m&amp;s_keyword=feeding%20america&amp;gclid=CjwKCAiAhqCdBhB0EiwAH8M_GoiSqr8pM78lO0YJXFr_xuajhVbfjhHfZgPvmhpsqERQg5sDpvNuWBoCGREQAvD_BwE&amp;gclsrc=aw.ds" target="_blank">https://give.feedingamerica.org/lH4Xa_sZL0eHIijGtjaVkw2?s_src=Y22YP1H1Z&amp;s_subsrc=m&amp;s_keyword=feeding%20america&amp;gclid=CjwKCAiAhqCdBhB0EiwAH8M_GoiSqr8pM78lO0YJXFr_xuajhVbfjhHfZgPvmhpsqERQg5sDpvNuWBoCGREQAvD_BwE&amp;gclsrc=aw.ds</a><br><br>Pure Water for the World <br>Pure Water for the World’s mission is to improve lives by empowering people with access to life’s most basic necessities: safe water and sanitation.<br><br>We do this by partnering with underserved communities, in Central America and Haiti, providing the tools and education to establish sustainable safe water,  sanitation and hygiene education programs<br><a href="https://www.purewaterfortheworld.org/about-pww/" target="_blank">https://www.purewaterfortheworld.org/about-pww/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://www.withhopefoundation.org/ambers-story" target="_blank">Who We Are | With Hope</a></div><img src="https://static.wixstatic.com/media/6a9957_8b6c00f62c7a4462ad4d8312d3202b6b%7Emv2.png/v1/fit/w_2500,h_1330,al_c/6a9957_8b6c00f62c7a4462ad4d8312d3202b6b%7Emv2.png" class="embed-thumbnail"></div><div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://give.feedingamerica.org/lH4Xa_sZL0eHIijGtjaVkw2?s_src=Y22YP1H1Z&s_subsrc=m&s_keyword=feeding%20america&gclid=CjwKCAiAhqCdBhB0EiwAH8M_GoiSqr8pM78lO0YJXFr_xuajhVbfjhHfZgPvmhpsqERQg5sDpvNuWBoCGREQAvD_BwE&gclsrc=aw.ds" target="_blank">Join me in ending hunger</a></div><img src="https://nvlupin.blob.core.windows.net/images/van/FAM/FAM/1/87084/images/themes/social/gregory-social-share-exp091823.jpg" class="embed-thumbnail"></div><div class="embed" style="border-left: 4px solid #202225;">
+            <div class="embed-author">
+                
+                <span class="embed-author-name">Pure Water for the World</span>
+            </div>
+            <div class="embed-title"><a href="https://www.purewaterfortheworld.org/about-pww/" target="_blank">About Pure Water for the World</a></div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1072656229387747348">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1055277195179872418/018d7f1854a837c1e495b7123f2b5ea9.png?size=1024" alt="aurora" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora</span>
+                        <span class="message-timestamp">02/07/2023 11:12 PM</span>
+                    </div>
+                    <div class="message-text"><u><strong>LINKS FOR DONATIONS TO TURKEY &amp; SYRIA</strong></u><br><strong>Bitcoin donation</strong><br><em>CLOSES IN ONE WEEK</em><br><a href="https://twitter.com/librarydefi/status/1622918592617500672?s=61&amp;t=jR6VcY1X2ustx9ddQ5oUUA" target="_blank">https://twitter.com/librarydefi/status/1622918592617500672?s=61&amp;t=jR6VcY1X2ustx9ddQ5oUUA</a><br><a href="https://twitter.com/tobbykitty/status/1622917520997883906?s=61&amp;t=jR6VcY1X2ustx9ddQ5oUUA" target="_blank">https://twitter.com/tobbykitty/status/1622917520997883906?s=61&amp;t=jR6VcY1X2ustx9ddQ5oUUA</a><br><br><strong>Trusted organizations</strong><br><a href="https://twitter.com/fatimazsaid/status/1622573650774728707?s=61&amp;t=jR6VcY1X2ustx9ddQ5oUUA" target="_blank">https://twitter.com/fatimazsaid/status/1622573650774728707?s=61&amp;t=jR6VcY1X2ustx9ddQ5oUUA</a><br><br><strong>Hasan Abi Donation site</strong><br><a href="https://events.softgiving.com/donate/HasanAbiForTurkeySyriaEarthquakesFund" target="_blank">https://events.softgiving.com/donate/HasanAbiForTurkeySyriaEarthquakesFund</a><br><br><strong>UNICEF</strong><br> <a href="https://www.unicefusa.org/stories/unicef-responding-after-massive-earthquake-syria-and-turkey/40803?form=FUNNPGQXEGQ" target="_blank">https://www.unicefusa.org/stories/unicef-responding-after-massive-earthquake-syria-and-turkey/40803?form=FUNNPGQXEGQ</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #1da1f2;">
+            <div class="embed-author">
+                <img src="https://pbs.twimg.com/profile_images/1599753319580311559/6z3P0Xbq_400x400.jpg" class="embed-author-icon">
+                <span class="embed-author-name">Baki aka DeFi Library (@LibraryDefi)</span>
+            </div>
+            <div class="embed-description">Here is the moment we&#x27;ve been waiting for.<br><br>@haluklevent &amp; @ahbap (the most trusted charity organization in Turkey) opened a Multisig for Earthquake support.<br><br>This initiative is permitted by authorities<br><br>%100 trusted &amp; official channel to donate crypto<br><br>Just do it!</div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Likes</div>
+                    <div class="embed-field-value">261</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Retweets</div>
+                    <div class="embed-field-value">159</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" class="embed-footer-icon">
+                <span>Twitter</span>
+            </div>
+            </div><div class="embed" style="border-left: 4px solid #1da1f2;">
+            <div class="embed-author">
+                <img src="https://pbs.twimg.com/profile_images/1564569518529253378/3aoZFbRD_400x400.jpg" class="embed-author-icon">
+                <span class="embed-author-name">tobbykitty.eth 🦇🔊 | ✨🐺 (@TobbyKitty)</span>
+            </div>
+            <div class="embed-description">🚨🚨🚨🚨<br><br>My friends of crypto<br><br>Now you can donate Turkey&#x27;s most trusted charity, AHBAP, to help earthquake victims in Turkey.<br><br>BINANCE SMART CHAIN ADDRESS:<br><br>0xB67705398fEd380a1CE02e77095fed64f8aCe463<br><br>ANY HELP is appriciated ❤️🙏❤️🙏<br><br><a href="https://t.co/SbC02PtLVu" target="_blank">https://t.co/SbC02PtLVu</a></div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Likes</div>
+                    <div class="embed-field-value">2776</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Retweets</div>
+                    <div class="embed-field-value">2363</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" class="embed-footer-icon">
+                <span>Twitter</span>
+            </div>
+            </div><div class="embed" style="border-left: 4px solid #1da1f2;">
+            <div class="embed-author">
+                <img src="https://pbs.twimg.com/profile_images/1607802308250714119/ZrNo2fLY_400x400.jpg" class="embed-author-icon">
+                <span class="embed-author-name">Fatima (@fatimazsaid)</span>
+            </div>
+            <div class="embed-description">Thread of trusted + reputable charities and organisations you can donate to who are currently on the ground helping victims of the Turkey+Syria earthquake.<br><br>I&#x27;ve donated to all these charities/orgs before and trust them:<br><br>#deprem</div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Likes</div>
+                    <div class="embed-field-value">6349</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Retweets</div>
+                    <div class="embed-field-value">7565</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" class="embed-footer-icon">
+                <span>Twitter</span>
+            </div>
+            </div><div class="embed" style="border-left: 4px solid #556cd6;"><div class="embed-title"><a href="https://events.softgiving.com/donate/HasanAbiForTurkeySyriaEarthquakesFund" target="_blank">#HasanAbiForTurkeySyriaEarthquakesFund</a></div><div class="embed-description">Join HasanAbi and the Turkey-Syria Earthquakes Fund as they support those impacted by the earthquakes.</div></div><div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://www.unicefusa.org/stories/unicef-responding-after-massive-earthquake-syria-and-turkey/40803?form=FUNNPGQXEGQ" target="_blank">UNICEF Responding After Massive Earthquake in Syria and Turkey</a></div><div class="embed-description">As aftershocks continue, children and families need immediate lifesaving support following the massive Feb. 6 earthquake.</div><img src="https://www.unicefusa.org/sites/default/files/field-images/story-teaser/2023/UN0778264.jpg.Thumb_.jpg" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1090411875126231120">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/609751745605926913/617fc371840eff2f54fc4e68faf013a4.png?size=1024" alt="Konnor Harris" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Konnor Harris</span>
+                        <span class="message-timestamp">03/28/2023 11:07 PM</span>
+                    </div>
+                    <div class="message-text">As I&#x27;m sure some of you may&#x27;ve heard, there was a tragic incident in Nashville TN. Six people, three of whom were just children, were gunned down in an act of senseless violence.<br><br>Regardless of how you feel about guns and school shootings, this is an absolutely tragic bloodshed incident and our thoughts and prayers goes to the community that was affected, especially the victims families.<br><br>If you want to donate to the families of those who were killed, you may do so here: <a href="https://www.cfmt.org/story/support-survivors-of-the-covenant-school-shooting/" target="_blank">https://www.cfmt.org/story/support-survivors-of-the-covenant-school-shooting/</a><br><br>Thank you all, God bless you, and may the victims and families be at peace.<br><br>- Posted on behalf of &lt;@426015209497296908&gt;</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;">
+            <div class="embed-author">
+                
+                <span class="embed-author-name">Kelly</span>
+            </div>
+            <div class="embed-title"><a href="https://www.cfmt.org/story/support-survivors-of-the-covenant-school-shooting/" target="_blank">Support Survivors of The Covenant School Shooting</a></div><div class="embed-description">The Community Foundation of Middle Tennessee is heartbroken by the horrific and senseless shooting that took place on Monday, March 27 at The Covenant</div><img src="https://cfmt-wp.s3.amazonaws.com/wp-content/uploads/2023/03/27145759/Rock-scaled-e1679947097132.jpg" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1270149642247737405">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">08/05/2024 10:41 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>RED CROSS CHARITY EVENT</u></strong><br><br>Good afternoon everyone. With Hurricane Debby and Hurricane Beryl hitting Florida and Texas respectively in the past couple of weeks, the admin team wanted to give our community the opportunity to give back and help those impacted by the natural disasters and blood shortages impacting our country. Our goal is to raise $50.00 during the month of August to benefit the Red Cross. <br><br>To incentivize contributions, we are offering the following incentives:<br>- VIP role for contributions over $5.00<br>- Charity Patron role for contributions of any amount<br>-  All contributions over $5.00 will also be entered for a chance to win a month of Nitro Basic.<br><br>For the roles and to enter to win the month of Nitro, please DM me your donation receipt (with personal details redacted, of course). All donations will also be noted in this channel to show our progress towards the goal. If you wish to keep your donation anonymous, please note that when you send your receipt. You can enter into the raffle and remain anonymous, if you prefer. <br><br>Also: you may donate to either the American Red Cross or the Red Cross affiliate in your country.<br><br>Link: <a href="https://www.redcross.org/donate/donation.html/" target="_blank">https://www.redcross.org/donate/donation.html/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://www.redcross.org/donate/donation.html/" target="_blank">I support the American Red Cross</a></div><div class="embed-description">Support the American Red Cross today. Please visit our website to donate now. Financial donations of any size help fund our mission.</div><img src="https://www.redcross.org/content/dam/redcross/red-cross-logos/American-Red-Cross_Logo_1200x630.jpg" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">❤️</span>
+                        <span class="reaction-count">8</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1270149780009390141">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">08/05/2024 10:41 PM</span>
+                    </div>
+                    <div class="message-text">@everyone</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1270155604899528846">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">08/05/2024 11:04 PM</span>
+                    </div>
+                    <div class="message-text">Ok so turns out the minimum donation for Red Cross is $10. Probably should have checked that first.<br><br>You can also donate to Direct Relief, which does not seem to have a minimum donation, to get the role and enter for the Nitro drawing. <br><br><a href="https://www.directrelief.org/work/" target="_blank">https://www.directrelief.org/work/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;">
+            <div class="embed-author">
+                
+                <span class="embed-author-name">Tony Morain</span>
+            </div>
+            <div class="embed-title"><a href="https://www.directrelief.org/work/" target="_blank">Work | Humanitarian Assistance</a></div><div class="embed-description">Direct Relief works to equip health professionals in resource-poor communities to meet the challenges of diagnosing and caring for people in need.</div><img src="https://i0.wp.com/www.directrelief.org/wp-content/uploads/2018/06/DHEDDEN-DR-1712190176_Full_Res-2-e1606265115826.jpg?fit=1200%2C675&ssl=1&w=640" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1270157168079015938">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">08/05/2024 11:11 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@607444842120871946&gt; has donated $10! We are 20% toward the goal.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1270157308470755465">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">08/05/2024 11:11 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@539264464189521952&gt; has donated $5! We are 30% toward the goal.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1270182364584349696">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">08/06/2024 12:51 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@630932959561777173&gt; has donated $5! We are 40% toward the goal.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1270482321702780979">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">08/06/2024 08:43 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@1113613253134790686&gt; has donated $5! We are 50% toward the goal.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1280661520673407036">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">09/03/2024 10:51 PM</span>
+                    </div>
+                    <div class="message-text">We didn’t reach our goal, but the raffle for nitro will take place in voice chat at a time to be announced</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1287513175893348484">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">09/22/2024 08:37 PM</span>
+                    </div>
+                    <div class="message-text">The nitro raffle will take place in voice chat tomorrow at 9:00 PM <br>CC: &lt;@&amp;1270157355534782526&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1291111699289604188">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">10/02/2024 06:56 PM</span>
+                    </div>
+                    <div class="message-text">Given the recent events with Hurricane Helene, a lot of people have been left victims to damage, with many people dead and some missing.<br><br>We are asking for your help for North Carolina and its citizens.<br><br>**(Disaster Relief Fund NC)<br>Donate here: <a href="http://nc.gov/donate" target="_blank">http://nc.gov/donate</a> **<br><br>-# For the role &quot;Charity Patron&quot;, please DM me your donation receipt (with personal details redacted). All donations will also be noted in this channel to show our progress. If you wish to keep your donation anonymous, please note that when you send your receipt.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">🙏</span>
+                        <span class="reaction-count">4</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">⭐</span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1291111959357558867">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">10/02/2024 06:57 PM</span>
+                    </div>
+                    <div class="message-text">@here</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1291113233087987814">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">10/02/2024 07:03 PM</span>
+                    </div>
+                    <div class="message-text">Donation received from &lt;@107257156750811136&gt;!</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:sunglassespoint:733092183011491940></span>
+                        <span class="reaction-count">6</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🦆</span>
+                        <span class="reaction-count">6</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1291182067438194789">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">10/02/2024 11:36 PM</span>
+                    </div>
+                    <div class="message-text">And that&#x27;s another donation from &lt;@398403582606442497&gt;!</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1293364681586642985">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">10/09/2024 12:09 AM</span>
+                    </div>
+                    <div class="message-text">Change of plans, drawing for September nitro lottery is tonight at 9 &lt;@&amp;1270157355534782526&gt; you don’t need to be there to claim it, but I will do it live</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1293364818329206857">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">10/09/2024 12:10 AM</span>
+                    </div>
+                    <div class="message-text">It’s been Sullivan, Walter, and Diana</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1423232974660305002">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">10/02/2025 08:59 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <script>
+        // Add click handlers for images
+        document.querySelectorAll('.attachment img, .embed-image').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

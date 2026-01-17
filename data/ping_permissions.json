@@ -1,0 +1,34 @@
+{
+  "e94bcd7a": {
+    "name": "Ping Attorney",
+    "target_role": 761836726506618920,
+    "allowed_users": [],
+    "allowed_roles": [
+      1405185118875680860
+    ],
+    "created_by": 272788643662528514,
+    "created_at": "2025-10-04T08:45:13.639521+00:00"
+  },
+  "8d242980": {
+    "name": "Ping Admin",
+    "target_role": 654477469004595221,
+    "allowed_users": [],
+    "allowed_roles": [
+      654477469004595221
+    ],
+    "created_by": 272788643662528514,
+    "created_at": "2025-10-04T08:54:19.035857+00:00"
+  },
+  "58ee04c6": {
+    "name": "Ping Representative",
+    "target_role": 1202305508963516446,
+    "allowed_users": [],
+    "allowed_roles": [
+      1037817411744841768,
+      654503955144900609,
+      656682310665764874
+    ],
+    "created_by": 272788643662528514,
+    "created_at": "2025-10-06T12:08:36.198013+00:00"
+  }
+}

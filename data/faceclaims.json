@@ -1,0 +1,534 @@
+{
+  "claims": {
+    "272788643662528514": {
+      "rpname": "Alexa Rosen",
+      "faceclaim": "Sidse Babett Knudsen",
+      "image_url": "https://media.discordapp.net/attachments/940417384827740210/1239531761092923422/Tt2xNtuG5Z5Zaw.png?ex=68dd08e9&is=68dbb769&hm=1ea989016924794627fd53516d799ee364de4a64a505b3050a814b4e77ae56bc&=&width=1406&height=1828",
+      "message_id": 1422698799792656489,
+      "timestamp": "2025-09-30T21:37:07.137474+00:00"
+    },
+    "1113613253134790686": {
+      "rpname": "Diana Catherine Allar",
+      "faceclaim": "Julia Louis Dreyfus as Selina Meyer",
+      "image_url": "https://aiptcomics.com/wp-content/uploads/2019/05/veep.jpeg",
+      "message_id": 1422700043646927049,
+      "timestamp": "2025-11-04T05:06:30.166694+00:00"
+    },
+    "933948927999373333": {
+      "rpname": "Ezra Victorin Hexum",
+      "faceclaim": "Edward Morra played by Bradley Cooper in Limitless the Movies & Series",
+      "image_url": "https://cdn.discordapp.com/attachments/1176500431346745444/1432636583785533550/IMG_6636.jpg?ex=6901c64a&is=690074ca&hm=81d9e923bec13a461442a6039b4a3be7a0966539d1fb844058a6db1f4bd662a9&",
+      "message_id": 1422700229295341651,
+      "timestamp": "2025-10-28T07:47:29.856410+00:00"
+    },
+    "1086730072624484432": {
+      "rpname": "Neel McGavin",
+      "faceclaim": "Mark Carney",
+      "image_url": "https://www.catholicregister.org/_next/image?url=https%3A%2F%2Fems.catholicregister.ca%2Fassets%2Fc116198f-ce7f-4ecd-ac62-617e6185088c%2F2025-02-06-Carney.png%3Ffit%3Dcover%26width%3D1200%26quality%3D80%26format%3Dauto&w=3840&q=75",
+      "message_id": 1422703344618569828,
+      "timestamp": "2025-09-30T21:55:51.427686+00:00"
+    },
+    "1369369508807966832": {
+      "rpname": "Cyrus Chan Brown",
+      "faceclaim": "John Lee Ka-Chiu",
+      "image_url": "https://www.hkforum.com/images/speakers/57.jpg?1733888682",
+      "message_id": 1422706364349808790,
+      "timestamp": "2025-09-30T22:07:10.120368+00:00"
+    },
+    "528568862703091732": {
+      "rpname": "Kayla Whitmer",
+      "faceclaim": "Gretchen Whitmer",
+      "image_url": "https://cdn.discordapp.com/attachments/940417384827740210/989991434293739530/IMG_0136.jpg?ex=68dd8fdf&is=68dc3e5f&hm=a70a07e53c020f17b7aabed0a23ceeee699dd25f194fe0ef025f30b9ece9eff7&",
+      "message_id": 1422706374001037516,
+      "timestamp": "2025-09-30T22:07:12.561281+00:00"
+    },
+    "668285222001049610": {
+      "rpname": "Aislinn Kinsley",
+      "faceclaim": "Gina Torre",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Iv1PZ7WZjPTdNy_394OI0UdkwMVSTseXfU9_saVpnDWwibnsD6OvDB6Y&s=10",
+      "message_id": 1422709438334111806,
+      "timestamp": "2025-09-30T22:19:23.042688+00:00"
+    },
+    "798610876277587981": {
+      "rpname": "Lee Borden",
+      "faceclaim": "N/A",
+      "image_url": "https://media.discordapp.net/attachments/940417384827740210/1389455764552421406/RTl3ywSmQQO0sFdi8oSEQQ.png?ex=68dd5045&is=68dbfec5&hm=933a95c6a7e7897b6ddae820da3421c36a39f8f757f18220454a0342b5da6026&=&format=webp&quality=lossless&width=1006&height=1438",
+      "message_id": 1422716260814163970,
+      "timestamp": "2025-09-30T22:46:30.359696+00:00"
+    },
+    "558668364847775757": {
+      "rpname": "Shawn Cooper",
+      "faceclaim": "Pete Bootyjudge",
+      "image_url": "https://assets.teenvogue.com/photos/5dd5b6300307710008294ba5/16:9/w_1280,c_limit/00-story-pete-buttigieg.jpg",
+      "message_id": 1422758250104754247,
+      "timestamp": "2025-10-01T01:33:21.152804+00:00"
+    },
+    "1324904021466808371": {
+      "rpname": "Sam Cooper",
+      "faceclaim": "https://cdn.britannica.com/84/100284-050-EBADB5BE/Gordon-Brown-2007.jpg",
+      "image_url": "",
+      "message_id": 1422760423047958640,
+      "timestamp": "2025-10-05T04:01:04.200897+00:00"
+    },
+    "1217948918298705964": {
+      "rpname": "Governor Harold Dream",
+      "faceclaim": "Augustine Washington",
+      "image_url": "",
+      "message_id": 1423078270030708868,
+      "timestamp": "2025-10-01T22:44:59.393888+00:00"
+    },
+    "1128826081798004746": {
+      "rpname": "E Pluribus Unum",
+      "faceclaim": "Face of Aang/body of Edgar Doud Whitcomb",
+      "image_url": "",
+      "message_id": 1423080738105987084,
+      "timestamp": "2025-10-01T22:54:48.027164+00:00"
+    },
+    "169221337880068096": {
+      "rpname": "Matthew Fields",
+      "faceclaim": "Jon Ossoff",
+      "image_url": "",
+      "message_id": 1423140600034754676,
+      "timestamp": "2025-10-02T02:52:40.417661+00:00"
+    },
+    "579350402105999400": {
+      "rpname": "Barty Finkus",
+      "faceclaim": "https://en.wikipedia.org/wiki/Dan_Quayle#/media/File:Dan_Quayle_crop.jpg",
+      "image_url": "",
+      "message_id": 1423400208917594224,
+      "timestamp": "2025-10-02T20:16:17.837143+00:00"
+    },
+    "707883943478689813": {
+      "rpname": "Greg Stillson",
+      "faceclaim": "Greg Stillson",
+      "image_url": "https://3.bp.blogspot.com/-lIDLRH4G7yQ/VsF6WytJNMI/AAAAAAAAJRg/Cgwwo9Xt4KI/s640/Presidential%2BCandidateTed%2BCruise.jpg",
+      "message_id": 1423932121013157961,
+      "timestamp": "2025-10-04T07:17:53.306544+00:00"
+    },
+    "1252645236757499975": {
+      "rpname": "Willard Mitt Romney",
+      "faceclaim": "Mitt Romney",
+      "image_url": "",
+      "message_id": 1424025634794901565,
+      "timestamp": "2025-10-04T13:29:29.040047+00:00"
+    },
+    "765000292659494913": {
+      "rpname": "Kelly Hoffman",
+      "faceclaim": "Kelly Ayotte",
+      "image_url": "",
+      "message_id": 1424073190975471687,
+      "timestamp": "2025-10-04T16:38:27.192559+00:00"
+    },
+    "669576268957876248": {
+      "rpname": "kamala Devi Harris",
+      "faceclaim": "kamala Harris",
+      "image_url": "",
+      "message_id": 1424133683056480389,
+      "timestamp": "2025-10-04T20:38:49.503694+00:00"
+    },
+    "1271220176569897017": {
+      "rpname": "Patrick Farrell",
+      "faceclaim": "Robert F. Kennedy Sr.",
+      "image_url": "https://media.newyorker.com/photos/5b1836eef7ae0e58d03ff881/master/w_960,c_limit/Gopnik-RFK.jpg",
+      "message_id": 1424337442550317127,
+      "timestamp": "2025-10-05T10:08:29.598071+00:00"
+    },
+    "1316443240173666340": {
+      "rpname": "Thomas Massie",
+      "faceclaim": "Thomas Massie",
+      "image_url": "https://cdn.discordapp.com/attachments/940417384827740210/1424756415452676218/IMG_2342.webp?ex=68e51b50&is=68e3c9d0&hm=f29d7c070593dabd2b18163e75786dbbde669f8bb01ae020c075608759dd9425&",
+      "message_id": 1424756503268692019,
+      "timestamp": "2025-10-06T13:53:41.388627+00:00"
+    },
+    "884946780909867019": {
+      "rpname": "Troy Duplech",
+      "faceclaim": "Taylor Lautner",
+      "image_url": "https://media.discordapp.net/attachments/1192034271771246633/1424861853569257532/d49f15f9e5db66d33bb9cf9aca7621b3.png?ex=68e57d82&is=68e42c02&hm=f04682e258c850a44cd94d5f742404fc1ddc43db902ab5d7bb725d53c63e9c71&=&format=webp&quality=lossless&width=1022&height=1544",
+      "message_id": 1424884902993596538,
+      "timestamp": "2025-10-06T22:23:54.422700+00:00"
+    },
+    "838354945572077610": {
+      "rpname": "Winston Cruz",
+      "faceclaim": "Ted Cruz",
+      "image_url": "",
+      "message_id": 1425072252839530517,
+      "timestamp": "2025-10-07T10:48:22.296952+00:00"
+    },
+    "426857682167791636": {
+      "rpname": "Nathan Regis",
+      "faceclaim": "Joshua Malina",
+      "image_url": "https://static.wikia.nocookie.net/scandal/images/3/3e/3x04_-_David_Rosen_01.jpg/revision/latest?cb=20171020014245",
+      "message_id": 1427484768899043369,
+      "timestamp": "2025-10-14T02:34:50.866977+00:00"
+    },
+    "823586286425604116": {
+      "rpname": "Radric Davis",
+      "faceclaim": "Gucci Mane",
+      "image_url": "https://media.pitchfork.com/photos/5dfa5ae5b7c76f0009ccadf1/4:3/w_5300,h_3975,c_limit/Gucci-Mane.jpg",
+      "message_id": 1427768247339716740,
+      "timestamp": "2025-10-14T21:21:17.167974+00:00"
+    },
+    "967871856520626236": {
+      "rpname": "Shiv Roy",
+      "faceclaim": "Sarah Snook",
+      "image_url": "https://media.licdn.com/dms/image/v2/D4E03AQEi751PNeqnqg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1670831451349?e=1762387200&v=beta&t=AsZfoc55-p0plRRqvpAIJd4MqYKqZHe-LzkWDwYRQyo",
+      "message_id": 1428535804564865028,
+      "timestamp": "2025-10-17T00:11:17.116950+00:00"
+    },
+    "93386212047335424": {
+      "rpname": "Royland Golden",
+      "faceclaim": "Stephen Dillane",
+      "image_url": "https://media.press.amazonmgmstudios.com/userfiles/images/00_IMDb_TV/Alex_Rider/Season_1/AR_S1_20190719-DW_Blunt_084RT2_FNL_thumb(1).JPG",
+      "message_id": 1429468410714001449,
+      "timestamp": "2025-10-19T13:57:07.813579+00:00"
+    },
+    "769700260808622090": {
+      "rpname": "Jenniffer González Colón",
+      "faceclaim": "Jenniffer González Colón",
+      "image_url": "https://cdn.discordapp.com/attachments/1420833929128054894/1429586252977410058/IMG_5287.jpg?ex=68f6ad73&is=68f55bf3&hm=e67e2a95dc8c1de5bf5fec928cb30c1f135e59acddf8ef30b5b4074bd4122243&",
+      "message_id": 1429585633218658407,
+      "timestamp": "2025-10-19T21:48:49.679336+00:00"
+    },
+    "445670879163056150": {
+      "rpname": "Wilber de Silveira",
+      "faceclaim": "https://www.nga.org/wp-content/uploads/2018/10/Rossello_Ricardo_AIF2018.png",
+      "image_url": "",
+      "message_id": 1429589223333298196,
+      "timestamp": "2025-10-19T21:57:11.608145+00:00"
+    },
+    "1192648317314801805": {
+      "rpname": "Garrett Walker",
+      "faceclaim": "https://static.wikia.nocookie.net/house-of-cards/images/b/b2/Screenshot_2024-03-06_at_2.33.56_PM.png/revision/latest?cb=20240306193432",
+      "image_url": "https://static.wikia.nocookie.net/house-of-cards/images/b/b2/Screenshot_2024-03-06_at_2.33.56_PM.png/revision/latest?cb=20240306193432",
+      "message_id": 1430709090098741269,
+      "timestamp": "2025-10-23T00:07:09.331638+00:00"
+    },
+    "1246385226230267980": {
+      "rpname": "Miles D Chase",
+      "faceclaim": "https://www.dvidshub.net/image/3254194/modern-desert-combat-marine-photo-illustration-marine-corps-reserve-centennial",
+      "image_url": "",
+      "message_id": 1431295047663489170,
+      "timestamp": "2025-10-24T14:55:31.785976+00:00"
+    },
+    "819731240004485135": {
+      "rpname": "John Peter Godfrey Ross III",
+      "faceclaim": "Tom Wolf",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Tom_Wolf_governor_portrait_2019.jpg",
+      "message_id": 1431522424150823114,
+      "timestamp": "2025-12-01T02:13:30.313257+00:00"
+    },
+    "1324557193206300682": {
+      "rpname": "jack haroson",
+      "faceclaim": "donald trump",
+      "image_url": "",
+      "message_id": 1431819700555223131,
+      "timestamp": "2025-10-26T01:40:18.796192+00:00"
+    },
+    "750817725462478868": {
+      "rpname": "John Ossoff",
+      "faceclaim": "John Ossoff",
+      "image_url": "",
+      "message_id": 1432838909141979168,
+      "timestamp": "2025-10-28T21:10:17.245498+00:00"
+    },
+    "589573196504891412": {
+      "rpname": "Gabriel Garcia",
+      "faceclaim": "Manny Rutinel",
+      "image_url": "https://coloradonewsline.com/wp-content/uploads/2025/01/IMG_9247.jpg",
+      "message_id": 1432929311056203786,
+      "timestamp": "2025-10-29T03:09:30.749548+00:00"
+    },
+    "1220976252647899221": {
+      "rpname": "Alexander Hamilton",
+      "faceclaim": "Lin Manuel Miranda",
+      "image_url": "https://static01.nyt.com/images/2020/07/01/arts/01streamjuly1/merlin_174046551_40b2e2ab-f48b-4674-acb8-4a492e58395f-mobileMasterAt3x.jpg?quality=75&auto=webp&disable=upscale&width=1200",
+      "message_id": 1433194300409249974,
+      "timestamp": "2025-11-01T05:44:41.678974+00:00"
+    },
+    "683892074390618142": {
+      "rpname": "Ian Quincy Greenlaw",
+      "faceclaim": "Horace A. Whopper",
+      "image_url": "https://i.imgur.com/BWU1OFF.jpeg",
+      "message_id": 1434035252111872157,
+      "timestamp": "2025-11-20T20:50:09.534804+00:00"
+    },
+    "704184943932211291": {
+      "rpname": "Deborah Elizabeth Lickington II",
+      "faceclaim": "Elizabeth McCord (Tea Leoni) from Madam Secretary",
+      "image_url": "",
+      "message_id": 1434601755957530766,
+      "timestamp": "2025-11-02T17:55:12.670536+00:00"
+    },
+    "763796772337352704": {
+      "rpname": "Empy Evander",
+      "faceclaim": "Frank Underwood",
+      "image_url": "",
+      "message_id": 1434601922370998414,
+      "timestamp": "2025-11-02T17:55:52.162253+00:00"
+    },
+    "1373437758961356912": {
+      "rpname": "Barack Obama",
+      "faceclaim": "Barack Hussein Obama",
+      "image_url": "https://www.icr.ac.uk/images/default-source/migrated/default-library/barack-obama-state-of-the-union-address-news.jpg?sfvrsn=340d9366_2",
+      "message_id": 1434614508386648135,
+      "timestamp": "2025-11-02T18:45:53.176378+00:00"
+    },
+    "227807370774839296": {
+      "rpname": "Doc Lemon",
+      "faceclaim": "Jonathan Edwards",
+      "image_url": "https://cdn.britannica.com/37/184737-050-E0DF03F4/Jonathan-Edwards.jpg",
+      "message_id": 1434853416542277675,
+      "timestamp": "2025-11-03T10:35:13.386822+00:00"
+    },
+    "1435300030822219849": {
+      "rpname": "Jimmy Carter",
+      "faceclaim": "Jimmy Carter",
+      "image_url": "",
+      "message_id": 1435432900068638752,
+      "timestamp": "2025-11-05T00:57:52.844999+00:00"
+    },
+    "241730635771674624": {
+      "rpname": "Chris Jackson",
+      "faceclaim": "https://www.refinery29.com/images/10336883.jpg?format=webp&width=720&height=864&quality=85",
+      "image_url": "",
+      "message_id": 1435545180701720608,
+      "timestamp": "2025-11-05T08:24:02.750052+00:00"
+    },
+    "1280009305759813653": {
+      "rpname": "Laura Priscilla Montez",
+      "faceclaim": "Andrea Savage as Laura Priscilla Montez",
+      "image_url": "https://cdn.discordapp.com/attachments/1368534182027984919/1435656226963984384/MontezElection2020.webp?ex=690cc28d&is=690b710d&hm=99f5b667d7cdd806130217f7e30a2f949d4e2c3462d93dd1694ca3d78ffeb423&",
+      "message_id": 1435656933582569522,
+      "timestamp": "2025-11-05T15:48:06.567040+00:00"
+    },
+    "1432014337639190732": {
+      "rpname": "Tyler Brown",
+      "faceclaim": "Timothee Chalamet",
+      "image_url": "https://cdn.britannica.com/36/231936-050-63D849FB/Timothee-Chalamet-2021.jpg",
+      "message_id": 1435809996888866828,
+      "timestamp": "2025-11-06T01:56:19.968659+00:00"
+    },
+    "1086207359929557002": {
+      "rpname": "Nicholas Bourgie",
+      "faceclaim": "This image I generated",
+      "image_url": "https://chatgpt.com/backend-api/estuary/content?id=file_000000001e0071fbac039725e34f39fc&ts=489629&p=fs&cid=1&sig=8efce4098e76ab1e3ebc8a8ca14ac0670eeb1f422e24c211a1c3ae1868828210&v=0",
+      "message_id": 1436944632012607508,
+      "timestamp": "2025-11-09T05:04:57.827898+00:00"
+    },
+    "1143803255734935602": {
+      "rpname": "Kyle Butler",
+      "faceclaim": "Michael C. Hall as Dexter Morgan",
+      "image_url": "https://i.scdn.co/image/ab67616d00001e021044603ca6d2723574971597",
+      "message_id": 1437013506238058587,
+      "timestamp": "2025-11-09T09:38:38.664878+00:00"
+    },
+    "1321609961268314208": {
+      "rpname": "Michael Walker",
+      "faceclaim": "Hakeem Jeffries",
+      "image_url": "",
+      "message_id": 1437243639423041578,
+      "timestamp": "2025-11-10T00:53:06.677075+00:00"
+    },
+    "1415424847575515189": {
+      "rpname": "Heinrich Netanyahu",
+      "faceclaim": "Cedric DIggory HP",
+      "image_url": "https://www.google.com/imgres?q=cedric%20diggory&imgurl=https%3A%2F%2Fi.redd.it%2Fcedric-diggory-embodies-the-phrase-young-and-beautiful-v0-pofd4wwe2ofe1.jpg%3Fwidth%3D735%26format%3Dpjpg%26auto%3Dwebp%26s%3D0f2e207efc395fa9781a90b315a8dc78f6704068&imgrefurl=https%3A%2F%2Fwww.reddit.com%2Fr%2Fharrypotter%2Fcomments%2F1ibu2a8%2Fcedric_diggory_embodies_the_phrase_young_and%2F&docid=NExfC0K87tLGKM&tbnid=yCKa9cSZdITjyM&vet=12ahUKEwjMo6Ha0eeQAxWSlmoFHUqWF50QM3oECCcQAA..i&w=735&h=997&hcb=2&ved=2ahUKEwjMo6Ha0eeQAxWSlmoFHUqWF50QM3oECCcQAA",
+      "message_id": 1437426757723750461,
+      "timestamp": "2025-11-10T13:00:47.108481+00:00"
+    },
+    "613109516732596244": {
+      "rpname": "John Hoffman",
+      "faceclaim": "John Thune",
+      "image_url": "https://commons.wikimedia.org/wiki/File:John_Thune,_official_portrait,_111th_Congress_%28cropped1%29.jpg",
+      "message_id": 1437583798257848391,
+      "timestamp": "2025-11-10T23:24:46.967582+00:00"
+    },
+    "1098361223369728101": {
+      "rpname": "Harmon Rabb",
+      "faceclaim": "Harmon Rabb",
+      "image_url": "https://upload.wikimedia.org/wikipedia/en/0/08/Harmon_Rabb_photo.jpg",
+      "message_id": 1438832721530192026,
+      "timestamp": "2025-11-14T10:07:33.357235+00:00"
+    },
+    "894727315270012988": {
+      "rpname": "Corvus Hâderach",
+      "faceclaim": "Jack Schlossberg",
+      "image_url": "https://www.thedailybeast.com/resizer/v2/ALWQF3W2PBEG3FX2DOSYRCJ7UU.jpg?smart=true&auth=074d8d25b193246471a4818affa37c9ad0eab919e76d84aaaace286049f7cc61&width=1600&height=900",
+      "message_id": 1439611257287344309,
+      "timestamp": "2025-11-16T13:41:11.265672+00:00"
+    },
+    "968909042800013362": {
+      "rpname": "Kaleb Whitmer",
+      "faceclaim": "Jake Ballard/ Scott Foley",
+      "image_url": "https://i.pinimg.com/736x/56/7b/0a/567b0a351dab064051778d6a71d99d8f.jpg",
+      "message_id": 1439727969084903465,
+      "timestamp": "2025-11-16T21:24:57.028105+00:00"
+    },
+    "1424469891737452645": {
+      "rpname": "Horatio Wallace",
+      "faceclaim": "Jack Kemp",
+      "image_url": "",
+      "message_id": 1439915225578078218,
+      "timestamp": "2025-11-17T09:49:02.407452+00:00"
+    },
+    "1136747941403562025": {
+      "rpname": "Jasmine Crockett",
+      "faceclaim": "Jasmine Crockett",
+      "image_url": "https://i.guim.co.uk/img/media/44edd284d2e45ac279c5219a9045c3849be9f2b1/0_0_5000_3002/master/5000.jpg?width=465&dpr=1&s=none&crop=none",
+      "message_id": 1440168675033481397,
+      "timestamp": "2025-11-18T02:36:09.536807+00:00"
+    },
+    "679445384992653312": {
+      "rpname": "Ruby Redd",
+      "faceclaim": "Hillary Scholten",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Rep._Hillary_Scholten_-_118th_Congress.jpg",
+      "message_id": 1440465206332494006,
+      "timestamp": "2025-11-18T22:14:28.480380+00:00"
+    },
+    "1245197071980564521": {
+      "rpname": "Mabel Simmons",
+      "faceclaim": "https://tse4.mm.bing.net/th/id/OIP.QF1v3z04vS9xrSVCpQB2EAHaLH?rs=1&pid=ImgDetMain&o=7&rm=3",
+      "image_url": "",
+      "message_id": 1443756149269725356,
+      "timestamp": "2025-11-28T00:11:30.987391+00:00"
+    },
+    "1250306020836773918": {
+      "rpname": "Alexander Hamilton II",
+      "faceclaim": "https://upload.wikimedia.org/wikipedia/commons/0/02/Alexander_Hamilton_Jr.jpg",
+      "image_url": "",
+      "message_id": 1444263896247697410,
+      "timestamp": "2025-11-29T09:49:06.510889+00:00"
+    },
+    "1420893802813460531": {
+      "rpname": "Roy Cooper",
+      "faceclaim": "Roy Cooper",
+      "image_url": "https://cdn.abcotvs.com/dip/images/14179122_121323-wtvd-roy-cooper-1-img.png",
+      "message_id": 1444341278992109708,
+      "timestamp": "2025-11-29T15:11:36.155106+00:00"
+    },
+    "1287430184168853526": {
+      "rpname": "John Hersey McFester",
+      "faceclaim": "Claude Rains",
+      "image_url": "https://delco.today/wp-content/uploads/sites/3/2023/07/Claude-Rains.jpg.webp",
+      "message_id": 1444361043941003294,
+      "timestamp": "2025-11-29T16:15:08.093861+00:00"
+    },
+    "1325541711488880683": {
+      "rpname": "William I. Bradford",
+      "faceclaim": "Steven Pifer",
+      "image_url": "https://www.brookings.edu/wp-content/uploads/2016/06/spifer_full_protrait-e1676999601421.jpg?quality=75",
+      "message_id": 1444379447833792545,
+      "timestamp": "2025-11-29T17:28:16.078206+00:00"
+    },
+    "850787062235922463": {
+      "rpname": "Oliver J. Matthews",
+      "faceclaim": "This guy",
+      "image_url": "",
+      "message_id": 1445045713368125481,
+      "timestamp": "2025-12-01T13:35:46.059254+00:00"
+    },
+    "639191936263258112": {
+      "rpname": "Ros Kiros",
+      "faceclaim": "Darializa Avila Chevalier",
+      "image_url": "https://cdn.discordapp.com/attachments/1189713243346829386/1445881075493638186/dims4_default_93f0810_2147483647_resize_762x_quality_90_.png?ex=6931f52f&is=6930a3af&hm=9b2dfc3ded87c27b11bc2c854b3b528767ebeda87b75f9a64ab1d56e2b4e6350&",
+      "message_id": 1445881498933657672,
+      "timestamp": "2025-12-03T20:57:51.277266+00:00"
+    },
+    "1103592382672420864": {
+      "rpname": "Zendaya Maree Stoermer Coleman",
+      "faceclaim": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw7L-bMRzHM5gVAlixVzNpdIwZCBM7nDSvEA&s",
+      "image_url": "",
+      "message_id": 1446125491294830632,
+      "timestamp": "2025-12-04T13:06:25.102191+00:00"
+    },
+    "743804614666616864": {
+      "rpname": "Mike Gilmore",
+      "faceclaim": "Malcolm Fraser",
+      "image_url": "https://content.ngv.vic.gov.au/retrieve.php?size=1280&type=image&vernonID=58952",
+      "message_id": 1446153600471535688,
+      "timestamp": "2025-12-04T14:58:06.892514+00:00"
+    },
+    "1018042029978165269": {
+      "rpname": "Anastasia Casmir",
+      "faceclaim": "idk just some dumbass image i put together in less than a minute on my phone",
+      "image_url": "https://cdn.discordapp.com/attachments/1080679524301275236/1446532828518023335/065A2BF6-5C78-4885-A4EC-0310310DF11D.jpg?ex=6934542d&is=693302ad&hm=78c5b24c6a3044ef2033da22d91213d3c9be89cea9741fa651eb965b4987d5ef&",
+      "message_id": 1446533362536943780,
+      "timestamp": "2025-12-05T16:07:09.275965+00:00"
+    },
+    "1446537013275656275": {
+      "rpname": "Clint Perot",
+      "faceclaim": "ross perot",
+      "image_url": "",
+      "message_id": 1446542427883049031,
+      "timestamp": "2025-12-05T16:43:10.722649+00:00"
+    }
+  },
+  "taken_faces": {
+    "sidse babett knudsen": 272788643662528514,
+    "mark carney": 1086730072624484432,
+    "john lee ka-chiu": 1369369508807966832,
+    "gretchen whitmer": 528568862703091732,
+    "gina torre": 668285222001049610,
+    "n/a": 798610876277587981,
+    "pete bootyjudge": 558668364847775757,
+    "augustine washington": 1217948918298705964,
+    "face of aang/body of edgar doud whitcomb": 1128826081798004746,
+    "jon ossoff": 169221337880068096,
+    "https://en.wikipedia.org/wiki/dan_quayle#/media/file:dan_quayle_crop.jpg": 579350402105999400,
+    "greg stillson": 707883943478689813,
+    "mitt romney": 1252645236757499975,
+    "kelly ayotte": 765000292659494913,
+    "kamala harris": 669576268957876248,
+    "https://cdn.britannica.com/84/100284-050-ebadb5be/gordon-brown-2007.jpg": 1324904021466808371,
+    "robert f. kennedy sr.": 1271220176569897017,
+    "thomas massie": 1316443240173666340,
+    "taylor lautner": 884946780909867019,
+    "ted cruz": 838354945572077610,
+    "joshua malina": 426857682167791636,
+    "gucci mane": 823586286425604116,
+    "sarah snook": 967871856520626236,
+    "stephen dillane": 93386212047335424,
+    "jenniffer gonzález colón": 769700260808622090,
+    "https://www.nga.org/wp-content/uploads/2018/10/rossello_ricardo_aif2018.png": 445670879163056150,
+    "https://static.wikia.nocookie.net/house-of-cards/images/b/b2/screenshot_2024-03-06_at_2.33.56_pm.png/revision/latest?cb=20240306193432": 1192648317314801805,
+    "https://www.dvidshub.net/image/3254194/modern-desert-combat-marine-photo-illustration-marine-corps-reserve-centennial": 1246385226230267980,
+    "donald trump": 1324557193206300682,
+    "edward morra played by bradley cooper in limitless the movies & series": 933948927999373333,
+    "john ossoff": 750817725462478868,
+    "manny rutinel": 589573196504891412,
+    "lin manuel miranda": 1220976252647899221,
+    "elizabeth mccord (tea leoni) from madam secretary": 704184943932211291,
+    "frank underwood": 763796772337352704,
+    "barack hussein obama": 1373437758961356912,
+    "jonathan edwards": 227807370774839296,
+    "julia louis dreyfus as selina meyer": 1113613253134790686,
+    "jimmy carter": 1435300030822219849,
+    "https://www.refinery29.com/images/10336883.jpg?format=webp&width=720&height=864&quality=85": 241730635771674624,
+    "andrea savage as laura priscilla montez": 1280009305759813653,
+    "timothee chalamet": 1432014337639190732,
+    "this image i generated": 1086207359929557002,
+    "michael c. hall as dexter morgan": 1143803255734935602,
+    "hakeem jeffries": 1321609961268314208,
+    "cedric diggory hp": 1415424847575515189,
+    "john thune": 613109516732596244,
+    "harmon rabb": 1098361223369728101,
+    "jack schlossberg": 894727315270012988,
+    "jake ballard/ scott foley": 968909042800013362,
+    "jack kemp": 1424469891737452645,
+    "jasmine crockett": 1136747941403562025,
+    "hillary scholten": 679445384992653312,
+    "horace a. whopper": 683892074390618142,
+    "https://tse4.mm.bing.net/th/id/oip.qf1v3z04vs9xrsvcpqb2eahalh?rs=1&pid=imgdetmain&o=7&rm=3": 1245197071980564521,
+    "https://upload.wikimedia.org/wikipedia/commons/0/02/alexander_hamilton_jr.jpg": 1250306020836773918,
+    "roy cooper": 1420893802813460531,
+    "claude rains": 1287430184168853526,
+    "steven pifer": 1325541711488880683,
+    "tom wolf": 819731240004485135,
+    "this guy": 850787062235922463,
+    "darializa avila chevalier": 639191936263258112,
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:and9gctw7l-bmrzhm5gvalixvznpdiwzcbm7ndsvea&s": 1103592382672420864,
+    "malcolm fraser": 743804614666616864,
+    "idk just some dumbass image i put together in less than a minute on my phone": 1018042029978165269,
+    "ross perot": 1446537013275656275
+  }
+}

@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#rose-garden - Virtual Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.375;
+        }
+        
+        .channel-header {
+            background-color: #2f3136;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7289da;
+        }
+        
+        .channel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .channel-info {
+            color: #b9bbbe;
+            font-size: 14px;
+        }
+        
+        .messages-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .message {
+            display: flex;
+            padding: 8px 16px;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        
+        .message:hover {
+            background-color: rgba(4, 4, 5, 0.07);
+        }
+        
+        .message-avatar {
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .message-author {
+            font-weight: 500;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .message-timestamp {
+            font-size: 12px;
+            color: #72767d;
+            font-weight: 500;
+        }
+        
+        .message-text {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message-text strong {
+            font-weight: 700;
+        }
+        
+        .message-text em {
+            font-style: italic;
+        }
+        
+        .message-text u {
+            text-decoration: underline;
+        }
+        
+        .message-text del {
+            text-decoration: line-through;
+        }
+        
+        .message-text code {
+            background-color: #2f3136;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+        
+        .message-text pre {
+            background-color: #2f3136;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 4px 0;
+        }
+        
+        .message-text pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .message-text a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .attachment {
+            margin: 8px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .attachment img {
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .attachment-info {
+            padding: 8px;
+            background-color: #2f3136;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .attachment-link {
+            color: #00aff4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attachment-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+        
+        .embed {
+            max-width: 520px;
+            margin: 8px 0;
+            padding: 12px 16px;
+            background-color: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-author-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .embed-author-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .embed-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .embed-description {
+            margin-bottom: 8px;
+        }
+        
+        .embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .embed-field {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        
+        .embed-field.inline {
+            flex: 1 1 150px;
+            min-width: 150px;
+        }
+        
+        .embed-field-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .embed-field-value {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .embed-image {
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            float: right;
+            margin: 8px 0 8px 16px;
+        }
+        
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #72767d;
+        }
+        
+        .embed-footer-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .reaction {
+            background-color: rgba(79, 84, 92, 0.16);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .reaction-emoji {
+            line-height: 1;
+        }
+        
+        .reaction-count {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .message {
+                padding: 8px 8px;
+            }
+            
+            .embed {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="channel-header">
+        <div class="channel-title">#rose-garden</div>
+        <div class="channel-info">Archived from Virtual Congress on October 02, 2025 at 08:59 AM UTC</div>
+    </div>
+    
+    <div class="messages-container">
+        
+            <div class="message" data-message-id="1066450362405507102">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/21/2023 08:13 PM</span>
+                    </div>
+                    <div class="message-text">``<code>President Twos signing ceremony at 3.30pm EST</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1066454791183683604">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/607444842120871946/10d28a2c4cda35fc84e8b5394681987c.png?size=1024" alt="dreadfulcadillac1" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">dreadfulcadillac1</span>
+                        <span class="message-timestamp">01/21/2023 08:30 PM</span>
+                    </div>
+                    <div class="message-text"><em>sniffs a rose</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1066454824029274263">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/21/2023 08:30 PM</span>
+                    </div>
+                    <div class="message-text">Good afternoon. I&#x27;m here to sign H.R.10 and H.R.11, 2 bills that will enable the nationalisation of rail on the Eastern Seaboard. Nationalisation of rail is something that I truly believe in, and while this plan is a start, I hope to see more nationalisation in the future if this goes well. However, I am disappointed that this bill was pushed through by unanimous consent in the Senate with distraction tactics used to prevent potential objections. However, I am glad to sign these bills to take the next great step in developing our public transport system.<br><br><em>signs H.R.10 and H.R.11, handing pen to &lt;@607444842120871946&gt;</em></div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">🖕</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1066454874805514380">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/21/2023 08:30 PM</span>
+                    </div>
+                    <div class="message-text"><a href="https://docs.google.com/document/d/1x5lYMUzpc3CYRYaDN9ACiQJUX68-ehsNyX9SHluQzQ4/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1x5lYMUzpc3CYRYaDN9ACiQJUX68-ehsNyX9SHluQzQ4/edit?usp=sharing</a><br><a href="https://docs.google.com/document/d/17vkFmHLzcNL29QNiDezzYnshGKJOdJAkHCwB17TclOM/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/17vkFmHLzcNL29QNiDezzYnshGKJOdJAkHCwB17TclOM/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1x5lYMUzpc3CYRYaDN9ACiQJUX68-ehsNyX9SHluQzQ4/edit?usp=sharing" target="_blank">H.R. 10 Revitalizing Eastern Rail Act</a></div><div class="embed-description">H.R.10. IN THE HOUSE OF REPRESENTATIVES January 20th, 2022  Mr. Sullivan of Olympia (for himself, Mr. WarriorShaker of Olympia) introduced the following bill;   A BILL To authorize a federal donation to the “Improve Railways” fund, for the reasoning of the experimentational improvement of Olymp...</div><img src="https://lh6.googleusercontent.com/_uGVe-_9pYnGts3F-nrxhrxqvcfauoLkoGMIw-njmWFWe5-GZD-g6tfVujvxQiQxVYuvnhKyDde9qA=w1200-h630-p" class="embed-thumbnail"></div><div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/17vkFmHLzcNL29QNiDezzYnshGKJOdJAkHCwB17TclOM/edit?usp=sharing" target="_blank">H.R.11. Revitalizing Eastern Rail Act Appropriations</a></div><div class="embed-description">H.R.11. IN THE HOUSE OF REPRESENTATIVES January 20th, 2022  Mr. Sullivan of Olympia (for himself, Mr. WarriorShaker of Olympia) introduced the following bill;   A BILL To appropriate a federal donation to the “Improve Railways” fund, for the purposes of mass-buyouts of Olympia’s Railways by the...</div><img src="https://lh5.googleusercontent.com/Hmz1VhTy3zxWjp2dEquqipVgsMJdo8B-3nCCyoAMdpriDnprWfsG6wpHirQ1OlINLXIn-xm86CkRXw=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1066455069312155829">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/607444842120871946/10d28a2c4cda35fc84e8b5394681987c.png?size=1024" alt="dreadfulcadillac1" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">dreadfulcadillac1</span>
+                        <span class="message-timestamp">01/21/2023 08:31 PM</span>
+                    </div>
+                    <div class="message-text"><em>Claps</em> &quot;Thank you for the pen Mr. President, and on the signage of these tremendous bills. This is the first step forward in making Olympia - and truly, america - Great again.&quot;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1066455298577010738">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/21/2023 08:32 PM</span>
+                    </div>
+                    <div class="message-text">``<code>END</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1068547096757669969">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/27/2023 03:04 PM</span>
+                    </div>
+                    <div class="message-text">``<code>President Twos signing ceremony at 11am EST</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1068561081687085118">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/27/2023 04:00 PM</span>
+                    </div>
+                    <div class="message-text">Good morning. Today, I am proud to sign H.R.4, a bill which will impose a 5 percent stock buyback tax. While I would have liked it to be greater, as stock buybacks take money that should be going towards workers to generate profit, this is nevertheless a start. This will help to reduce the deficit slightly, but we still have a long way to go to get the deficit down. I will now sign H.R.4</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1068561248490373211">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/27/2023 04:00 PM</span>
+                    </div>
+                    <div class="message-text"><em>signs H.R.4, handing pen to a union leader</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1068561483547553832">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/27/2023 04:01 PM</span>
+                    </div>
+                    <div class="message-text"><a href="https://docs.google.com/document/d/1yRuIZWygg2aP_Kj8cFaUO11zLEDBZ5Kpkc9qF0Zygek/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1yRuIZWygg2aP_Kj8cFaUO11zLEDBZ5Kpkc9qF0Zygek/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1yRuIZWygg2aP_Kj8cFaUO11zLEDBZ5Kpkc9qF0Zygek/edit?usp=sharing" target="_blank">H.R. 4. - Lowering the Deficit Act of 2023</a></div><div class="embed-description">H.R.4. IN THE HOUSE OF REPRESENTATIVES January 13th, 2022  Mr. Sullivan of Olympia (for himself, Mr. Posting of Pacifica, Mr. Morales of Frontier) introduced the following bill;   A BILL Be it enacted by the Senate and the House of Representatives of the United States of America in Congress Ass...</div><img src="https://lh4.googleusercontent.com/dCndrgndRZlmJd32pY3fXUYS0Wk1Jzv3TojrywJBpH699RE0ncfS3zj96NwJkU4PT7c-usqf34twOw=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1068561493299306526">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/27/2023 04:01 PM</span>
+                    </div>
+                    <div class="message-text">Thank you.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1068561508272967791">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/27/2023 04:01 PM</span>
+                    </div>
+                    <div class="message-text">``<code>END</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131236651306336307">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 02:50 PM</span>
+                    </div>
+                    <div class="message-text">``<code>COMMISSIONING OF ZACHARY AUSTIN LEMAIRE AS MAJOR GENERAL OF THE UNITED STATES</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131236851349454960">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/19/2023 02:51 PM</span>
+                    </div>
+                    <div class="message-text"><em>is present in the Army Green Service Uniform</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131236899030302780">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 02:51 PM</span>
+                    </div>
+                    <div class="message-text">Welcome all to this ceremony. Today we will be swearing in &lt;@969237104490086430&gt; as a Major General.<br><br>Mr. LeMaire, are you ready?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131237802261102603">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/19/2023 02:55 PM</span>
+                    </div>
+                    <div class="message-text"><em>several other officers and senior NCOs are present</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131237926580269167">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/19/2023 02:55 PM</span>
+                    </div>
+                    <div class="message-text">Yes I am Madam President.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131238282496319521">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 02:57 PM</span>
+                    </div>
+                    <div class="message-text">Please repeat after me:<br><br>&quot;I, Zachary Austin LeMaire, do solemnly swear (or affirm) that I will support and defend the Constitution of the United States against all enemies, foreign and domestic; that I will bear true faith and allegiance to the same; that I take this obligation freely, without any mental reservation or purpose of evasion; and that I will well and faithfully discharge the duties of the office on which I am about to enter. So help me God.&quot;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131238479892840510">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/19/2023 02:57 PM</span>
+                    </div>
+                    <div class="message-text"><em>raises right hand</em> <br><br>I, Zachary Austin LeMaire, do solemnly swear that I will support and defend the Constitution of the United States against all enemies, foreign and domestic; that I will bear true faith and allegiance to the same; that I take this obligation freely, without any mental reservation or purpose of evasion; and that I will well and faithfully discharge the duties of the office on which I am about to enter. So help me God.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131238603800985610">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 02:58 PM</span>
+                    </div>
+                    <div class="message-text">Congratulations, Major General LeMaire 🤝</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131238625808494592">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 02:58 PM</span>
+                    </div>
+                    <div class="message-text">Would you like to say a few words?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131238836261892137">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/19/2023 02:59 PM</span>
+                    </div>
+                    <div class="message-text">Thank you Madam President, I would if you would be so kind.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131238993690906654">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 02:59 PM</span>
+                    </div>
+                    <div class="message-text">Of course, the floor is yours.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131239983613755593">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/19/2023 03:03 PM</span>
+                    </div>
+                    <div class="message-text">I would just like to thank the President for this renewed Commission as an Officer in the United States Army. Whenever I resigned my Commission to become President, I had believed that my service in uniform would have come to an end. I am deeply honoured for another chance to continue serving our great Nation. Thank you to those Officers, NCOs, and other guests for being in attendance today. Go Army!!</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131240061233532938">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/19/2023 03:04 PM</span>
+                    </div>
+                    <div class="message-text"><em>steps back from the podium and remains at attention</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131243358589816923">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 03:17 PM</span>
+                    </div>
+                    <div class="message-text">Thank you very much, Major General. <br><br>We will now continue to the reception where there will be light refreshments, thank you all.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131243381356511343">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 03:17 PM</span>
+                    </div>
+                    <div class="message-text">``<code>THE END</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1173285653530812558">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/358420871355957250/2f39e7d585561503d396fdc8ffc92648.png?size=1024" alt="Senator Axel! ⭐" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">Senator Axel! ⭐</span>
+                        <span class="message-timestamp">11/12/2023 03:38 PM</span>
+                    </div>
+                    <div class="message-text"><em>frolicks</em></div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">😭</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1263627375594311801">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">07/18/2024 10:44 PM</span>
+                    </div>
+                    <div class="message-text"><em>does presidenting</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1264128910350876674">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">07/20/2024 07:56 AM</span>
+                    </div>
+                    <div class="message-text"><em>takes a 4 AM walk</em></div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">💀</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275769856389546129">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">08/21/2024 10:53 AM</span>
+                    </div>
+                    <div class="message-text"><em>plants a poppy in honor of world war one lieutenant-colonel John McCrae</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275837364349960246">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/261699242438033409/376bdc6cf497efcbc9888028ee9626b2.png?size=1024" alt="dogappreciator" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">dogappreciator</span>
+                        <span class="message-timestamp">08/21/2024 03:22 PM</span>
+                    </div>
+                    <div class="message-text"><em>plots a poppy seed as well</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275954798751121540">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:08 PM</span>
+                    </div>
+                    <div class="message-text"><em>The feed starts on all major networks, showing an empty podium in the Rose Garden</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275954879575097415">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:09 PM</span>
+                    </div>
+                    <div class="message-text"><em>Holland walks to the podium</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275954937821528158">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:09 PM</span>
+                    </div>
+                    <div class="message-text">My fellow Americans,<br><br>Not too long ago, our nation was abruptly shocked as terrorists struck at the heart of our nation, taking the lives of our fellow Americans, while those terrorists may have hurt us, they have not defeated us. We may be punched, but we won’t fall down, and you better be prepared for the wrath of our resolve. Pax Mortis, a cowardice organization that believes that America is theirs to change, outside of our democratic process, outside of rights granted by the constitution, outside of morality. This administration vowed that those behind it won’t be able to sleep – they won’t be able to run, and they won’t be able to hide. Like those who killed our neighbours, friends, co-workers, our family, on 9/11, we too said on 8/1, Never again. We said, we will get justice. With the might of our intelligence apparatus, and the brave men and women that stood at the frontline, I can confirm that the cowardice leadership of Pax Mortis has been dismantled, crippling their abilities, and scattering their partners into hiding. While we’re still on the look out for their partners – and the leader of Pax Mortis itself, we’ve dealt a great blow. We’ve blinded them, we’ve strangled their income source, and we’ve disrupted their further plans, here in America, and abroad.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275955044684140566">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:09 PM</span>
+                    </div>
+                    <div class="message-text">When the FBI raided the compounds of Pax Mortis’ partners, namely the Green Boys in Colorado, and the Mississippi Wildboys in Mississippi, we found two bodies, those of Marcus Shaw and Nadia Petrova, the Infiltrator and Head of Intelligence of Pax Mortis respectively, like cowards withering in the light of justice, they took the cowards way out and swallowed cyanide pills, efforts to resuscitate them failed, but, with them gone, Pax Mortis is blind.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275955188863209536">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:10 PM</span>
+                    </div>
+                    <div class="message-text">In a recent action, with our Egyptian allies, we intercepted a Pax Mortis shipment, on board, we captured Isabella Marquez and Doctor Evelyn Moreau, while wounded, they are in U.S. custody, and will face Justice. They’re respectively the Chief of Operations and Head of Scientific Research and Development, with them gone, Pax Mortis lost it’s brains.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275955269377200159">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:10 PM</span>
+                    </div>
+                    <div class="message-text">With the return of the CIA, we uncovered Pax Mortis’ Communications Director, Sophia Laurent. While she’s still at large, she’s on any and all watchlists in the world, and the hands of justice will soon grab her aswell, While she’s on the run, Pax Mortis lost it’s vile voice.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275955367175782432">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:11 PM</span>
+                    </div>
+                    <div class="message-text">Lastly, earlier today, Vincent Carter has been found dead, A billionaire, he felt that his money was well spent on the death of 2 thousand Americans, but, like a coward, he’s no more, but with him gone, Pax Mortis is broke.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275955450143178803">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:11 PM</span>
+                    </div>
+                    <div class="message-text">We’re still on the look, watching, waiting, and ready to strike, and strike we will, Pax Mortis is crippled, they’re no longer a danger, and we can chalk that up as a victory.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275955503574552704">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:11 PM</span>
+                    </div>
+                    <div class="message-text">While the people we’ve lost – my own daughters included – Justice will be served, Justice will always be served. Be it that they will face a judge, and perish away in cell, or be they damned to eternity in Hell. There won’t be rest for the wicked – there won’t be rest to those who wish to harm us, and think they can get away with it.<br><br>Thank you, and god bless these United States.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275955557689196707">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/171983337433333760/d26b3a664cb844b2ac8cd82b81f3171b.png?size=1024" alt="The Rigging Continues." class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">The Rigging Continues.</span>
+                        <span class="message-timestamp">08/21/2024 11:11 PM</span>
+                    </div>
+                    <div class="message-text"><em>Holland walks away, and the feed cuts</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1279717762738163723">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/01/2024 08:21 AM</span>
+                    </div>
+                    <div class="message-text"><em>walks at 4 am again</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1279717827586035775">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/01/2024 08:21 AM</span>
+                    </div>
+                    <div class="message-text"><em>heads to the white house bowling alley</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1279718181551738961">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/01/2024 08:23 AM</span>
+                    </div>
+                    <div class="message-text"><em>mentally prepares for James Sun Jr. going back to school that morning</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1279718288544235551">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/01/2024 08:23 AM</span>
+                    </div>
+                    <div class="message-text"><em>thinks James Sun Jr. should be President someday</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1279785892722245768">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">09/01/2024 12:52 PM</span>
+                    </div>
+                    <div class="message-text"><em>Wonders if he will let me bowl with him</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1282836357814685697">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">09/09/2024 10:53 PM</span>
+                    </div>
+                    <div class="message-text"><em>Calls &lt;@788864922414219324&gt;</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1282836414035132427">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">09/09/2024 10:53 PM</span>
+                    </div>
+                    <div class="message-text">&quot;Mr. President, can I take a rose from the rose garden for my office?&quot;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1282836505462833243">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/09/2024 10:54 PM</span>
+                    </div>
+                    <div class="message-text">definitely</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1282836550266388500">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">09/09/2024 10:54 PM</span>
+                    </div>
+                    <div class="message-text"><em>Takes a rose from the rose garden</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1282836572353466389">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">09/09/2024 10:54 PM</span>
+                    </div>
+                    <div class="message-text"><em>Puts it into my office</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1314346842925826048">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/528568862703091732/4628309edd31f428e2e74a6d97b33e58.png?size=1024" alt="Kaylalicious" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">Kaylalicious</span>
+                        <span class="message-timestamp">12/05/2024 09:45 PM</span>
+                    </div>
+                    <div class="message-text"><em>thinks</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1325992476435021866">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/399656866474360832/727efbd6e7c32c11f337fd5d8c3c5c14.png?size=1024" alt="Eternal Senator Schlorp (R-OL)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Eternal Senator Schlorp (R-OL)</span>
+                        <span class="message-timestamp">01/07/2025 01:00 AM</span>
+                    </div>
+                    <div class="message-text"><em>Hops the fence and starts swimming in the pool next to the Rose Garden</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1325993932856754177">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/528568862703091732/4628309edd31f428e2e74a6d97b33e58.png?size=1024" alt="Kaylalicious" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">Kaylalicious</span>
+                        <span class="message-timestamp">01/07/2025 01:06 AM</span>
+                    </div>
+                    <div class="message-text">arrest this man</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1356274123940171836">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">03/31/2025 02:29 PM</span>
+                    </div>
+                    <div class="message-text"><em>Enters</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1356274156647219362">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">03/31/2025 02:29 PM</span>
+                    </div>
+                    <div class="message-text"><em>Waves at &lt;@974331254793175151&gt;</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1356274168060051579">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">03/31/2025 02:29 PM</span>
+                    </div>
+                    <div class="message-text"><em>Leaves</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1356274199165014127">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/630932959561777173/749cd371c7fa08518d0bf00419ed0ae4.png?size=1024" alt="Riemann Zeta Function" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Riemann Zeta Function</span>
+                        <span class="message-timestamp">03/31/2025 02:29 PM</span>
+                    </div>
+                    <div class="message-text"><em>Hopes secret service doesnt notice</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1397067213340541079">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">07/22/2025 04:06 AM</span>
+                    </div>
+                    <div class="message-text"><em>runs</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1423232833048281088">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">10/02/2025 08:59 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <script>
+        // Add click handlers for images
+        document.querySelectorAll('.attachment img, .embed-image').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

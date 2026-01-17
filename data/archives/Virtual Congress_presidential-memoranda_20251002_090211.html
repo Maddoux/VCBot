@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#presidential-memoranda - Virtual Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.375;
+        }
+        
+        .channel-header {
+            background-color: #2f3136;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7289da;
+        }
+        
+        .channel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .channel-info {
+            color: #b9bbbe;
+            font-size: 14px;
+        }
+        
+        .messages-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .message {
+            display: flex;
+            padding: 8px 16px;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        
+        .message:hover {
+            background-color: rgba(4, 4, 5, 0.07);
+        }
+        
+        .message-avatar {
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .message-author {
+            font-weight: 500;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .message-timestamp {
+            font-size: 12px;
+            color: #72767d;
+            font-weight: 500;
+        }
+        
+        .message-text {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message-text strong {
+            font-weight: 700;
+        }
+        
+        .message-text em {
+            font-style: italic;
+        }
+        
+        .message-text u {
+            text-decoration: underline;
+        }
+        
+        .message-text del {
+            text-decoration: line-through;
+        }
+        
+        .message-text code {
+            background-color: #2f3136;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+        
+        .message-text pre {
+            background-color: #2f3136;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 4px 0;
+        }
+        
+        .message-text pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .message-text a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .attachment {
+            margin: 8px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .attachment img {
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .attachment-info {
+            padding: 8px;
+            background-color: #2f3136;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .attachment-link {
+            color: #00aff4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attachment-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+        
+        .embed {
+            max-width: 520px;
+            margin: 8px 0;
+            padding: 12px 16px;
+            background-color: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-author-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .embed-author-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .embed-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .embed-description {
+            margin-bottom: 8px;
+        }
+        
+        .embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .embed-field {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        
+        .embed-field.inline {
+            flex: 1 1 150px;
+            min-width: 150px;
+        }
+        
+        .embed-field-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .embed-field-value {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .embed-image {
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            float: right;
+            margin: 8px 0 8px 16px;
+        }
+        
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #72767d;
+        }
+        
+        .embed-footer-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .reaction {
+            background-color: rgba(79, 84, 92, 0.16);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .reaction-emoji {
+            line-height: 1;
+        }
+        
+        .reaction-count {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .message {
+                padding: 8px 8px;
+            }
+            
+            .embed {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="channel-header">
+        <div class="channel-title">#presidential-memoranda</div>
+        <div class="channel-info">Archived from Virtual Congress on October 02, 2025 at 09:02 AM UTC</div>
+    </div>
+    
+    <div class="messages-container">
+        
+            <div class="message" data-message-id="731914107166523472">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/591965734532415488/7caf1f842a3ac2b93de13e8241bf7412.png?size=1024" alt="Layla" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Layla</span>
+                        <span class="message-timestamp">07/12/2020 04:45 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF STATE</strong> — Acceding to the Comprehensive and Progressive Agreement for Trans-Pacific Partnership<br><br><a href="https://drive.google.com/file/d/17fnabJFQzZtVjrHcvzGjtMlh0EoizD5f/view" target="_blank">https://drive.google.com/file/d/17fnabJFQzZtVjrHcvzGjtMlh0EoizD5f/view</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/17fnabJFQzZtVjrHcvzGjtMlh0EoizD5f/view" target="_blank">Memorandum for the Secretary of State</a></div><img src="https://lh6.googleusercontent.com/AtrA1DXecolZh3Pb8naAMZ9kdFUccDxgwrKdSn9HdWDFwB-tOtAd-qLBtBbxZhw=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="731924586295197826">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/591965734532415488/7caf1f842a3ac2b93de13e8241bf7412.png?size=1024" alt="Layla" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Layla</span>
+                        <span class="message-timestamp">07/12/2020 05:26 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF SECURITY</strong> — Deferred Enforced Departure for Liberians <br><a href="https://drive.google.com/file/d/11qvujcUk660c2JADtRNDqiq0xb6K0mVx/view" target="_blank">https://drive.google.com/file/d/11qvujcUk660c2JADtRNDqiq0xb6K0mVx/view</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/11qvujcUk660c2JADtRNDqiq0xb6K0mVx/view" target="_blank">Memorandum for the Secretary of Security</a></div><img src="https://lh5.googleusercontent.com/NI18dkOoC4xzuuC8e06DufuPjo2n9gx-r0d5mwo4p2134PFp_x2OLSsMxfhNtHo=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="755136173889945801">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">09/14/2020 06:41 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF EDUCATION</strong> - September 14th, 2020 🇺🇸 <br><em>Regarding Department of Education Secretarial Order 1 of September 7th, 2020</em><br>—<br><a href="https://docs.google.com/document/d/1-n3jnjO5xfN5scSvwdtlfZo1L3uemW0x6SIHOkE28AM/edit" target="_blank">https://docs.google.com/document/d/1-n3jnjO5xfN5scSvwdtlfZo1L3uemW0x6SIHOkE28AM/edit</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1-n3jnjO5xfN5scSvwdtlfZo1L3uemW0x6SIHOkE28AM/edit" target="_blank">Presidential Memorandum for the Secretary of Education - Halpert Ad...</a></div><div class="embed-description">PRESIDENTIAL MEMORANDUM  Memorandum for the Secretary of Education SUBJECT: Department of Education, Secretarial Order 1 SECTION 1. BACKGROUND The Department of Education Secretarial Order 1 of September 7th, 2020 aimed to reward schools with “mental health support systems,...</div><img src="https://lh5.googleusercontent.com/r0Ti9Kt2BLDqy4hrulWZGxXyKrRWVZL-R3Z8djfYCfwblek-AvCj0jVSnF3yQj6B-LBpmWG8mw=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="758142374739968031">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">09/23/2020 01:47 AM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF THE INTERIOR</strong> (in their capacity as EPA Administrator) - September 22nd, 2020 🇺🇸 <br><em>Regarding the Environment Protection Agency Secretarial Order 5 of August 29th, 2020</em><br>—<br><a href="https://docs.google.com/document/d/1_TI4mQIae9KA5O27-7pFU064d4pmWT6webXADXg9ses/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1_TI4mQIae9KA5O27-7pFU064d4pmWT6webXADXg9ses/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1_TI4mQIae9KA5O27-7pFU064d4pmWT6webXADXg9ses/edit?usp=sharing" target="_blank">Presidential Memorandum for the Secretary of the Interior (as EPA A...</a></div><div class="embed-description">PRESIDENTIAL MEMORANDUM Memorandum for the Secretary of the Interior (in their capacity as EPA Administrator) SUBJECT: Secretarial Order 5 of August 29, 2020SECTION 1. BACKGROUND Secretarial Order 5 of August 29th, 2020, under the Holbrook administration, sought to remove t...</div><img src="https://lh6.googleusercontent.com/7pTOlWNam7Cysj47bmdSZ_rOOG14W0v6sj_2ngkpoquaFuMUdaMmtkDphUYufCD5EC5zFNnZIw=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="759863765386395678">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">09/27/2020 07:47 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF HEALTH AND HUMAN SERVICES</strong> - September 27th, 2020 🇺🇸 <br><em>Regarding the Recent Rise in Livestock Deaths in Missouri, Kansas, and Nebraska</em><br>—<br><a href="https://docs.google.com/document/d/1DcFG2xlQT_lO82wXGQy0fnT3RdaLS0lEIeJiDgoBbWM/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1DcFG2xlQT_lO82wXGQy0fnT3RdaLS0lEIeJiDgoBbWM/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1DcFG2xlQT_lO82wXGQy0fnT3RdaLS0lEIeJiDgoBbWM/edit?usp=sharing" target="_blank">Presidential Memorandum for the Secretary of Health and Human Servi...</a></div><div class="embed-description">PRESIDENTIAL MEMORANDUM Memorandum for the Secretary of the Interior (in their capacity as EPA Administrator) SUBJECT: The Recent Rise in Livestock Deaths in Missouri, Kansas, and Nebraska.SECTION 1. BACKGROUND Throughout this week, it has been reported that livestock death...</div><img src="https://lh3.googleusercontent.com/tZqG6zC6xD4-F59hX0_5FbF1lcZ5RVug0y8K9h-hks53U7UsX4jSLQro4mPTp1CJl6cWPcxpDA=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="763505546791485490">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">10/07/2020 08:58 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF THE INTERIOR</strong> (in their capacity as Secretary of Agriculture) - October 7th, 2020 🇺🇸 <br><em>Regarding the Haemonchus Worm crisis in California, Iowa, Illinois, Kansas, Missouri, Nebraska, and other states.</em><br>—<br><a href="https://docs.google.com/document/d/1n3YMNdpChYaW1LgffNTxto6Y8zBOtpHkhXEM5t10FnQ/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1n3YMNdpChYaW1LgffNTxto6Y8zBOtpHkhXEM5t10FnQ/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1n3YMNdpChYaW1LgffNTxto6Y8zBOtpHkhXEM5t10FnQ/edit?usp=sharing" target="_blank">Presidential Memorandum for the Secretary of the Interior (as Secre...</a></div><div class="embed-description">PRESIDENTIAL MEMORANDUM Memorandum for the Secretary of the Interior (in their capacity as Secretary of Agriculture) SUBJECT: The Haemonchus Worm crisis in California, Iowa, Illinois, Kansas, Missouri, Nebraska, and other states.SECTION 1. BACKGROUND The Haemonchus Worm cri...</div><img src="https://lh6.googleusercontent.com/BkgB9uSsmA8gtr69Kw1bozlwgePbN7_ueaO5t36N-Onqo0azjFF0p9tPhd2jKnYOr8NMp-yvAA=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="778669335949869078">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">11/18/2020 05:13 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE ATTORNEY GENERAL AND DIRECTOR OF THE BUREAU OF PRISONS</strong> - November 18th, 2020<br><br><em>Directing the Director of the Bureau of Prisons to enact several reforms to federal prison policies</em><br><br><a href="https://docs.google.com/document/d/1E9jiJm9uB0HlmzFYLjd50J--gD5OxR_D041dHBEY8Fg/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1E9jiJm9uB0HlmzFYLjd50J--gD5OxR_D041dHBEY8Fg/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1E9jiJm9uB0HlmzFYLjd50J--gD5OxR_D041dHBEY8Fg/edit?usp=sharing" target="_blank">Memorandum for the Attorney General and the Director of the Bureau ...</a></div><div class="embed-description">JAMES E. CARTER JR. , PRESIDENT of THE UNITED STATES ——————————————————————————————————————  Memorandum for the Attorney General and the Director of the Bureau of Prisons  SUBJECT: Policy for Federal Penitentiaries Administered by the Bureau of Prisons  Section 1: Background T...</div><img src="https://lh4.googleusercontent.com/PQf46TCrU7T3jl3OCg6RGpcCR3EhMwGIKuv0iie14zuXotY3lApCwcbfbxwXHNUXjcLKXjwaJQ=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">👏</span>
+                        <span class="reaction-count">3</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="779571186085527553">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">11/21/2020 04:57 AM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE ATTORNEY GENERAL</strong> — November 20th, 2020 🇺🇸 <br><em>Regarding direction of investigation into the Great Lakes Oil Spill Crisis.</em><br>—<br><a href="https://drive.google.com/file/d/1KVlG7lT_uS9Hc2PjnwdxnGcyg5_-3ixt/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1KVlG7lT_uS9Hc2PjnwdxnGcyg5_-3ixt/view?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/1KVlG7lT_uS9Hc2PjnwdxnGcyg5_-3ixt/view?usp=sharing" target="_blank">Presidential Memorandum for the Attorney General — Halpert Administ...</a></div><img src="https://lh3.googleusercontent.com/aQXU56xGQFn_fIT2dn3jFvTWciWu79zGiLGPDQVaH-Rsnd3rMlj4gkE13gblYME=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="780542735114960906">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">11/23/2020 09:18 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF THE INTERIOR</strong> — November 23rd, 2020 🇺🇸 <br><em>Regarding the proposed high-speed rail network in the Northeastern Corridor.</em><br>—<br><a href="https://drive.google.com/file/d/1sdeYaMVSzpuoopTpNZQ147b_UeFl8ilM/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1sdeYaMVSzpuoopTpNZQ147b_UeFl8ilM/view?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/1sdeYaMVSzpuoopTpNZQ147b_UeFl8ilM/view?usp=sharing" target="_blank">Presidential Memorandum for the Secretary of the Interior — Halpert...</a></div><img src="https://lh3.googleusercontent.com/WDzX9boRu0Y8vqZRx77bojmYF08aCskja88vMatjPbOoKggY7zme-U6eXzE2x9w=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">😃</span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="782419562242375721">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">11/29/2020 01:36 AM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF STATE</strong> — November 28th, 2020 🇺🇸 <br><em>Regarding the Certification of Rescission of the Determination regarding the Republic of the Sudan.</em><br>—<br><a href="https://drive.google.com/file/d/1klCNo2VYNq_fmOJIGAZCpxjV874tuD_8/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1klCNo2VYNq_fmOJIGAZCpxjV874tuD_8/view?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/1klCNo2VYNq_fmOJIGAZCpxjV874tuD_8/view?usp=sharing" target="_blank">Presidential Memorandum for the Secretary of State — Halpert Admini...</a></div><img src="https://lh6.googleusercontent.com/QDuHjGCCMg77NatEhastOZYdi_V8Up8kM3mSlUH_0B83EdIJbw0mF0uhD3DeNSs=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="784679190276341760">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/273652390954008576/a_bfec3bd1c62edc0b0ec61b6552f74118.gif?size=1024" alt="ian" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">ian</span>
+                        <span class="message-timestamp">12/05/2020 07:14 AM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF DEFENSE</strong> — December 4th, 2020 🇺🇸 <br>Regarding the Deployment and Positioning of the Seventh Fleet of the United States Navy.<br>—<br><a href="https://drive.google.com/file/d/1V7NUoSONfcNuSDOfvIJHiMuCzAD2zH_R/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1V7NUoSONfcNuSDOfvIJHiMuCzAD2zH_R/view?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/1V7NUoSONfcNuSDOfvIJHiMuCzAD2zH_R/view?usp=sharing" target="_blank">Presidential Memorandum for the Secretary of Defense — Halpert Admi...</a></div><img src="https://lh5.googleusercontent.com/cbu1YEX3BnZOg7rVW8OqTSEWZz4s5h0oQr98AJhrk2KrHa8BtF6fEFRB6Y94Ikg=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="804076206500216833">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/260827560739340288/efefdf34812895dfad0218138f159264.png?size=1024" alt="Citizen Mark (I-CA)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">Citizen Mark (I-CA)</span>
+                        <span class="message-timestamp">01/27/2021 07:51 PM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE SECRETARY OF HEALTH AND HUMAN SERVICES </strong>- January 27nd, 2021 🇺🇸 <br><em>Regarding the emergence of the H2N3 and H7N9 virus strains.</em><br><br><a href="https://docs.google.com/document/d/1YH-mjx5hrHcc96J580oBJLyacZrpfJfiG5ngBNhPL60/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1YH-mjx5hrHcc96J580oBJLyacZrpfJfiG5ngBNhPL60/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1YH-mjx5hrHcc96J580oBJLyacZrpfJfiG5ngBNhPL60/edit?usp=sharing" target="_blank">Presidential Memorandum for the Secretary of Health | Mark Administ...</a></div><div class="embed-description">Presidential Memorandum for the Secretary of Health 1-26-21  Approach Regarding the Strains of Influenza Known As A/Patras/05/21 (H2N3) and A/Thessaloniki/03/21 (H7N9) ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯  SECTION 1. BACKGROUND.  Statistic A/Patras/05/21 (H2N3) A/Thessaloniki/03/21 (H7N9) Basic reproduction num...</div><img src="https://lh6.googleusercontent.com/ZceBGPl-lyIfC3vkEdoLl4j3kIgSyPGYOFNo9abcfcyasmONIkdOmPNzQX25W1MDQKJT5bTZiw=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="811084135715569685">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/307697755646722048/eba4ba4acce6e826a725f285ec02e4ac.png?size=1024" alt="Battleaxzes" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Battleaxzes</span>
+                        <span class="message-timestamp">02/16/2021 03:58 AM</span>
+                    </div>
+                    <div class="message-text"><strong>PRESIDENTIAL MEMORANDUM FOR THE ADMINISTRATOR OF THE FEDERAL EMERGENCY MANAGEMENT AGENCY</strong> - February 15, 2021 🇺🇸 <br><em>Regarding the impact of the Midwest snow storms and FEMA Response</em><br><br><a href="https://drive.google.com/file/d/1EQ_fjzGvQohY5tLXFiARqH5dlNSNfk0j/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1EQ_fjzGvQohY5tLXFiARqH5dlNSNfk0j/view?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/1EQ_fjzGvQohY5tLXFiARqH5dlNSNfk0j/view?usp=sharing" target="_blank">Presidential Memorandum (Regarding the impact of the midwest snow s...</a></div><img src="https://lh3.googleusercontent.com/m70TqzeppQV6m-vM8OECioQ1orZt97b0puANTTeo6pv08IVJd09rj-Wi_tcgJhQ=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="911017697502978058">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/489916127863111721/b8e31904c3f46485d31753b1138309ba.png?size=1024" alt="Amb. Pluribus (D-LN)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Amb. Pluribus (D-LN)</span>
+                        <span class="message-timestamp">11/18/2021 10:19 PM</span>
+                    </div>
+                    <div class="message-text"><code>Pluribus Administration</code></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="911029503604703282">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/482677706509647894/a06ed311f94a3e8b558ec1d0feb779a9.png?size=1024" alt="antonio" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">antonio</span>
+                        <span class="message-timestamp">11/18/2021 11:05 PM</span>
+                    </div>
+                    <div class="message-text">``<code>From the WH Server</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="911029665618100234">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/482677706509647894/a06ed311f94a3e8b558ec1d0feb779a9.png?size=1024" alt="antonio" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">antonio</span>
+                        <span class="message-timestamp">11/18/2021 11:06 PM</span>
+                    </div>
+                    <div class="message-text">VC White House Server #presidential-memoranda</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="927360996610277376">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/8840453489cc15483b4c236784fae598.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">01/03/2022 12:41 AM</span>
+                    </div>
+                    <div class="message-text"><strong>MEMORANDUM FOR THE DEPARTMENT OF HOMELAND SECURITY AND THE DEPARTMENT OF COMMERCE</strong> -  🇺🇸 <br><br><em>On Improving Cybersecurity for Critical Infrastructure Control Systems</em><br><br><a href="https://docs.google.com/document/d/1ys_tP7g_Z2P18NSwfFQOPqf1fTGO-R4oCfoJCrX58v8/edit?usp=drivesdk" target="_blank">https://docs.google.com/document/d/1ys_tP7g_Z2P18NSwfFQOPqf1fTGO-R4oCfoJCrX58v8/edit?usp=drivesdk</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1ys_tP7g_Z2P18NSwfFQOPqf1fTGO-R4oCfoJCrX58v8/edit?usp=drivesdk" target="_blank">Presidential Memorandum on Improving Cybersecuirty for Critical Inf...</a></div><div class="embed-description">MEMORANDUM FOR: The Department of Homeland Security                                          The Department of Commerce   Sec.1. Policy  It is the policy of my Administration to safeguard the critical infrastructure of the Nation, with a particular focus on the cybersecurity and resilience of sys...</div><img src="https://lh5.googleusercontent.com/ojQeEBRrow75tlVuGGzxQ3P3_q0h2lnXOJbgqN-OPfaBNFkhk18KrxNru-4VZbMLrY_oJMmwfUamag=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="933106815368060958">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/8840453489cc15483b4c236784fae598.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">01/18/2022 09:13 PM</span>
+                    </div>
+                    <div class="message-text"><code>Miguel Administration</code></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="975563322604781618">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/8840453489cc15483b4c236784fae598.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">05/16/2022 01:00 AM</span>
+                    </div>
+                    <div class="message-text"><strong>MEMORANDUM FOR THE DEPARTMENT OF DEFENSE</strong><br><br><a href="https://docs.google.com/document/d/1_TDDvfwnS_9il4GE-3ew6795r4dkyj6XWEOtyiuyfgM/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1_TDDvfwnS_9il4GE-3ew6795r4dkyj6XWEOtyiuyfgM/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1_TDDvfwnS_9il4GE-3ew6795r4dkyj6XWEOtyiuyfgM/edit?usp=sharing" target="_blank">Presidential Memorandum - Presidential Determination Pursuant to Se...</a></div><div class="embed-description">MEMORANDUM FOR THE SECRETARY OF DEFENSE  SUBJECT:       Presidential Determination Pursuant to Section 303 of the Defense Production Act of 1950, as amended  By the authority vested in me as President by the Constitution and the laws of the United States of America, including section 303 of the D...</div><img src="https://lh5.googleusercontent.com/safkzhqJhv-GTp-02kL9epWJv3K7QTGSZoFAr6jO0bU6QJCNkwPA0wpaRUf32xAeKL2mk6kd5n-F1w=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1023037159642517514">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/7ef25ac5183b2f8731d1b6e4f0ee053d.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">09/24/2022 01:04 AM</span>
+                    </div>
+                    <div class="message-text"><a href="https://docs.google.com/document/d/1ngbP-XnxpFAmyXWPJv9LNOkHSbBZm_ZvsoNjWppCz4I/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1ngbP-XnxpFAmyXWPJv9LNOkHSbBZm_ZvsoNjWppCz4I/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1ngbP-XnxpFAmyXWPJv9LNOkHSbBZm_ZvsoNjWppCz4I/edit?usp=sharing" target="_blank">Special Message -- Eaton Administration</a></div><div class="embed-description">September 23, 2022  To the Senate of the United States of America;  I have given very attentive consideration to a bill that currently sits in the Senate– I was originally supportive of the bill until I was made aware of provisions that can require clinics to recommend abortions, violating med...</div><img src="https://lh6.googleusercontent.com/aH5iMEgGuoq_9Weg2a4FHOh8mo_bMVZgsciLx1eSX0jHpo0McwGmR91TlO1bRQCdpppSnAE-F8v4GA=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1023037359534645368">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/7ef25ac5183b2f8731d1b6e4f0ee053d.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">09/24/2022 01:05 AM</span>
+                    </div>
+                    <div class="message-text">I humbly ask the above message be formally transmitted to the Senate.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1023037388940922921">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/7ef25ac5183b2f8731d1b6e4f0ee053d.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">09/24/2022 01:05 AM</span>
+                    </div>
+                    <div class="message-text">CC: @Vice-President Noah (L-AR-JK)</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1023040140060397628">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/7ef25ac5183b2f8731d1b6e4f0ee053d.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">09/24/2022 01:16 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum #04 - September 23rd, 2022</strong><br><br><a href="https://docs.google.com/document/d/1UAti9rJdjSzyAoRlh82POp0Ro7Ex_5dRZODErn7d-EA/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1UAti9rJdjSzyAoRlh82POp0Ro7Ex_5dRZODErn7d-EA/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1UAti9rJdjSzyAoRlh82POp0Ro7Ex_5dRZODErn7d-EA/edit?usp=sharing" target="_blank">Presidential Memorendum #4 - Eaton Administration</a></div><div class="embed-description">September 23, 2022  Topic: Mexico City Policy   I hereby direct the Department of State, in coordination with the Department of Health and Human Services, to the extent allowable by law, to ensure that U.S. taxpayer dollars do not fund organizations or programs that support or participate in th...</div><img src="https://lh6.googleusercontent.com/XkXT0NkEW9JgPSGhx64rzmo6Xq0nxwNVeFj9dKJ5his57yB-NZ4DEfP_i9kXFuj_dg2JIWCwB2jVTg=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1023674585268375723">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/7ef25ac5183b2f8731d1b6e4f0ee053d.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">09/25/2022 07:17 PM</span>
+                    </div>
+                    <div class="message-text"><strong>Federalizing Pacifica National Guard</strong><br><br><a href="https://docs.google.com/document/d/1PpCpfAne-Ug8wVsxDlzY--d6slUiQbRBBmMhCj8BP_E/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1PpCpfAne-Ug8wVsxDlzY--d6slUiQbRBBmMhCj8BP_E/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1PpCpfAne-Ug8wVsxDlzY--d6slUiQbRBBmMhCj8BP_E/edit?usp=sharing" target="_blank">Federalizing Pacifica National Guard</a></div><div class="embed-description">September 25, 2022  FEDERALIZING PACIFICA NATIONAL GUARD  In order to end shipping of immigrants to other states and regions,  I hereby order the federalization of the Pacifica National Guard and the ceasing of busing/shipping of immigrants to Frontier or other regions/states in the US. authori...</div><img src="https://lh5.googleusercontent.com/F6iZ8JSQOqb2FpJ5cue5G7U1DF1JgJ2Kah_YnjlAKxuBPoS6fOMrTJLV3OMbgwAZWXdVpwhpc-v99Q=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1023681321282846771">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/7ef25ac5183b2f8731d1b6e4f0ee053d.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">09/25/2022 07:44 PM</span>
+                    </div>
+                    <div class="message-text">White House — At 3:44 EST this afternoon, the federalization of the Pacifica National Guard shall cease. I shall be meeting with both the Governors of Pacifica and Frontier regarding border security and fighting illegal immigration (Which doesn&#x27;t include shipping immigrants to other States)</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1023703401760030832">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/911029664867287070/7ef25ac5183b2f8731d1b6e4f0ee053d.png?size=1024" alt="Presidential Memoranda" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Presidential Memoranda</span>
+                        <span class="message-timestamp">09/25/2022 09:11 PM</span>
+                    </div>
+                    <div class="message-text">Having seen the Governor of Pacifica refusing to cooperate and has already obstructed federal order, federalization of the Pacifica National Guard shall re-continue.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1066515183922593792">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/446015732896235520/dde6062648f9bfa25e69223d5b74b810.png?size=1024" alt="derek | デレック FREE ALDERAAN" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">derek | デレック FREE ALDERAAN</span>
+                        <span class="message-timestamp">01/22/2023 12:30 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Threes Presidential Memorandum #1 - Rescinding the Mexico City Policy</strong><br><a href="https://docs.google.com/document/d/1MVgwP8ZJna5tG6vhXfjbAY4X4QhlB3EMKF6F9xy2tqk/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1MVgwP8ZJna5tG6vhXfjbAY4X4QhlB3EMKF6F9xy2tqk/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1MVgwP8ZJna5tG6vhXfjbAY4X4QhlB3EMKF6F9xy2tqk/edit?usp=sharing" target="_blank">Threes Presidential Memo - Rescinding the Mexico City Policy</a></div><div class="embed-description">Presidentia1 Memorandum #1 -  January 21st, 2023 To the Secretary of State Subject - Mexico City Policy  I hereby revoke the Presidential Memorandum issued on September 23rd, 2022 on the Mexico City Policy, and direct that the Secretary of State cease imposing the conditions underlined in the ...</div><img src="https://lh3.googleusercontent.com/1PTvc8HMONoudlPxpDz2uxsIjQhkYiMZyNEVKPV9Y1GpIjr_p4POD7Wq1ayXBNfMWh1qG-GdzNWoZQ=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:trolllaugh:889997651850956800></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1087925499294126161">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/706281849323782275/d006a4b4976214afed8638d4460a512f.png?size=1024" alt="Former President James Hersey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Former President James Hersey</span>
+                        <span class="message-timestamp">03/22/2023 02:27 AM</span>
+                    </div>
+                    <div class="message-text">``<code>HERSEY ADMINISTRATION</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1106836515100835860">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/706281849323782275/d006a4b4976214afed8638d4460a512f.png?size=1024" alt="Former President James Hersey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Former President James Hersey</span>
+                        <span class="message-timestamp">05/13/2023 06:53 AM</span>
+                    </div>
+                    <div class="message-text"><strong>FROM THE OFFICE OF THE PRESIDENT</strong><br><br><strong>HERSEY ADMINISTRATION</strong><br><br><strong>Presidential Memorandum #1 - Encouragement of the Territorial Government of the Northern Mariana Islands to Develop a Functional Website</strong><br><br>cc.<br><br><a href="https://docs.google.com/document/d/1aNiJ19qMqaJ0Nbcp-qTC2bb4gB-YP3-cb6D2kmtltTw/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1aNiJ19qMqaJ0Nbcp-qTC2bb4gB-YP3-cb6D2kmtltTw/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1aNiJ19qMqaJ0Nbcp-qTC2bb4gB-YP3-cb6D2kmtltTw/edit?usp=sharing" target="_blank">Hersey Memorandum #1 - Encouragement of the Territorial Government ...</a></div><div class="embed-description">Hersey Administration Presidential Memorandum #1. | HERSEY ADMINISTRATION Hersey Memorandum #1 - Encouragement of the Territorial Government of the Northern Mariana Islands to Develop a Functional Website  To the Governor...</div><img src="https://lh3.googleusercontent.com/docs/ADP-6oEGTkvE7lR7uONbHQIz02J5V7CZLmE-xGYBLL_d4xZpF-bbQGQbpttpOikBFCyfGvPx5fDlcaETHSFvkfOZnlK7Hcx2gcfjDYAdzaA9AvO_=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1108726331941851147">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/706281849323782275/d006a4b4976214afed8638d4460a512f.png?size=1024" alt="Former President James Hersey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Former President James Hersey</span>
+                        <span class="message-timestamp">05/18/2023 12:02 PM</span>
+                    </div>
+                    <div class="message-text">``<code>OLIVER HERSEY ADMINISTRATION</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1108798412222120099">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">05/18/2023 04:49 PM</span>
+                    </div>
+                    <div class="message-text">``<code>LEMAIRE ADMINISTRATION</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1120801606242414592">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">06/20/2023 07:45 PM</span>
+                    </div>
+                    <div class="message-text"><strong>FROM THE OFFICE OF THE PRESIDENT</strong><br><br><strong>LeMaire Memorandum #1 - Memorandum on Declassification of Certain Materials Related to the CIA&#x27;s Investigation Into the Assassination of President John Fitzgerald Kennedy</strong><br><br>cc. &lt;@&amp;654477469004595221&gt; <br><br><a href="https://docs.google.com/document/d/1MxaNqB2va-EY23B7kwVr3OYn5gI5eh6ckcIWp3ItJbk/" target="_blank">https://docs.google.com/document/d/1MxaNqB2va-EY23B7kwVr3OYn5gI5eh6ckcIWp3ItJbk/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1MxaNqB2va-EY23B7kwVr3OYn5gI5eh6ckcIWp3ItJbk/" target="_blank">LeMaire Memorandum #1 - Memorandum on Declassification of Certain M...</a></div><div class="embed-description">LEMAIRE MEMORANDUM #1 - MEMORANDUM ON DECLASSIFICATION OF CERTAIN MATERIALS RELATED TO THE CIA&#x27;S INVESTIGATION INTO THE ASSASSINATION OF PRESIDENT JOHN FITZGERALD KENNEDY  MEMORANDUM FOR THE DIRECTOR OF NATIONAL INTELLIGENCE THE DIRECTOR OF THE CENTRAL INTELLIGENCE AGENCY  SUBJECT:    Declassifi...</div><img src="https://lh3.googleusercontent.com/docs/ADP-6oGPoovYFAiOUBmxRW23kxisNmR0WwNXtcPUG4jefbA4qtIJQ_4FeJ89Giginkm1kFp5JMBGH2rDcd2NIeKQSx4aMRQYBd5J-yimVgUtv5MP=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1130866780567515286">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/18/2023 02:20 PM</span>
+                    </div>
+                    <div class="message-text"><strong>FROM THE OFFICE OF THE PRESIDENT</strong><br><br><strong>LeMaire Memorandum #2 - Memorandum on Declassification of Certain Materials Related to the Iraq War</strong><br><br>cc. &lt;@&amp;654477469004595221&gt; &lt;@492849733086216192&gt; <br><br><a href="https://docs.google.com/document/d/1lCcLsoGHd0MdJN_92ny2ss6yNkFvvw_cvxBo5-OV3y4/" target="_blank">https://docs.google.com/document/d/1lCcLsoGHd0MdJN_92ny2ss6yNkFvvw_cvxBo5-OV3y4/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1lCcLsoGHd0MdJN_92ny2ss6yNkFvvw_cvxBo5-OV3y4/" target="_blank">LeMaire Memorandum #2 - Memorandum on Declassification of Certain M...</a></div><div class="embed-description">LEMAIRE MEMORANDUM #2 - MEMORANDUM ON DECLASSIFICATION OF CERTAIN MATERIALS RELATED TO THE IRAQ WAR  MEMORANDUM FOR SECRETARY OF DEFENSE THE DIRECTOR OF NATIONAL INTELLIGENCE THE DIRECTOR OF THE CENTRAL INTELLIGENCE AGENCY  SUBJECT:    Declassification of Certain Materials Related to the Iraq ...</div><img src="https://lh3.googleusercontent.com/docs/AOD9vFoPmQ_nBGVkYlEHUrgtSMB-ZHTTJxMrBagHB4vwUBXcqZCgmC70iIqV54a6121HRKUdm5a2FP53HXWLKRYA8IFKnFQyGTHM5CrDg6NsMZWX=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1130869215650402304">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/18/2023 02:30 PM</span>
+                    </div>
+                    <div class="message-text"><strong>FROM THE OFFICE OF THE PRESIDENT</strong><br><br><strong>LeMaire Memorandum #3 - Memorandum on Declassification of Certain Materials Related to the Invasion of Afghanistan in 2001</strong><br><br>cc. &lt;@&amp;654477469004595221&gt; &lt;@492849733086216192&gt; <br><br><a href="https://docs.google.com/document/d/1MtJNSX0GZEsROn-boCTirpngO74FgXJUo2Ho53ervQA/" target="_blank">https://docs.google.com/document/d/1MtJNSX0GZEsROn-boCTirpngO74FgXJUo2Ho53ervQA/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1MtJNSX0GZEsROn-boCTirpngO74FgXJUo2Ho53ervQA/" target="_blank">LeMaire Memorandum #3 - Memorandum on Declassification of Certain M...</a></div><div class="embed-description">LEMAIRE MEMORANDUM #3 - MEMORANDUM ON DECLASSIFICATION OF CERTAIN MATERIALS RELATED TO THE INVASION OF AFGHANISTAN IN 2001  MEMORANDUM FOR SECRETARY OF DEFENSE THE DIRECTOR OF NATIONAL INTELLIGENCE THE DIRECTOR OF THE CENTRAL INTELLIGENCE AGENCY  SUBJECT:    Declassification of Certain Materials...</div><img src="https://lh3.googleusercontent.com/docs/AOD9vFooLlH51SP16FBuXSaBdQK2SMgueLrsrgzPDmQ5LfkHNsRkfjwuonh8XDjAI8k_hk6yN39qp1kycWsTq602PXARD3Eh7Jk9qFKzFukcwO0H=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1130873308695507084">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/969237104490086430/a1ae72006cc95cb741bf5d16a1298837.png?size=1024" alt="GEN Zach LeMaire" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">GEN Zach LeMaire</span>
+                        <span class="message-timestamp">07/18/2023 02:46 PM</span>
+                    </div>
+                    <div class="message-text"><strong>FROM THE OFFICE OF THE PRESIDENT</strong><br><br><strong>LeMaire Memorandum #4 - Memorandum on Declassification of Certain Materials Related to Operation Neptune Spear</strong><br><br>cc. &lt;@&amp;654477469004595221&gt; &lt;@492849733086216192&gt; <br><br><a href="https://docs.google.com/document/d/1iNWusM2ZKCfVG9ucXDBzkN5dVecC55SlftRGvmhV1-s/" target="_blank">https://docs.google.com/document/d/1iNWusM2ZKCfVG9ucXDBzkN5dVecC55SlftRGvmhV1-s/</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1iNWusM2ZKCfVG9ucXDBzkN5dVecC55SlftRGvmhV1-s/" target="_blank">LeMaire Memorandum #4 - Memorandum on Declassification of Certain M...</a></div><div class="embed-description">LEMAIRE MEMORANDUM #4 - MEMORANDUM ON DECLASSIFICATION OF CERTAIN MATERIALS RELATED TO OPERATION NEPTUNE SPEAR  MEMORANDUM FOR SECRETARY OF DEFENSE THE DIRECTOR OF NATIONAL INTELLIGENCE THE DIRECTOR OF THE CENTRAL INTELLIGENCE AGENCY  SUBJECT:    Declassification of Certain Materials Related to ...</div><img src="https://lh3.googleusercontent.com/docs/AOD9vFraNnOlpxiwudidClZd6iaUeuMaBRnf_72ayfl5YkXRAWvEcjLjjYKXacl3o3xE0slqyerQ1DcKc7rinqOL_cIguEcCmdNAbe29pyiuye6C=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1131141677332058142">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">07/19/2023 08:33 AM</span>
+                    </div>
+                    <div class="message-text">``<code>ROSEN ADMINISTRATION</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1157114538336993301">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/970469505631416340/5b7341ef8602f81491bad1d8b03b4728.png?size=1024" alt="Lord TC" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">Lord TC</span>
+                        <span class="message-timestamp">09/29/2023 12:40 AM</span>
+                    </div>
+                    <div class="message-text">I hereby issue a complete and unequivocal pardon of Ted Cruz of Hawaii, Pacifica due to him being abused by the federal governments detainment for nearly a year without an indictment or trial and the infringement of his rights under the 6th Amendment to the Constituition of the United States. &lt;@&amp;707781265985896469&gt;</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:troll:785390372171808769></span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">🇺🇸</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1175539425296535593">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">11/18/2023 08:53 PM</span>
+                    </div>
+                    <div class="message-text">``<code>CHAREST ADMINISTRATION</code>``<br><a href="https://docs.google.com/document/d/1P-gCWmQkBOuI3vkD3QwpP8mDWiHnK4QEgziAQRWTOHg/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1P-gCWmQkBOuI3vkD3QwpP8mDWiHnK4QEgziAQRWTOHg/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1P-gCWmQkBOuI3vkD3QwpP8mDWiHnK4QEgziAQRWTOHg/edit?usp=sharing" target="_blank">S.C-H - Memoranda</a></div><div class="embed-description">PRESIDENT OF THE UNITED STATES  THE WHITE HOUSE 1600 PENNSYLVANIA AVE. | WASHINGTON D.C. 20500     Sabastien J. Charest-Harris					  Telephone: (202) 456-1414  REORGANIZATION PLAN In an effort to ensure the streamlining of government, I announce the following reorganization plan:  Sect...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyK-eQzHk0L_feya9oCvrYLRxYwK5s0_nxTIOkbeEbFWeP7T-W-rWzW9h0Hr6c2sx9KWwcg0AANbqnt23eicdWiGal6jGkqf9PKfEAsLjw1BWg=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1241424719538815057">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/195424753358471168/450d6aa22663eec9fceb80732f69bcaa.png?size=1024" alt="the chairman of the server" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fd75f3">the chairman of the server</span>
+                        <span class="message-timestamp">05/18/2024 04:18 PM</span>
+                    </div>
+                    <div class="message-text">``<code>EMPERIO ADMINISTRATION</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1258682376486391910">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1201778736589180980/31bccc948c804f5ff9876b81db013cb6.png?size=1024" alt="President Joey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #2aa9e9">President Joey</span>
+                        <span class="message-timestamp">07/05/2024 07:14 AM</span>
+                    </div>
+                    <div class="message-text">``<code>DiCARLO ADMINISTRATION</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1258682516974342155">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1201778736589180980/31bccc948c804f5ff9876b81db013cb6.png?size=1024" alt="President Joey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #2aa9e9">President Joey</span>
+                        <span class="message-timestamp">07/05/2024 07:14 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memordandum on Kenya&#x27;s Designation as a Major Non-NATO Ally - DiCarlo Administration</strong></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1258682563275522120">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1201778736589180980/31bccc948c804f5ff9876b81db013cb6.png?size=1024" alt="President Joey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #2aa9e9">President Joey</span>
+                        <span class="message-timestamp">07/05/2024 07:15 AM</span>
+                    </div>
+                    <div class="message-text">&gt; <a href="https://docs.google.com/document/d/15ycwKwLa7Moxjb8Q3-MXv-uQsMJ1Cc7Vf3NS_IqUZco/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/15ycwKwLa7Moxjb8Q3-MXv-uQsMJ1Cc7Vf3NS_IqUZco/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/15ycwKwLa7Moxjb8Q3-MXv-uQsMJ1Cc7Vf3NS_IqUZco/edit?usp=sharing" target="_blank">Presidential Memorandum on Kenya&#x27;s designation as a Major Non-NATO ...</a></div><div class="embed-description">Presidential Memorandum on Kenya&#x27;s Designation as a Major Non-NATO Ally  -  July 5th, 2024 By the authority vested in me as President of the United States by the Constitution and the laws of the United States of America, including section 517 of the Foreign Assistance Act of 1961, as amended ...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyJsaCDQ2ZlDeAO7Sn1pgKa5BYJqUdJfjdT_pu55_0XKcCECPI35z-LDtjynDqBN7_l_hAArtw8S_XKv400LsmywVrF3NQEtjjAwb-pYb4AnynOKIOc=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">⭐</span>
+                        <span class="reaction-count">3</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1259042212856070188">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1201778736589180980/31bccc948c804f5ff9876b81db013cb6.png?size=1024" alt="President Joey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #2aa9e9">President Joey</span>
+                        <span class="message-timestamp">07/06/2024 07:04 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum on Veterans Affairs Benefit Claim Wait Times</strong><br>&gt; It is high time that the brave men and women that served our great nation recieve the benefits that they truly deserve within a timely manner. I am proud to issue this Memorandum to ensure that our former servicemen are treated with the respect and dignity that they deserve. <br>&gt; <a href="https://docs.google.com/document/d/11s6JgfbJJKfl22hplhxG94jneTCP3nmrHGglYUZHz-I/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/11s6JgfbJJKfl22hplhxG94jneTCP3nmrHGglYUZHz-I/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/11s6JgfbJJKfl22hplhxG94jneTCP3nmrHGglYUZHz-I/edit?usp=sharing" target="_blank">Presidential Memorandum on Veterans Affairs Benefit Claim Wait Times</a></div><div class="embed-description">Presidential Memorandum on Veterans Affairs Benefit Claim Wait Times  - July 6th, 2024  Purpose. To conduct a review of wait times for benefits from the Sub-Department of Veterans Affairs under the Department of Health and Human Services.  Section 1. Findings. Large delays in getting benefits t...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLTPd1KW6gc0s3GVC0c37eOkUUJt5DPsJavbKCoZ8MXI7KSquM0RaHRKjGFciq70g2w2y1uyjkSi5wEaolsJ-E_RXa35hjVuYv-3nOAL5xWrXuLih0=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">⭐</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1261215888854487070">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1201778736589180980/31bccc948c804f5ff9876b81db013cb6.png?size=1024" alt="President Joey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #2aa9e9">President Joey</span>
+                        <span class="message-timestamp">07/12/2024 07:01 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum to Award Thanos Rectumius May the Presidential Medal of Freedom</strong><br>&gt; <a href="https://docs.google.com/document/d/19OR2Gmk9Jb5PLHrVHFpITnRAk_Ooe7W2pj63OHHilqY/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/19OR2Gmk9Jb5PLHrVHFpITnRAk_Ooe7W2pj63OHHilqY/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/19OR2Gmk9Jb5PLHrVHFpITnRAk_Ooe7W2pj63OHHilqY/edit?usp=sharing" target="_blank">Thanos Rectumius May Presidential Medal Memorandum - DiCarlo admini...</a></div><div class="embed-description">Thanos Rectumius May Presidential Medal of Freedom Memorandum - July 12th, 2024  	Thanos Rectumius has been one of the most influential and important figures in American politics and culture. They are someone who has always fought for LGBTQIA+ rights throughout the post-2019 era.   Section 1. P...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyJeVun_6YLt9V_CUSpRO4MhoHbpyseWG-fkoQtNBLeCcAWXvWjIZeMl_BRmyp4qYVAmkJRHcvEUndP-3vdI-Zbyf-CTI83sWhLGEkI-qr6BqJevbAI=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">⭐</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1263408338969038909">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1201778736589180980/31bccc948c804f5ff9876b81db013cb6.png?size=1024" alt="President Joey" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #2aa9e9">President Joey</span>
+                        <span class="message-timestamp">07/18/2024 08:13 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum To Award Various Individuals.</strong> <br>&gt; <a href="https://docs.google.com/document/d/1V5MhxhjgJT3gvU1PlP2mQGpIIRIBe-8OLhyKLZa1oPg/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1V5MhxhjgJT3gvU1PlP2mQGpIIRIBe-8OLhyKLZa1oPg/edit?usp=sharing</a><br>&gt; CC: &lt;@788864922414219324&gt; &lt;@171983337433333760&gt; &lt;@792117332184006677&gt; &lt;@877944038395899914&gt; &lt;@107257156750811136&gt; &lt;@570297414754238464&gt;</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1V5MhxhjgJT3gvU1PlP2mQGpIIRIBe-8OLhyKLZa1oPg/edit?usp=sharing" target="_blank">Presidential Memorandum To Award Various Individuals</a></div><div class="embed-description">Presidential Memorandum To Award Various Individuals - July 18th, 2024  By the power invested in me as President of the United States, I hereby award the following individuals the Presidential Medal of Freedom;  Section 1. Presidential Medal of Freedom Award James Sun of Olympia.  Norman Nord o...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyK9CvqtAMiuCAqceC5oMeAtkCI6G5DPW9JhpsShFfmeEay3c82W4qqLA1dY4alpKc6WyIemVPOocsyolC5MZnDaGzTe32IkE-S2OgrNbXH3U5F5mxj7=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:trolllaugh:1068728637634904075></span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:salute:831977821999726602></span>
+                        <span class="reaction-count">6</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji">⭐</span>
+                        <span class="reaction-count">5</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1263673210076135509">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">07/19/2024 01:46 AM</span>
+                    </div>
+                    <div class="message-text">``<code>SUN ADMINISTRATON</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1269527731482136638">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">08/04/2024 05:29 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum Awarding the Public Safety Officer Medal of Valor to all First Responders who engaged in Safety and Rescue following the tunnel explosions of August 1st, 2024</strong><br><br><a href="https://docs.google.com/document/d/1GMIgVPHi06oIxqhXsnwbbztg6qdS5cbm5H79d37jrbk/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1GMIgVPHi06oIxqhXsnwbbztg6qdS5cbm5H79d37jrbk/edit?usp=sharing</a><br><br>// copied over to here from &lt;#654481412707057667&gt; bc i didn&#x27;t see this channel existed</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1GMIgVPHi06oIxqhXsnwbbztg6qdS5cbm5H79d37jrbk/edit?usp=sharing" target="_blank">Presidential Memorandum on Presenting Awards to First Responders</a></div><div class="embed-description">Awarding the Public Safety Officer Medal of Valor to all First Responders who engaged in Safety and Rescue following the tunnel explosions of August 1st, 2024  Understanding that all first responders who engaged in safety and rescue missions to recover those injured in the D.C. tunnel explosions...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLGTzLR-LtDpFUAxu7yLozGDmehPFBRIwWoLzKETaRflU6uQehs5HSk9h2Hf_a98hMKRTj0yvryuOMxyxmXulXuCO-6wuGVNlClLJEGb-zMRDCu3Wo=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275365441568510034">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">08/20/2024 08:06 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum on Reinstating the Mexico City Policy</strong><br><br><a href="https://docs.google.com/document/d/1bv2OMFvBSFDM_NRvhHRmAX6ZmXg9_zynCqn2G1DCGG8/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1bv2OMFvBSFDM_NRvhHRmAX6ZmXg9_zynCqn2G1DCGG8/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1bv2OMFvBSFDM_NRvhHRmAX6ZmXg9_zynCqn2G1DCGG8/edit?usp=sharing" target="_blank">Presidential Memorandum on Reinstating the Mexico City Policy</a></div><div class="embed-description">Presidential Memorandum on Reinstating the Mexico City Policy  To - Secretary of State Empy Evander  The Presidential Memorandum of January 21st, 2023, by the Threes Twos Administration is hereby rescinded; and I hereby direct the Department of State, in coordination with the Department of Health...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyKC8p2EroSNEKdswDWslIuAnSwdh3AYHSEvWMWwh2uVXC6Z42bjzbSV1T50odvz28fhBXL-tA3YEyq069q_mv7e107RhZ2D8GQ7Us-61CtEw6bZGnpy=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1278840957487288360">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">08/29/2024 10:17 PM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum on Deferred Enforced Departure for Certain Venezuleans</strong><br><br><a href="https://docs.google.com/document/d/1K50fIg1jlrokLacrQqTO4FHGB0_8VhLk6QY-ucXLraA/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1K50fIg1jlrokLacrQqTO4FHGB0_8VhLk6QY-ucXLraA/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1K50fIg1jlrokLacrQqTO4FHGB0_8VhLk6QY-ucXLraA/edit?usp=sharing" target="_blank">Presidential Memorandum on Deferred Enforced Departure for Certain ...</a></div><div class="embed-description">Presidential Memorandum on Deferred Enforced Departure for Certain Venezuleans  I, James Sun, President of the United States, find that the autocratic government of Nicolas Maduro has consistently violated the sovereign freedoms possessed by the Venezuelan people. Through force and fraud, the Mad...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyIIIDgqRAFxZz1NFAoXYEu5ApJGChQJSZj39M9ua_gdJYah1uUTkL1L5lOUpT6qywcXPdZGecRDSkpyY0pXPza2-yNaeEsvsLwluXGlFpn-rGFr-DT5=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1278842694759874644">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">08/29/2024 10:24 PM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum on Declassifying Documents related to U.S. Political Events Transpiring on December 11th and 12th, 2019</strong><br><br><a href="https://docs.google.com/document/d/1UtqUQ7hWHJ1dOobMPktvOHcesIqZ0-MyJPyJ_3jFkhw/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1UtqUQ7hWHJ1dOobMPktvOHcesIqZ0-MyJPyJ_3jFkhw/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1UtqUQ7hWHJ1dOobMPktvOHcesIqZ0-MyJPyJ_3jFkhw/edit?usp=sharing" target="_blank">Presidential Memorandum on Declassifying Documents related to U.S. ...</a></div><div class="embed-description">Presidential Memorandum on Declassifying Documents related to U.S. Political Events Transpiring on December 11th and 12th, 2019  I, James Sun, President of the United States, find that transparency in our federal government is essential for the well-being of our republic, except in cases where t...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyILIa8dOVid9uxSyaT4KSBNJ739JZjfJd83AzSAr55ALfArb0d5CMu45q6MEfW6Ga1TFr2-9D_n3IfPnrjtE9MYkhsCmX3ooKXyqQvraJR66HLi9EI=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1278846250837610588">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/975873526923931699/d47e90f2729a0b44fdb14a1660fab82c.png?size=1024" alt="posting" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">posting</span>
+                        <span class="message-timestamp">08/29/2024 10:38 PM</span>
+                    </div>
+                    <div class="message-text">``<code>Retconned.</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1278846301949267999">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">08/29/2024 10:38 PM</span>
+                    </div>
+                    <div class="message-text">;-;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1278847072031866942">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">08/29/2024 10:41 PM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum on Awarding Specific Individuals the Presidential Medal of Freedom</strong><br><br><a href="https://docs.google.com/document/d/1Fiu3YKo8JPV08yzjMZwbC2Orj48oYZhQ4-N2ysmTXhc/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1Fiu3YKo8JPV08yzjMZwbC2Orj48oYZhQ4-N2ysmTXhc/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1Fiu3YKo8JPV08yzjMZwbC2Orj48oYZhQ4-N2ysmTXhc/edit?usp=sharing" target="_blank">Presidential Memorandum on Awarding Specific Individuals the Presid...</a></div><div class="embed-description">Presidential Memorandum on Awarding Specific Individuals the Presidential Medal of Freedom  I, James Sun, President of the United States, by the powers vested in me by the Constitution and by the laws of the United States, hereby;	 (a) Award the Presidential Medal of Freedom, with Distinction, to...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLYVvJK_yWqQVbPx6co2wHPyBQbFX4YEW2swuucMTbNVTPUQR33ZohbWoeZO5XNAz-0EExJspEva54nHibMoHIqkHqcfwubQ3WdUBDMKsjd01YMNVA=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1281131920788426802">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/05/2024 06:00 AM</span>
+                    </div>
+                    <div class="message-text"><strong>Presidential Memorandum on Integrating Blockchain Technology into the practices of the U.S. Mint</strong><br><br><a href="https://docs.google.com/document/d/1AAr13RI2D0jDbf9YwtKQfQ8h132I0ixKqYv2_IQWV7I/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1AAr13RI2D0jDbf9YwtKQfQ8h132I0ixKqYv2_IQWV7I/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1AAr13RI2D0jDbf9YwtKQfQ8h132I0ixKqYv2_IQWV7I/edit?usp=sharing" target="_blank">Presidential Memorandum on Integrating Blockchain Technology into t...</a></div><div class="embed-description">Presidential Memorandum on Integrating Blockchain Technology into the practices of the U.S. Mint  To:  The Secretary of the Treasury  I, James Sun, President of the United States, by the powers vested in me by the Constitution and by the laws of the United States, hereby declare that it is the po...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyL8GGmm9ecVyDOprQ3yBiI9G03H5g7ypKN6JDPG7_j3IdtgSK28aFabRaxcbsdAni9JG5x1a8rB_Z2z0gzBtZQA5sEOzG5y6_nlyHQW6yY2CORlCmiS=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1283536096084496508">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/11/2024 09:14 PM</span>
+                    </div>
+                    <div class="message-text"><strong>2nd Presidential Memorandum on Awarding Specific Individuals the Presidential Medal of Freedom</strong><br><br><a href="https://docs.google.com/document/d/1WuZwDleBxkG0WWGmjnlZpeKnkNYw4-JZWrGnaDQFU_A/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1WuZwDleBxkG0WWGmjnlZpeKnkNYw4-JZWrGnaDQFU_A/edit?usp=sharing</a><br><br>// &lt;@&amp;707781265985896469&gt; role &lt;@707718685241901106&gt; &lt;@877944038395899914&gt; &lt;@698822340716265483&gt; &lt;@777926146888564750&gt; &lt;@456226577798135808&gt; and &lt;@973318389030326312&gt;</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1WuZwDleBxkG0WWGmjnlZpeKnkNYw4-JZWrGnaDQFU_A/edit?usp=sharing" target="_blank">2nd Presidential Memorandum on Awarding Specific Individuals the Pr...</a></div><div class="embed-description">2nd Presidential Memorandum on Awarding Specific Individuals the Presidential Medal of Freedom  I, James Sun, President of the United States, by the powers vested in me by the Constitution and by the laws of the United States, hereby;	 (a) Award the Presidential Medal of Freedom, with Distinction...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLbHNsr90p65Krk6KieZERqNA8jNRFvHPu2A9iiYPsqwSKttIpNzynBhZDGPyDJPFAjo9DIKCsDRUzS2aabZb4tLf8VoDDjRikO_eRlyZnz1d-Jh5w=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">😊</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:salute:831977821999726602></span>
+                        <span class="reaction-count">3</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1283536204213649529">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/11/2024 09:14 PM</span>
+                    </div>
+                    <div class="message-text">// and &lt;@398403582606442497&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1283536214581841920">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/11/2024 09:14 PM</span>
+                    </div>
+                    <div class="message-text">// he got the medal too</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1283556428115607634">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/11/2024 10:34 PM</span>
+                    </div>
+                    <div class="message-text"><strong>3rd Presidential Memorandum on Awarding Specific Individuals the Presidential Medal of Freedom</strong><br><br><a href="https://docs.google.com/document/d/1jf7niHL6TMbAuCMUnHhZW6tfts2gjRRp7jMesw6AuZo/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1jf7niHL6TMbAuCMUnHhZW6tfts2gjRRp7jMesw6AuZo/edit?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1jf7niHL6TMbAuCMUnHhZW6tfts2gjRRp7jMesw6AuZo/edit?usp=sharing" target="_blank">3rd Presidential Memorandum on Awarding Specific Individuals the Pr...</a></div><div class="embed-description">3rd Presidential Memorandum on Awarding Specific Individuals the Presidential Medal of Freedom  I, James Sun, President of the United States, by the powers vested in me by the Constitution and by the laws of the United States, hereby;	 (a) Award the Presidential Medal of Freedom to John Hoffman, ...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLTGs8bbEao7dysf7SU5JThrNDYs68_oQ5i1qXZECefEPBkmsQHgafurF6fIbm8sKiaL3orEDa8aNUFBM1u-i-HWYqcbXf7AHVxMcLWvuWaY_cmFJEW=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1283556476337524776">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/11/2024 10:35 PM</span>
+                    </div>
+                    <div class="message-text">cc/ &lt;@613109516732596244&gt; &lt;@&amp;707781265985896469&gt;</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:troll:785390372171808769></span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1285846804822491187">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/788864922414219324/893ff3c571610d2029e3749cca81a02a.png?size=1024" alt="Toasted" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Toasted</span>
+                        <span class="message-timestamp">09/18/2024 06:16 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@1201778736589180980&gt; gets a presidential medal of freedom with disctinction!</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1285994130685821083">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1113613253134790686/305d216651158a8552d155cffc87d2ba.png?size=1024" alt="Fmr. Pres. Diana Allar (D-UT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Fmr. Pres. Diana Allar (D-UT)</span>
+                        <span class="message-timestamp">09/18/2024 04:01 PM</span>
+                    </div>
+                    <div class="message-text">``<code> ALLAR ADMINISTRATION</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1306017284430762105">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/704184943932211291/a_599f3af053835bb3d053399f8cc32b91.gif?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #ffffff">Mr. Deb</span>
+                        <span class="message-timestamp">11/12/2024 10:06 PM</span>
+                    </div>
+                    <div class="message-text">``<code>Lickington Administration</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1307913417541161020">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/704184943932211291/a_599f3af053835bb3d053399f8cc32b91.gif?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #ffffff">Mr. Deb</span>
+                        <span class="message-timestamp">11/18/2024 03:40 AM</span>
+                    </div>
+                    <div class="message-text"><u>OFFICE OF THE PRESIDENT OF THE UNITED STATESS</u> &lt;:PresidentialSeal:1003018428875014194&gt; <br><strong>Presidential Memorandum #94-001</strong><br>Revokation of the Mexico City Policy<br><br><a href="https://docs.google.com/document/d/1XjYnjiqXcHe5CxMa4VfzMdp36qoigTErYO--w602HGY/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1XjYnjiqXcHe5CxMa4VfzMdp36qoigTErYO--w602HGY/edit?usp=sharing</a><br><br>CC: &lt;@456226577798135808&gt;</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1XjYnjiqXcHe5CxMa4VfzMdp36qoigTErYO--w602HGY/edit?usp=sharing" target="_blank">Presidential Memorandum #94-001</a></div><div class="embed-description">Presidential Memorandum on the Revocation of the Mexico City Policy  To: The Secretary of State  The Presidential Memorandum issued on August 20th, 2024 by President James Sun is hereby revoked in its entirety and the Secretary of State is instructed to halt the implementation of the condition...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLEB3lZ-GiZ_pgcF5HSbESxWHF7xNn41IU3RdrpMps2MMOLMw81WghT_uozeqdhXhU_On9myggkkc3DbJB61Lr79SZ-vxJSWvONNI053Tkr20bPiy3z=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1307924355329560576">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/704184943932211291/a_599f3af053835bb3d053399f8cc32b91.gif?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #ffffff">Mr. Deb</span>
+                        <span class="message-timestamp">11/18/2024 04:24 AM</span>
+                    </div>
+                    <div class="message-text"><u>OFFICE OF THE PRESIDENT OF THE UNITED STATESS</u> &lt;:PresidentialSeal:1003018428875014194&gt; <br><strong>Presidential Memorandum #94-002</strong><br>Awarding of the Presidential Medal of Freedom<br><br><a href="https://docs.google.com/document/d/1N_KK0kaCq9T2VYD3NAwr0TbHRDMKmsqxs0YXDd4IlVY/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1N_KK0kaCq9T2VYD3NAwr0TbHRDMKmsqxs0YXDd4IlVY/edit?usp=sharing</a><br><br>CC: &lt;@763796772337352704&gt; &lt;@1068015099710799942&gt; &lt;@1085557773942669312&gt; &lt;@1284907765000835133&gt; &lt;@334553400928894976&gt; &lt;@635216176695345194&gt;</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1N_KK0kaCq9T2VYD3NAwr0TbHRDMKmsqxs0YXDd4IlVY/edit?usp=sharing" target="_blank">Presidential Memorandum #94-002</a></div><div class="embed-description">Presidential Memorandum on the Awarding of Medals of Freedom   The following individuals are hereby granted the Presidential Medal of Freedom for their service to the nation.  	The Honorable Empy Evander of the Commonwealth of Olympia 	The Honorable Benjamin Martin of the Commonwealth of Linc...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyJfC8PK-euYWIIuVQc01_5W34sau3ynM6_jMijqg-Ix_8n70Py4GPnuoLjqVE3ZY_Sih27B9wNeq-fbo7CwQiXHaF4DEyj5aTRIijPulEYGg2ESX-yu=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1307986546384834560">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/704184943932211291/a_599f3af053835bb3d053399f8cc32b91.gif?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #ffffff">Mr. Deb</span>
+                        <span class="message-timestamp">11/18/2024 08:31 AM</span>
+                    </div>
+                    <div class="message-text">// &lt;@&amp;707781265985896469&gt; roles for these fine fellows</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">👍</span>
+                        <span class="reaction-count">2</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1330251395781099683">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/819731240004485135/4a29261317cfdbae274714e56be98657.png?size=1024" alt="Glorious Emperor Ross III" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Glorious Emperor Ross III</span>
+                        <span class="message-timestamp">01/18/2025 07:04 PM</span>
+                    </div>
+                    <div class="message-text">[Presidential Memorandum JR-96-001](<a href="https://docs.google.com/document/d/1ijnHELYk_Qb_y8hfpppmiQfQ0HrRQISTidESVNcv-y8/edit?tab=t.0)" target="_blank">https://docs.google.com/document/d/1ijnHELYk_Qb_y8hfpppmiQfQ0HrRQISTidESVNcv-y8/edit?tab=t.0)</a><br>&lt;@974331254793175151&gt;</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/document/d/1ijnHELYk_Qb_y8hfpppmiQfQ0HrRQISTidESVNcv-y8/edit?tab=t.0" target="_blank">Presidential Memorandum on Reinstating the Mexico City Policy</a></div><div class="embed-description">Presidential Memorandum on Reinstating the Mexico City Policy  To - Secretary of State Jake Taylor  The first Presidential Memorandum of November 17th, 2024, by the Lickington Administration is hereby rescinded. I hereby direct the Department of State, in coordination with the Department of Healt...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyK4vyalukIztoOgbTUrKJDvuXgxEJ7YjZwWTwtqdm_rRN5flYtILT1LHauBZ90FlNbVfkzNgEeUXoI3tbz-btaeqh-B3LtA1CDNuNma-zGOpsUww4k=w1200-h630-p" class="embed-thumbnail"></div>
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">👍</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336077008152694879">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/819731240004485135/4a29261317cfdbae274714e56be98657.png?size=1024" alt="Glorious Emperor Ross III" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Glorious Emperor Ross III</span>
+                        <span class="message-timestamp">02/03/2025 08:53 PM</span>
+                    </div>
+                    <div class="message-text">Presidential Memorandum JR-96-002<br><br>By the power invested to me through the <strong>Insurrection Act of 1807</strong>, through <strong>10 U.S.C. § 254</strong>, I am ordering the dispersement of insurrectionists. Ceasing unlawful activity and the ordering of the disbanding of those responsible of Jacksonian secession.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1423233593282527342">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">10/02/2025 09:02 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <script>
+        // Add click handlers for images
+        document.querySelectorAll('.attachment img, .embed-image').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#election-forms - Virtual Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.375;
+        }
+        
+        .channel-header {
+            background-color: #2f3136;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7289da;
+        }
+        
+        .channel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .channel-info {
+            color: #b9bbbe;
+            font-size: 14px;
+        }
+        
+        .messages-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .message {
+            display: flex;
+            padding: 8px 16px;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        
+        .message:hover {
+            background-color: rgba(4, 4, 5, 0.07);
+        }
+        
+        .message-avatar {
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .message-author {
+            font-weight: 500;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .message-timestamp {
+            font-size: 12px;
+            color: #72767d;
+            font-weight: 500;
+        }
+        
+        .message-text {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message-text strong {
+            font-weight: 700;
+        }
+        
+        .message-text em {
+            font-style: italic;
+        }
+        
+        .message-text u {
+            text-decoration: underline;
+        }
+        
+        .message-text del {
+            text-decoration: line-through;
+        }
+        
+        .message-text code {
+            background-color: #2f3136;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+        
+        .message-text pre {
+            background-color: #2f3136;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 4px 0;
+        }
+        
+        .message-text pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .message-text a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .attachment {
+            margin: 8px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .attachment img {
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .attachment-info {
+            padding: 8px;
+            background-color: #2f3136;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .attachment-link {
+            color: #00aff4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attachment-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+        
+        .embed {
+            max-width: 520px;
+            margin: 8px 0;
+            padding: 12px 16px;
+            background-color: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-author-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .embed-author-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .embed-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .embed-description {
+            margin-bottom: 8px;
+        }
+        
+        .embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .embed-field {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        
+        .embed-field.inline {
+            flex: 1 1 150px;
+            min-width: 150px;
+        }
+        
+        .embed-field-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .embed-field-value {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .embed-image {
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            float: right;
+            margin: 8px 0 8px 16px;
+        }
+        
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #72767d;
+        }
+        
+        .embed-footer-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .reaction {
+            background-color: rgba(79, 84, 92, 0.16);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .reaction-emoji {
+            line-height: 1;
+        }
+        
+        .reaction-count {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .message {
+                padding: 8px 8px;
+            }
+            
+            .embed {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="channel-header">
+        <div class="channel-title">#election-forms</div>
+        <div class="channel-info">Archived from Virtual Congress on October 02, 2025 at 09:00 AM UTC</div>
+    </div>
+    
+    <div class="messages-container">
+        
+            <div class="message" data-message-id="1003789094473703424">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/884683682093367306/07086056540a7d29a8b397bf4afd117c.png?size=1024" alt="aurora~" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora~</span>
+                        <span class="message-timestamp">08/01/2022 10:19 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Register to vote: &lt;<a href="https://bit.ly/registrationSep&gt" target="_blank">https://bit.ly/registrationSep&gt</a>;<br>Candidate experience: &lt;<a href="https://bit.ly/experienceSep&gt" target="_blank">https://bit.ly/experienceSep&gt</a>;<br>Endorsements: &lt;<a href="https://bit.ly/endorsementsSep&gt" target="_blank">https://bit.ly/endorsementsSep&gt</a>;<br><br><strong><u>Info</u></strong><br>Candidate list: &lt;<a href="https://bit.ly/candidatelistSep&gt" target="_blank">https://bit.ly/candidatelistSep&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1025880110827569162">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/276976462140014593/dc7598c432da9a6cf52557f5504117a7.png?size=1024" alt="Wolfdragon24" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Wolfdragon24</span>
+                        <span class="message-timestamp">10/01/2022 09:21 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Register to vote: <a href="https://bit.ly/registrationOct" target="_blank">https://bit.ly/registrationOct</a><br>Candidate experience:  <a href="https://bit.ly/experienceOct" target="_blank">https://bit.ly/experienceOct</a><br><br><strong><u>Info</u></strong><br>Candidate List: <a href="https://bit.ly/candidatelistOct" target="_blank">https://bit.ly/candidatelistOct</a></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1037128991213109349">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/884683682093367306/07086056540a7d29a8b397bf4afd117c.png?size=1024" alt="aurora~" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora~</span>
+                        <span class="message-timestamp">11/01/2022 10:20 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Register to vote: &lt;<a href="https://bit.ly/registrationNov&gt" target="_blank">https://bit.ly/registrationNov&gt</a>;<br>Candidate experience:  &lt;<a href="https://bit.ly/experienceNov&gt" target="_blank">https://bit.ly/experienceNov&gt</a>;<br>Endorsements: &lt;<a href="https://bit.ly/endorsementsNov&gt" target="_blank">https://bit.ly/endorsementsNov&gt</a>;<br><br><strong><u>Info</u></strong><br>Candidate List: &lt;<a href="https://bit.ly/candidatelistNov&gt" target="_blank">https://bit.ly/candidatelistNov&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1048016089742848020">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/884683682093367306/07086056540a7d29a8b397bf4afd117c.png?size=1024" alt="aurora~" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora~</span>
+                        <span class="message-timestamp">12/01/2022 11:21 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate experience:  &lt;<a href="https://bit.ly/experienceDec&gt" target="_blank">https://bit.ly/experienceDec&gt</a>;<br><del>Endorsements: &lt;<a href="https://bit.ly/endorsementsDec&gt" target="_blank">https://bit.ly/endorsementsDec&gt</a>;</del><br><br><strong><u>Info</u></strong><br>Candidate List: &lt;<a href="https://bit.ly/candidatelistDec&gt" target="_blank">https://bit.ly/candidatelistDec&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1059244700973924352">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1055277195179872418/018d7f1854a837c1e495b7123f2b5ea9.png?size=1024" alt="aurora" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora</span>
+                        <span class="message-timestamp">01/01/2023 11:00 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate experience:  &lt;<a href="https://bit.ly/experienceJan23&gt" target="_blank">https://bit.ly/experienceJan23&gt</a>;<br>Endorsements: &lt;<a href="https://bit.ly/endorsementsJan23&gt" target="_blank">https://bit.ly/endorsementsJan23&gt</a>;<br><br><strong><u>Info</u></strong><br>Election Handbook: &lt;<a href="http://www.handbook.fecresults.com/&gt" target="_blank">http://www.handbook.fecresults.com/&gt</a>;<br>Candidate list: &lt;<a href="https://bit.ly/candidatelistJan23&gt" target="_blank">https://bit.ly/candidatelistJan23&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1070492821301252226">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1055277195179872418/018d7f1854a837c1e495b7123f2b5ea9.png?size=1024" alt="aurora" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora</span>
+                        <span class="message-timestamp">02/01/2023 11:56 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate experience:  &lt;<a href="https://bit.ly/experienceFeb23&gt" target="_blank">https://bit.ly/experienceFeb23&gt</a>;<br>Endorsements: &lt;<a href="https://bit.ly/endorsementsFeb23&gt" target="_blank">https://bit.ly/endorsementsFeb23&gt</a>;<br><br><strong><u>Info</u></strong><br>Election Handbook: &lt;<a href="https://bit.ly/HandbookFeb23&gt" target="_blank">https://bit.ly/HandbookFeb23&gt</a>;<br>Candidate list: &lt;<a href="https://bit.ly/candidatelistFeb23&gt" target="_blank">https://bit.ly/candidatelistFeb23&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1080625752418046012">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1055277195179872418/018d7f1854a837c1e495b7123f2b5ea9.png?size=1024" alt="aurora" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora</span>
+                        <span class="message-timestamp">03/01/2023 11:00 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate experience:  &lt;<a href="https://bit.ly/experienceMar23&gt" target="_blank">https://bit.ly/experienceMar23&gt</a>;<br>Endorsements: &lt;<a href="https://bit.ly/endorsementsMar23&gt" target="_blank">https://bit.ly/endorsementsMar23&gt</a>;<br><br><strong><u>Info</u></strong><br>Election Handbook: &lt;<a href="http://www.handbook.fecresults.com/&gt" target="_blank">http://www.handbook.fecresults.com/&gt</a>;<br>Candidate list: &lt;<a href="https://bit.ly/candidatelistMar23&gt" target="_blank">https://bit.ly/candidatelistMar23&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1092090903742644335">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1055277195179872418/018d7f1854a837c1e495b7123f2b5ea9.png?size=1024" alt="aurora" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora</span>
+                        <span class="message-timestamp">04/02/2023 02:19 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate experience:  &lt;<a href="https://bit.ly/experienceApr23&gt" target="_blank">https://bit.ly/experienceApr23&gt</a>;<br>Endorsements: &lt;<a href="https://bit.ly/endorsementsApr23&gt" target="_blank">https://bit.ly/endorsementsApr23&gt</a>;<br><br><strong><u>Info</u></strong><br>Election Handbook: &lt;<a href="http://www.handbook.fecresults.com/&gt" target="_blank">http://www.handbook.fecresults.com/&gt</a>;<br>Candidate list: &lt;<a href="https://bit.ly/candidatelistApr23&gt" target="_blank">https://bit.ly/candidatelistApr23&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1102761692015894588">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/586551302977486861/bbda23ff6b11918f256dc56454a43c23.png?size=1024" alt="Justice Chuck Stewart" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #3f9836">Justice Chuck Stewart</span>
+                        <span class="message-timestamp">05/02/2023 01:01 AM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate Experience: <a href="https://bit.ly/experienceMay23" target="_blank">https://bit.ly/experienceMay23</a><br>Endorsements: <a href="https://bit.ly/endorsementsMay23" target="_blank">https://bit.ly/endorsementsMay23</a><br><br><strong><u>Info</u></strong><br>Election Handbook: <a href="https://bit.ly/FEChandbookMay23" target="_blank">https://bit.ly/FEChandbookMay23</a><br>Candidate List: <a href="https://bit.ly/candidatelistMay23" target="_blank">https://bit.ly/candidatelistMay23</a></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1113936208653979738">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1055277195179872418/018d7f1854a837c1e495b7123f2b5ea9.png?size=1024" alt="aurora" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">aurora</span>
+                        <span class="message-timestamp">06/01/2023 09:04 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate experience:  &lt;<a href="https://bit.ly/experienceJun23&gt" target="_blank">https://bit.ly/experienceJun23&gt</a>;<br><del>Endorsements: &lt;<a href="https://bit.ly/endorsementsJun23&gt" target="_blank">https://bit.ly/endorsementsJun23&gt</a>;</del><br><br><strong><u>Info</u></strong><br>Election Handbook: &lt;<a href="http://www.handbook.fecresults.com/&gt" target="_blank">http://www.handbook.fecresults.com/&gt</a>;<br>Candidate list: &lt;<a href="https://bit.ly/candidatelistJun23&gt" target="_blank">https://bit.ly/candidatelistJun23&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1124886492817412106">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">07/02/2023 02:17 AM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Voter registration: &lt;<a href="https://bit.ly/registrationJul23&gt" target="_blank">https://bit.ly/registrationJul23&gt</a>;<br>Candidate experience: &lt;<a href="https://bit.ly/experienceJul23&gt" target="_blank">https://bit.ly/experienceJul23&gt</a>;<br>Endorsements: &lt;<a href="https://bit.ly/endorsementsJul23&gt" target="_blank">https://bit.ly/endorsementsJul23&gt</a>;<br><br><strong><u>Info</u></strong><br>Election Handbook: &lt;<a href="https://bit.ly/electionhandbook23&gt" target="_blank">https://bit.ly/electionhandbook23&gt</a>;<br>Candidate list: &lt;<a href="https://bit.ly/candidatelistJul23&gt" target="_blank">https://bit.ly/candidatelistJul23&gt</a>;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1160408726252036137">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/586551302977486861/bbda23ff6b11918f256dc56454a43c23.png?size=1024" alt="Justice Chuck Stewart" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #3f9836">Justice Chuck Stewart</span>
+                        <span class="message-timestamp">10/08/2023 02:49 AM</span>
+                    </div>
+                    <div class="message-text"><u><strong>Forms</strong></u><br>Candidate experience: <a href="https://forms.gle/gX9MfhoVQWgSyPZ76" target="_blank">https://forms.gle/gX9MfhoVQWgSyPZ76</a><br>Endorsements: <a href="https://forms.gle/aquMw2iehpmcvX1m7" target="_blank">https://forms.gle/aquMw2iehpmcvX1m7</a><br><br><u><strong>Info</strong></u><br>Candidate List: <a href="https://docs.google.com/spreadsheets/d/1_tnCUHs12gW75ZwVDpEPMy-BPMPkj9mGfDfYOJefUd4/edit" target="_blank">https://docs.google.com/spreadsheets/d/1_tnCUHs12gW75ZwVDpEPMy-BPMPkj9mGfDfYOJefUd4/edit</a></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1169412152042463262">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/586551302977486861/bbda23ff6b11918f256dc56454a43c23.png?size=1024" alt="Justice Chuck Stewart" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #3f9836">Justice Chuck Stewart</span>
+                        <span class="message-timestamp">11/01/2023 11:06 PM</span>
+                    </div>
+                    <div class="message-text"><strong><u>Forms</u></strong><br>Candidate Experience: <a href="https://forms.gle/wgGhUSjsJK9Q6FiD7" target="_blank">https://forms.gle/wgGhUSjsJK9Q6FiD7</a><br>Endorsements: TBA<br><br><strong><u>Info</u></strong><br>Candidate List: TBA</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1181752538358370305">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">12/06/2023 12:22 AM</span>
+                    </div>
+                    <div class="message-text">Experience: <a href="https://forms.gle/jEtfTp3LRg3mWQAn6" target="_blank">https://forms.gle/jEtfTp3LRg3mWQAn6</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/jEtfTp3LRg3mWQAn6" target="_blank">December Experience Form</a></div><div class="embed-description">Please answer all questions honestly and to the best of your ability.</div><img src="https://lh3.googleusercontent.com/_HaZukQS10j4pGayJGUXnyAusmYIvfSWHAdYXHq-QODoVA99Yx9X_VCB9OPSItXQZvN7AhNAeKI=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1182121253029548063">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">12/07/2023 12:47 AM</span>
+                    </div>
+                    <div class="message-text">Candidate List: <a href="https://docs.google.com/spreadsheets/d/1hvCKLuZqeJlIfBglyKosAL1ycdTRQq1xvfX2uKlLtKs/edit#gid=0" target="_blank">https://docs.google.com/spreadsheets/d/1hvCKLuZqeJlIfBglyKosAL1ycdTRQq1xvfX2uKlLtKs/edit#gid=0</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://docs.google.com/spreadsheets/d/1hvCKLuZqeJlIfBglyKosAL1ycdTRQq1xvfX2uKlLtKs/edit" target="_blank">December Candidate List</a></div><div class="embed-description">Candidate List<br><br>Updated 12/6 7:42pm E.T.<br>Bold indicates ballot fees paid<br>* indicates write-in candidate,Olympia,Pacifica,Frontier ,Lincoln (Special),Frontier (Special),Frontier Delegate (5 seats)<br>Position,Party<br>U.S. Senate,Incumbent,Senator Natalia Poklonskaya (D),Senator Flynn Someone (D),Vacant...</div><img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLAd4G6Wo4_C6Bq2d_5BeaTfnMsrMZ1EPb35oMakJMIWYEAJhhqfZop_OPtY-UHdlDRw-rYk9JM0O0dCkletvSBLGBQ9avQaYadz5Qoq47WSGM=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1191089512600846446">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/246422725717917696/59ea9fc2762a676bd7d551698747d8ff.png?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Mr. Deb</span>
+                        <span class="message-timestamp">12/31/2023 06:44 PM</span>
+                    </div>
+                    <div class="message-text"><u><strong><em>January Election Forms and Info</strong></em></u><br><br><u>Forms</u><br><del>Candidate Experience: <a href="https://forms.gle/FYBYkvcareehTpACA" target="_blank">https://forms.gle/FYBYkvcareehTpACA</a></del> (CLOSED)<br>Endorsements: <a href="https://forms.gle/DQMh3x7BrxNTjfYv7" target="_blank">https://forms.gle/DQMh3x7BrxNTjfYv7</a><br><br><u>Info:</u><br>Intro to Elections Document: <a href="https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing</a><br>Submission Tracker: <a href="https://docs.google.com/spreadsheets/d/196B_AU3oQReN4vMEJx32JGMQYgxwKpCgUqxtjt7ZcJk/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/196B_AU3oQReN4vMEJx32JGMQYgxwKpCgUqxtjt7ZcJk/edit?usp=sharing</a><br>Election Schedule: <a href="https://discord.com/channels/654458344781774879/1000296265990541343/1190119521424510977" target="_blank">https://discord.com/channels/654458344781774879/1000296265990541343/1190119521424510977</a><br>Public Modifier List: <a href="https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing</a><br>Endorsement Tracker: <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSTfHDZdiBrVmgJMjmCKeKwNWlDZOSYSSrYp9myO3_f32M7ZntboA8J_vrQLXxyrpiytafaR_R2m-jP/pubhtml?gid=1056271194&amp;single=true" target="_blank">https://docs.google.com/spreadsheets/d/e/2PACX-1vSTfHDZdiBrVmgJMjmCKeKwNWlDZOSYSSrYp9myO3_f32M7ZntboA8J_vrQLXxyrpiytafaR_R2m-jP/pubhtml?gid=1056271194&amp;single=true</a></div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">💖</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1198038723049312447">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/246422725717917696/59ea9fc2762a676bd7d551698747d8ff.png?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Mr. Deb</span>
+                        <span class="message-timestamp">01/19/2024 10:58 PM</span>
+                    </div>
+                    <div class="message-text"><u><strong><em>January Frontier Special Election Forms and Info</strong></em></u><br><br><u>Forms</u><br><del>Candidate Experience: <a href="https://forms.gle/Tyx7rQrzgWWBHAmx9" target="_blank">https://forms.gle/Tyx7rQrzgWWBHAmx9</a></del> (CLOSED)<br>Endorsements: <a href="https://forms.gle/D2wi2e2VWdeavHdJ7" target="_blank">https://forms.gle/D2wi2e2VWdeavHdJ7</a><br><br><u>Info:</u><br>Intro to Elections Document: <a href="https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing</a><br>Submission Tracker: <a href="https://docs.google.com/spreadsheets/d/1qAAHjx1iBUOj9ILUHj_zwNbPxvQw6G4JYJmBZtTNrbA/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/1qAAHjx1iBUOj9ILUHj_zwNbPxvQw6G4JYJmBZtTNrbA/edit?usp=sharing</a><br>Election Schedule: <a href="https://discord.com/channels/654458344781774879/1000296265990541343/1198038689520041995" target="_blank">https://discord.com/channels/654458344781774879/1000296265990541343/1198038689520041995</a><br>Public Modifier List: <a href="https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing</a><br>Endorsement Tracker: <a href="https://docs.google.com/spreadsheets/u/6/d/e/2PACX-1vS5OCIsEjRQjYxtcU38Pg27iJMzc3zX7zOmhpD6RT1qZhSBAETi1DcCJiIhZovGtkqJkse7ps3Yz_Op/pubhtml?gid=1056271194&amp;single=true" target="_blank">https://docs.google.com/spreadsheets/u/6/d/e/2PACX-1vS5OCIsEjRQjYxtcU38Pg27iJMzc3zX7zOmhpD6RT1qZhSBAETi1DcCJiIhZovGtkqJkse7ps3Yz_Op/pubhtml?gid=1056271194&amp;single=true</a></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1201354248370258050">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/246422725717917696/59ea9fc2762a676bd7d551698747d8ff.png?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Mr. Deb</span>
+                        <span class="message-timestamp">01/29/2024 02:32 AM</span>
+                    </div>
+                    <div class="message-text"><u><strong><em>February Election Forms and Info</strong></em></u><br><br><u>Forms</u><br>&gt; <del>Candidate Experience: <a href="https://forms.gle/2Tr6L5hrkS3bALuRA" target="_blank">https://forms.gle/2Tr6L5hrkS3bALuRA</a></del><br>&gt; Endorsements: <a href="https://forms.gle/iaydA3RAXoR3kR12A" target="_blank">https://forms.gle/iaydA3RAXoR3kR12A</a><br><br><u>Info:</u><br>&gt; Intro to Elections Document: <a href="https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing</a><br>&gt; Submission Tracker: <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTbn-oLON_cFlqaBErSbXsMQNBlxew3EwiN_zmWYFM-5njSnv9fhNAZkUS0eENPDQeVomv3iL_Sb6kz/pubhtml?gid=633232591&amp;single=true" target="_blank">https://docs.google.com/spreadsheets/d/e/2PACX-1vTbn-oLON_cFlqaBErSbXsMQNBlxew3EwiN_zmWYFM-5njSnv9fhNAZkUS0eENPDQeVomv3iL_Sb6kz/pubhtml?gid=633232591&amp;single=true</a><br>&gt; Election Schedule: <a href="https://discord.com/channels/654458344781774879/1000296265990541343/1201353945935785984" target="_blank">https://discord.com/channels/654458344781774879/1000296265990541343/1201353945935785984</a><br>&gt; Public Modifier List: <a href="https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing</a><br>&gt; Endorsement Tracker: <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vStv9spsWiv4kvcfOH29U_lTCkz0DL9jugkwmtbWy3z8hYN418ArTQ8OpKM8EZ_oKXF-p0BRxVLegGn/pubhtml?gid=1028920921&amp;single=true" target="_blank">https://docs.google.com/spreadsheets/d/e/2PACX-1vStv9spsWiv4kvcfOH29U_lTCkz0DL9jugkwmtbWy3z8hYN418ArTQ8OpKM8EZ_oKXF-p0BRxVLegGn/pubhtml?gid=1028920921&amp;single=true</a></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1206748981141704774">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/246422725717917696/59ea9fc2762a676bd7d551698747d8ff.png?size=1024" alt="Mr. Deb" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Mr. Deb</span>
+                        <span class="message-timestamp">02/12/2024 11:49 PM</span>
+                    </div>
+                    <div class="message-text"><u><strong><em>February Olympia Special Election Forms and Info</strong></em></u><br><br><u>Forms</u><br>Candidate Experience: <a href="https://forms.gle/ppwUQ13fs3mwkByM6" target="_blank">https://forms.gle/ppwUQ13fs3mwkByM6</a><br>Endorsements: <a href="https://forms.gle/hypptpAyu9Kftq5c6" target="_blank">https://forms.gle/hypptpAyu9Kftq5c6</a><br><br><u>Info:</u><br>Intro to Elections Document: <a href="https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing" target="_blank">https://docs.google.com/document/d/1X4_LV3YoZm2GHZBR1JNuRbeqiBD4dfx3EZYPhVHPvtw/edit?usp=sharing</a><br>Submission Tracker: <a href="https://docs.google.com/spreadsheets/d/1D6AIs_qlMebhMioJa3app_pbOdU0KKP3sdPX00Qtbfk/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/1D6AIs_qlMebhMioJa3app_pbOdU0KKP3sdPX00Qtbfk/edit?usp=sharing</a><br>Election Schedule: <a href="https://discord.com/channels/654458344781774879/1000296265990541343/1206382791382663268" target="_blank">https://discord.com/channels/654458344781774879/1000296265990541343/1206382791382663268</a><br>Public Modifier List: <a href="https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/1ei_dhiHvGVisC9ZBA9y25L8hXc3LsDvtXrYrIZWkNXc/edit?usp=sharing</a><br>Endorsement Tracker: <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQLLK_SCXWLZLnVCTgrXgFdyfBYC1XLPH9HV3v-f9F4PbGDPvRrjVCmoI27N4TIfBajJlGATmjJnzVp/pubhtml?gid=1028920921&amp;single=true" target="_blank">https://docs.google.com/spreadsheets/d/e/2PACX-1vQLLK_SCXWLZLnVCTgrXgFdyfBYC1XLPH9HV3v-f9F4PbGDPvRrjVCmoI27N4TIfBajJlGATmjJnzVp/pubhtml?gid=1028920921&amp;single=true</a></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1213224232306085908">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/584617993754116098/0f8d2ed33c56478150383d76500073ff.png?size=1024" alt="Randy" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Randy</span>
+                        <span class="message-timestamp">03/01/2024 08:39 PM</span>
+                    </div>
+                    <div class="message-text"><a href="https://forms.gle/YozPFMW45vmqUyiU8" target="_blank">https://forms.gle/YozPFMW45vmqUyiU8</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/YozPFMW45vmqUyiU8" target="_blank">Virtual Congress experience form - February 2024</a></div><div class="embed-description">Experience form for the February 2024 Virtual Congress elections, courtesy of FEC Commissioner Rose.<br>Please contact a member of the FEC with any questions.</div><img src="https://lh3.googleusercontent.com/S4A-sBUbz_9VD1jPHglpoSj46mSHfDzRWwsYYJkH6kkHfsTM5JvfoWg77301HWWwEWWSyn7VC6I=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1218599146202726572">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/584617993754116098/0f8d2ed33c56478150383d76500073ff.png?size=1024" alt="Randy" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Randy</span>
+                        <span class="message-timestamp">03/16/2024 04:37 PM</span>
+                    </div>
+                    <div class="message-text">—-</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1218599154893459527">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/584617993754116098/0f8d2ed33c56478150383d76500073ff.png?size=1024" alt="Randy" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Randy</span>
+                        <span class="message-timestamp">03/16/2024 04:37 PM</span>
+                    </div>
+                    <div class="message-text"><a href="https://forms.gle/GHo7SMiv3FZ1YZBp8" target="_blank">https://forms.gle/GHo7SMiv3FZ1YZBp8</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/GHo7SMiv3FZ1YZBp8" target="_blank">Virtual Congress experience form - Pacifica Special 2024</a></div><div class="embed-description">Experience form for the February 2024 Virtual Congress elections, courtesy of FEC Commissioner Rose.<br>Please contact a member of the FEC with any questions.</div><img src="https://lh6.googleusercontent.com/hidweFUxohViO9hKOaya5s-JFeb1b2zb46qPb-5WJdLIpXcJIhJ0wCKIxtPzuh7Y7jSN5ps2znQ=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1223186268087648336">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/968909042800013362/73cc18cf0618e142065324455f6661c6.png?size=1024" alt="Athena" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Athena</span>
+                        <span class="message-timestamp">03/29/2024 08:25 AM</span>
+                    </div>
+                    <div class="message-text">--<br><a href="https://forms.gle/X35U6nbDJ2zwFZjo6" target="_blank">https://forms.gle/X35U6nbDJ2zwFZjo6</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/X35U6nbDJ2zwFZjo6" target="_blank">Virtual Congress experience form - APRIL GENERAL 2024</a></div><div class="embed-description">Experience form for the April 2024 Virtual Congress elections, courtesy of FEC Commissioner Rose.<br>Please contact a member of the FEC with any questions.</div><img src="https://lh5.googleusercontent.com/xXTPboDsyXu1rrEx-ZIVJWfx7YFZujUl70gaJIx2UmHujDI3YYIaspZ9RoveLWm8PNSM_zwNPnk=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1235304859226603672">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">05/01/2024 07:00 PM</span>
+                    </div>
+                    <div class="message-text"><a href="https://forms.gle/7ds4wT5NZbFPL9gy7" target="_blank">https://forms.gle/7ds4wT5NZbFPL9gy7</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/7ds4wT5NZbFPL9gy7" target="_blank">Experience Form - May</a></div><div class="embed-description">Experience form for the May 2024 Virtual Congress elections.<br>Please contact a member of the FEC with any questions.</div><img src="https://lh5.googleusercontent.com/-h9T7okc8gry2Lvo3NST2c2pqiGuto1A-nq7xjGaKNRrvn_4J3cbP9LnNaadqBBfM_Q_vIxgIJg=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1236101675626795038">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">05/03/2024 11:46 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;892177906812473375&gt; Reminder to fill out the experience form.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1275053643338354742">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/272788643662528514/7475cc482728f85f0d7c50403d0eb527.png?size=1024" alt="shasfel ketmore haya" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">shasfel ketmore haya</span>
+                        <span class="message-timestamp">08/19/2024 11:27 AM</span>
+                    </div>
+                    <div class="message-text">``<code>ARCHIVED</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1423233173189431327">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">10/02/2025 09:00 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <script>
+        // Add click handlers for images
+        document.querySelectorAll('.attachment img, .embed-image').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

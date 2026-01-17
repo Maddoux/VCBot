@@ -1,0 +1,2451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#vcbot-admin - Virtual Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.375;
+        }
+        
+        .channel-header {
+            background-color: #2f3136;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7289da;
+        }
+        
+        .channel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .channel-info {
+            color: #b9bbbe;
+            font-size: 14px;
+        }
+        
+        .messages-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .message {
+            display: flex;
+            padding: 8px 16px;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        
+        .message:hover {
+            background-color: rgba(4, 4, 5, 0.07);
+        }
+        
+        .message-avatar {
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .message-author {
+            font-weight: 500;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .message-timestamp {
+            font-size: 12px;
+            color: #72767d;
+            font-weight: 500;
+        }
+        
+        .message-text {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message-text strong {
+            font-weight: 700;
+        }
+        
+        .message-text em {
+            font-style: italic;
+        }
+        
+        .message-text u {
+            text-decoration: underline;
+        }
+        
+        .message-text del {
+            text-decoration: line-through;
+        }
+        
+        .message-text code {
+            background-color: #2f3136;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+        
+        .message-text pre {
+            background-color: #2f3136;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 4px 0;
+        }
+        
+        .message-text pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .message-text a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .attachment {
+            margin: 8px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .attachment img {
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .attachment-info {
+            padding: 8px;
+            background-color: #2f3136;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .attachment-link {
+            color: #00aff4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attachment-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+        
+        .embed {
+            max-width: 520px;
+            margin: 8px 0;
+            padding: 12px 16px;
+            background-color: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-author-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .embed-author-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .embed-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .embed-description {
+            margin-bottom: 8px;
+        }
+        
+        .embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .embed-field {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        
+        .embed-field.inline {
+            flex: 1 1 150px;
+            min-width: 150px;
+        }
+        
+        .embed-field-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .embed-field-value {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .embed-image {
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            float: right;
+            margin: 8px 0 8px 16px;
+        }
+        
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #72767d;
+        }
+        
+        .embed-footer-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .reaction {
+            background-color: rgba(79, 84, 92, 0.16);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .reaction-emoji {
+            line-height: 1;
+        }
+        
+        .reaction-count {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .message {
+                padding: 8px 8px;
+            }
+            
+            .embed {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="channel-header">
+        <div class="channel-title">#vcbot-admin</div>
+        <div class="channel-info">Archived from Virtual Congress on October 02, 2025 at 09:00 AM UTC</div>
+    </div>
+    
+    <div class="messages-container">
+        
+            <div class="message" data-message-id="1385329559767093248">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">⚙️ Economic Admin Hub</div><div class="embed-description">Administrative controls for economic system management</div><div class="embed-fields">
+                <div class="embed-field ">
+                    <div class="embed-field-name">📊 System Status</div>
+                    <div class="embed-field-value"><strong>Current Settings:</strong><br>Inflation Base: 8.51%<br>Analysis Interval: 60 minutes<br><br><strong>Latest Report:</strong> 2025-06-15T23:59</div>
+                </div>
+                
+                <div class="embed-field ">
+                    <div class="embed-field-name">🛠️ Admin Controls</div>
+                    <div class="embed-field-value">• <strong>View Status</strong> - Detailed system parameters<br>• <strong>Set Inflation</strong> - Adjust base inflation rate<br>• <strong>Set Interval</strong> - Change analysis frequency<br>• <strong>Fetch Data Now</strong> - Trigger immediate analysis<br>• <strong>Manage Memory</strong> - Add/remove memory entries<br>• <strong>Generate Report</strong> - Create current economic report</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>⚠️ Admin controls affect economic analysis</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329585918316565">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">📊 Economic Report</div><div class="embed-description"><strong>High Inflation Crisis</strong></div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🏛️ GDP</div>
+                    <div class="embed-field-value"><strong>$26.8T</strong> 📈<br>Change: +2.0%</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🔥 Inflation</div>
+                    <div class="embed-field-value"><strong>8.51%</strong> YoY<br>Fed Rate: 0.00%</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">😟 Market Sentiment</div>
+                    <div class="embed-field-value">Confidence: 30%<br>Inflation Anxiety: 0%</div>
+                </div>
+                </div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329598102900737">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/975873526923931699/d47e90f2729a0b44fdb14a1660fab82c.png?size=1024" alt="posting" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">posting</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">What</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329618034364507">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">📊 Updating economic data with comprehensive AI analysis...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329619179147395">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">🚀 <strong>Starting comprehensive economic analysis</strong> - analyzing 30 days of server activity...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329630637981727">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 1/15</strong>: 🔍 Discovering available Discord channels...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329660115816611">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 2/15</strong>: 📊 Analyzing government activity patterns...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329692382331001">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 3/15</strong>: 📈 Processing legislative discussions...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329728403017921">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 4/15</strong>: 📝 Extracting economic policy indicators...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329760581718208">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:45 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 5/15</strong>: 📄 Reviewing committee activities...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329797424742421">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:46 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 6/15</strong>: 📰 Analyzing news and public sentiment...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329837773815878">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:46 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 7/15</strong>: 💰 Calculating budget and spending impacts...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329929255915523">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:46 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 8/15</strong>: 📉 Modeling economic projections...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385329996347871254">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:46 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 9/15</strong>: 🎯 Synthesizing comprehensive analysis...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385330199595450499">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:47 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 10/15</strong>: ⚙️ Fine-tuning economic indicators...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385330462481715240">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:48 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 11/15</strong>: 📊 Validating analysis results...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385330780485455933">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:49 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 12/15</strong>: 🏁 Finalizing economic report...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385331236846964788">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:51 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 13/15</strong>: ✨ Completing final calculations...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385331238113644706">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:51 PM</span>
+                    </div>
+                    <div class="message-text">✅ <strong>Economic analysis complete!</strong> Generating detailed report...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385331239346634802">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:51 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00ff00;"><div class="embed-title">📈 Economic Analysis Complete</div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">GDP</div>
+                    <div class="embed-field-value">$26.80 (+1.90%)</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Inflation</div>
+                    <div class="embed-field-value">9.06% (Sustained High and Increasing)</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Market Sentiment</div>
+                    <div class="embed-field-value">30/100</div>
+                </div>
+                </div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385332065456619640">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 06:55 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">📊 Economic Report - 2025-06-20</div><div class="embed-description"><strong>High Inflation Crisis</strong></div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🏛️ GDP</div>
+                    <div class="embed-field-value"><strong>$26.8T</strong> 📈<br>Change: +1.9%<br>Trend: Slowing</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🔥 Inflation Crisis</div>
+                    <div class="embed-field-value"><strong>9.06%</strong> YoY<br>Fed Rate: 0.00%<br>Status: 🚨 Critical</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">😟 Market Sentiment</div>
+                    <div class="embed-field-value">Confidence: 30% (Low)<br>Outlook: Pessimistic</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">👥 Labor Market</div>
+                    <div class="embed-field-value"><strong>4.1%</strong> Unemployment<br>Status: Normal</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">📈 Stock Market</div>
+                    <div class="embed-field-value">Trend: 📉 Bearish<br>Volatility: 🌪️ Very High<br>Stocks: 25 active</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>Real economic data • Integrated with stock market system</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385333702002737212">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:01 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">⚙️ Economic Admin Hub</div><div class="embed-description">Administrative controls for economic system management</div><div class="embed-fields">
+                <div class="embed-field ">
+                    <div class="embed-field-name">📊 System Status</div>
+                    <div class="embed-field-value"><strong>Current Settings:</strong><br>Inflation Base: 8.51%<br>Analysis Interval: 60 minutes<br><br><strong>Latest Report:</strong> 2025-06-20T00:00</div>
+                </div>
+                
+                <div class="embed-field ">
+                    <div class="embed-field-name">🛠️ Admin Controls</div>
+                    <div class="embed-field-value">• <strong>View Status</strong> - Detailed system parameters<br>• <strong>Set Inflation</strong> - Adjust base inflation rate<br>• <strong>Set Interval</strong> - Change analysis frequency<br>• <strong>Fetch Data Now</strong> - Trigger immediate analysis<br>• <strong>Manage Memory</strong> - Add/remove memory entries<br>• <strong>Generate Report</strong> - Create current economic report</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>⚠️ Admin controls affect economic analysis</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385333718675357837">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:01 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">📊 Economic Report</div><div class="embed-description"><strong>High Inflation Crisis</strong></div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🏛️ GDP</div>
+                    <div class="embed-field-value"><strong>$26.8T</strong> 📈<br>Change: +1.9%</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🔥 Inflation</div>
+                    <div class="embed-field-value"><strong>9.06%</strong> YoY<br>Fed Rate: 0.00%</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">😟 Market Sentiment</div>
+                    <div class="embed-field-value">Confidence: 30%<br>Inflation Anxiety: 0%</div>
+                </div>
+                </div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385335915848925224">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:10 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">⚙️ Economic Admin Hub</div><div class="embed-description">Administrative controls for economic system management</div><div class="embed-fields">
+                <div class="embed-field ">
+                    <div class="embed-field-name">📊 System Status</div>
+                    <div class="embed-field-value"><strong>Current Settings:</strong><br>Inflation Base: 8.51%<br>Analysis Interval: 60 minutes<br><br><strong>Latest Report:</strong> No data available</div>
+                </div>
+                
+                <div class="embed-field ">
+                    <div class="embed-field-name">🛠️ Admin Controls</div>
+                    <div class="embed-field-value">• <strong>View Status</strong> - Detailed system parameters<br>• <strong>Set Inflation</strong> - Adjust base inflation rate<br>• <strong>Set Interval</strong> - Change analysis frequency<br>• <strong>Fetch Data Now</strong> - Trigger immediate analysis<br>• <strong>Manage Memory</strong> - Add/remove memory entries<br>• <strong>Generate Report</strong> - Create current economic report</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>⚠️ Admin controls affect economic analysis</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385335942335823932">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:10 PM</span>
+                    </div>
+                    <div class="message-text">🔍 No existing economic data found. Starting comprehensive AI analysis...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385335943401177243">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:10 PM</span>
+                    </div>
+                    <div class="message-text">🚀 <strong>Starting comprehensive economic analysis</strong> - analyzing 30 days of server activity...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385335952242774129">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:10 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 1/15</strong>: 🔍 Discovering available Discord channels...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385335996534751335">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:10 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 2/15</strong>: 📊 Analyzing government activity patterns...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385336358343807072">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:12 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 3/15</strong>: 📈 Processing legislative discussions...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337031638388789">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:14 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 4/15</strong>: 📝 Extracting economic policy indicators...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337149116907635">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:15 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 5/15</strong>: 📄 Reviewing committee activities...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337361616994467">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:16 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 6/15</strong>: 📰 Analyzing news and public sentiment...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337673324953781">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:17 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 7/15</strong>: 💰 Calculating budget and spending impacts...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337805634277587">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:17 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 8/15</strong>: 📉 Modeling economic projections...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337954070822912">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:18 PM</span>
+                    </div>
+                    <div class="message-text">🔄 <strong>Turn 9/15</strong>: 🎯 Synthesizing comprehensive analysis...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337954884386969">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:18 PM</span>
+                    </div>
+                    <div class="message-text">✅ <strong>Economic analysis complete!</strong> Generating detailed report...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385337956558049442">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:18 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00ff00;"><div class="embed-title">📈 Economic Analysis Complete</div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">GDP</div>
+                    <div class="embed-field-value">$27.00 (+1.68%)</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Inflation</div>
+                    <div class="embed-field-value">9.06% (increasing but expected to peak and decline due to policy interventions)</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">Market Sentiment</div>
+                    <div class="embed-field-value">55/100</div>
+                </div>
+                </div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385341416858845364">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/19/2025 07:32 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">📊 Economic Report - 2025-06-20</div><div class="embed-description"><strong>High Inflation Crisis</strong></div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🏛️ GDP</div>
+                    <div class="embed-field-value"><strong>$27.0T</strong> 📈<br>Change: +1.7%<br>Trend: Slowing</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🔥 Inflation Crisis</div>
+                    <div class="embed-field-value"><strong>9.06%</strong> YoY<br>Fed Rate: 0.00%<br>Status: 🚨 Critical</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">😐 Market Sentiment</div>
+                    <div class="embed-field-value">Confidence: 55% (Moderate)<br>Outlook: Cautious</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">👥 Labor Market</div>
+                    <div class="embed-field-value"><strong>3.7%</strong> Unemployment<br>Status: Normal</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">📈 Stock Market</div>
+                    <div class="embed-field-value">Trend: 📉 Bearish<br>Volatility: 🌪️ Very High<br>Stocks: 25 active</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>Real economic data • Integrated with stock market system</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385600167993937930">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/20/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1385600168035876914/stock_market_analysis_hourly_analysis.json?ex=68df1b77&is=68ddc9f7&hm=42256af8bf369f3d6b03164c933c0f1a67545af26b416f460d64692fc098de5d&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.5 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385681290405089450">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/20/2025 06:02 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">📊 Economic Report - 2025-06-20</div><div class="embed-description"><strong>High Inflation Crisis</strong></div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🏛️ GDP</div>
+                    <div class="embed-field-value"><strong>$27.0T</strong> 📈<br>Change: +1.7%<br>Trend: Slowing</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🔥 Inflation Crisis</div>
+                    <div class="embed-field-value"><strong>9.06%</strong> YoY<br>Fed Rate: 0.00%<br>Status: 🚨 Critical</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">😐 Market Sentiment</div>
+                    <div class="embed-field-value">Confidence: 55% (Moderate)<br>Outlook: Cautious</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">👥 Labor Market</div>
+                    <div class="embed-field-value"><strong>3.7%</strong> Unemployment<br>Status: Normal</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">📈 Stock Market</div>
+                    <div class="embed-field-value">Trend: 📈 Bullish<br>Volatility: 🌊 Moderate<br>Stocks: 25 active</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>Real economic data • Integrated with stock market system</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385684102010900481">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/20/2025 06:13 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">⚙️ Stock Market Admin Hub</div><div class="embed-description">Administrative controls for stock market management</div><div class="embed-fields">
+                <div class="embed-field ">
+                    <div class="embed-field-name">📊 System Status</div>
+                    <div class="embed-field-value"><strong>Scheduler</strong>: ✅ Running<br><strong>Market Day</strong>: 2025-06-20<br><strong>Update Rate</strong>: 60 minutes<br><br><strong>Market Parameters:</strong><br>Trend: +0.41<br>Volatility: 0.35<br>Sentiment: 0.50</div>
+                </div>
+                
+                <div class="embed-field ">
+                    <div class="embed-field-name">🛠️ Admin Controls</div>
+                    <div class="embed-field-value">• <strong>Start/Stop</strong> - Control market scheduler<br>• <strong>View Status</strong> - Detailed scheduler status<br>• <strong>Force Update</strong> - Trigger immediate analysis<br>• <strong>Market Parameters</strong> - Adjust market behavior<br>• <strong>Add Stock</strong> - Add new stocks to market<br>• <strong>Sync Economy</strong> - Sync with economic data<br>• <strong>Save Structure</strong> - Save current market structure to disk<br>• <strong>Clear History</strong> - Clear price history<br>• <strong>Toggle Admin Trading</strong> - Restrict trading<br>• <strong>Stock Details</strong> - View detailed stock parameters<br>• <strong>Peek Future</strong> - Preview future price movements<br>• <strong>Debug Info</strong> - View system internals</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>⚠️ Admin controls - use with caution</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385684141651001478">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/20/2025 06:14 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00ff88;"><div class="embed-title">✅ AI Market Analysis Complete</div><div class="embed-description">All stock prices updated based on fresh AI analysis</div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">📊 Market Parameters</div>
+                    <div class="embed-field-value"><strong>Trend</strong>: +0.340 📈<br><strong>Volatility</strong>: 1.000 🌪️<br><strong>Momentum</strong>: 0.440 ⚡<br><strong>Sentiment</strong>: 0.550 😐<br><strong>Outlook</strong>: 0.530 🌤️</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">📈 Update Summary</div>
+                    <div class="embed-field-value"><strong>Total Stocks</strong>: 25<br><strong>Analysis Time</strong>: 2025-06-20T18:14:35.434079+00:00<br><strong>Market Status</strong>: 🟢 Open</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>AI analysis complete • Prices updated • Trading active</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385684271150403656">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/20/2025 06:14 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1385684271682949191/stock_market_analysis_hourly_analysis.json?ex=68df69cb&is=68de184b&hm=3d140502e10affcff84cceb0896bd08c60f2d72af3ed1ceb04863e08cc5679b5&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">7.2 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385692472658624614">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/20/2025 06:47 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1385692473103487016/stock_market_analysis_hourly_analysis.json?ex=68df716e&is=68de1fee&hm=3dd16cdc68dbbcd2335ba8ce3c8212ed4c9f530ced7b1ac46917ea4259ad0ca4&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.9 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385962551246061608">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/21/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1385962551266770994/stock_market_analysis_hourly_analysis.json?ex=68df1b76&is=68ddc9f6&hm=5d34466d06bcee340ececc6acc1080dd1dbeab20db02d7f59b318df46b750c40&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.8 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1386324938775859340">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/22/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1386324938805350490/stock_market_analysis_hourly_analysis.json?ex=68df1b76&is=68ddc9f6&hm=0f4a02f1daac02fcb94d38e376241daa79f63094288877febd2662536f2b5cda&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.7 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1386687339484549122">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/23/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1386687339744460840/stock_market_analysis_hourly_analysis.json?ex=68df1b79&is=68ddc9f9&hm=cac57f76c70252f02111182763b97307ec136f4ee30efe7824046c402e6bd317&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.6 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1387049727216058520">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/24/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1387049727345950831/stock_market_analysis_hourly_analysis.json?ex=68df1b79&is=68ddc9f9&hm=e6fa22e2e9f54b7e710ab7fc05b59798ad23f2f97c2e327c3f0c82bb4965c21c&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.9 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1387281246991941713">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/25/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1387281247536939058/stock_market_analysis_hourly_analysis.json?ex=68df4a57&is=68ddf8d7&hm=b8e8934b6c5cc7c3478f21eaa8362262752f1b0e401cf751359d3d2dede33a01&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.4 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1387643646416785628">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/26/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1387643646458855506/stock_market_analysis_hourly_analysis.json?ex=68df4a5a&is=68ddf8da&hm=9da4cedd4b6a3062dbee12539cab13361baa0ac43c07b64539d30f019676f069&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.6 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1387774496865255624">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/26/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1387774496907333753/stock_market_analysis_hourly_analysis.json?ex=68df1b77&is=68ddc9f7&hm=370900da47672f9d432e129d1d6252246f0423d00bb244d487356a2c367fec87&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.2 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1388255083703042138">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/27/2025 08:30 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1388255083782996142/stock_market_analysis_hourly_analysis.json?ex=68df898c&is=68de380c&hm=1d8f941449747bd82601d7d3adb836dcc0837d8990d5b8b7aa429f81e7f10020&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.2 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1388575355480314007">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/28/2025 05:42 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1388575355597492385/stock_market_analysis_hourly_analysis.json?ex=68df6253&is=68de10d3&hm=e04dafd335ad15d8398ffe3bef602e8d66525fbe25323b3f6dd5b75f3be0337d&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.4 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1388730801667047587">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/29/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1388730801826304092/stock_market_analysis_hourly_analysis.json?ex=68df4a58&is=68ddf8d8&hm=8ef5c11e2ff7ef0ea7c1049317c8389ae1996560009ddbdf0e8cbae0d1e8946c&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.4 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1388861667135455375">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/29/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1388861667181465711/stock_market_analysis_hourly_analysis.json?ex=68df1b79&is=68ddc9f9&hm=7844a2ea90b47f0d8a181ef45abc40dff37e926f00e8cc24c92f13b1a38777df&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.9 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1389093193353662524">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/30/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1389093193399668736/stock_market_analysis_hourly_analysis.json?ex=68df4a59&is=68ddf8d9&hm=4233fc57d7a4909bb09e298dde9e17b85bdfe2afeca31efdf44e6bb3bbf82b9a&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.9 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1389224061099442198">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">06/30/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1389224061216886945/stock_market_analysis_hourly_analysis.json?ex=68df1b7a&is=68ddc9fa&hm=15dea3c05c5a9f5ee5f2729030c70f72a780b06877ea7a15f728570901227f58&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.4 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1389455575846227999">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/01/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1389455575875850303/stock_market_analysis_hourly_analysis.json?ex=68df4a58&is=68ddf8d8&hm=4bb13ece79afaa9e4a02c1031b8c65c7030d0471a40fc198273d485dc4582055&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.3 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1389586443546005525">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/01/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1389586443600396408/stock_market_analysis_hourly_analysis.json?ex=68df1b79&is=68ddc9f9&hm=c5f23466dfe4b74086f575e2cdbba91fb6c631becaa7ed4eecae4d47d3adab70&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.5 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1389817989142155295">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/02/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1389817989209002066/stock_market_analysis_hourly_analysis.json?ex=68df4a5e&is=68ddf8de&hm=739e142d11a6569824d6e05539d937d111ac13ff06cabc16f1070a7e6f889ef1&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">7.0 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1389948853360525435">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/02/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1389948853402337290/stock_market_analysis_hourly_analysis.json?ex=68df1b7e&is=68ddc9fe&hm=b35d600d84e5ac146b3e12b8120b2bc29ad8ede199a7b33079ccc91ca0dd8480&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">7.2 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1390180361157480598">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/03/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1390180361262075954/stock_market_analysis_hourly_analysis.json?ex=68df4a5a&is=68ddf8da&hm=d22e13a2f68fed292409f30de17327d217b2bc3a5a0cd1e98ac8ff48ba9291cd&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.7 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1390311230417408013">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/03/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1390311230769594368/stock_market_analysis_hourly_analysis.json?ex=68df1b7c&is=68ddc9fc&hm=a4b83fba0b1e7cfe202412afbdef7300685fbfaf742854e645f4774fa2a76b88&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.5 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1390557852397211719">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/04/2025 05:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1390557852476772434/stock_market_analysis_hourly_analysis.json?ex=68df586b&is=68de06eb&hm=8ea7df503b6fe5cd1f250fa5c09532ea1c34b935ab43011642ef6733fcd98cd6&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.6 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1390673609923756033">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/04/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1390673610158505995/stock_market_analysis_hourly_analysis.json?ex=68df1b7a&is=68ddc9fa&hm=e8404a31588ca86662c11735d14c549fc1f2b421a4e2ea7fea7d1ab141049147&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">6.6 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1394906481576513658">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/16/2025 05:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1394906481647812639/stock_market_analysis_hourly_analysis.json?ex=68df5865&is=68de06e5&hm=b8c729d62e8983d20be3c25bda188a3c60f9fce82ecefd71a49862c2b0f44620&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">5.2 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1395024831040192582">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/16/2025 12:50 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1395024831069814834/stock_market_analysis_hourly_analysis.json?ex=68df1dde&is=68ddcc5e&hm=3bf138dd278f4c9349807eb9cec6f9d8c043fe44be9c217ab016a8320980501c&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.6 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1395268864346034279">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/17/2025 05:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1395268864383909898/stock_market_analysis_hourly_analysis.json?ex=68df5864&is=68de06e4&hm=a9df6d889f6658fb67edb58936c506002cfe7091192e8dbd57693d48a571a06a&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">5.0 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1395384986911375380">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/17/2025 12:41 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1395384986953187328/stock_market_analysis_hourly_analysis.json?ex=68df1bc9&is=68ddca49&hm=c4a055ff480b98f9d1311ed039c8d9d729a064274e8d1de0a88e9270dc10de2d&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.7 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1395616149219180584">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/18/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1395616149240156342/stock_market_analysis_hourly_analysis.json?ex=68df4a53&is=68ddf8d3&hm=8bc074624982aac4e3a0fa6f86f3fc5f0e11946616949e26b5a0b65f417c892d&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.5 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1395747007657803907">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/18/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1395747007687299109/stock_market_analysis_hourly_analysis.json?ex=68df1b72&is=68ddc9f2&hm=31e0b7971a39dcdab0dc3bda7558813c9c1fc806eaf40035d9b6110692b8e813&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.9 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1395993641465548891">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/19/2025 05:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1395993641511813242/stock_market_analysis_hourly_analysis.json?ex=68df5864&is=68de06e4&hm=3c0bbe5268aaddc605072e8d2b6e00de3e2bf11f10147f2adb25f3659bad30a0&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.6 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396109393002500187">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/19/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1396109393132785806/stock_market_analysis_hourly_analysis.json?ex=68df1b71&is=68ddc9f1&hm=e5834501f10f96a2baacc12903bea2053b5e77c021e74341c0c5a9d7cd733374&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.6 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396330299859665066">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/20/2025 03:18 AM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396330301692710952">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/20/2025 03:18 AM</span>
+                    </div>
+                    <div class="message-text">``<code>json<br>{<br>  &quot;timestamp&quot;: &quot;2025-07-20T03:18:05.720854+00:00&quot;,<br>  &quot;ai_raw_response&quot;: {<br>    &quot;parameters&quot;: {<br>      &quot;long_term_outlook&quot;: 0.52,<br>      &quot;market_sentiment&quot;: 0.57,<br>      &quot;momentum&quot;: 0.71,<br>      &quot;trend_direction&quot;: 0.05,<br>      &quot;volatility&quot;: 1.05<br>    },<br>    &quot;reasoning&quot;: {<br>      &quot;market_outlook&quot;: &quot;The market outlook is cautiously optimistic. GDP growth is positive, but inflation remains high, creating volatility. Discord activity is moderate, with a slight positive tone, contributing to a neutral-to-slightly bullish sentiment. The long-term outlook is adjusted slightly upwards to reflect continued economic growth, but inflationary pressures remain a concern.&quot;<br>    }<br>  },<br>  &quot;parsed_analysis&quot;: {<br>    &quot;market_params&quot;: {},<br>    &quot;invisible_factors&quot;: {},<br>    &quot;daily_ranges&quot;: {},<br>    &quot;sector_outlooks&quot;: {}<br>  },<br>  &quot;previous_market_params&quot;: {<br>    &quot;trend_direction&quot;: 0.04,<br>    &quot;volatility&quot;: 1.0,<br>    &quot;momentum&quot;: 0.69,<br>    &quot;market_sentiment&quot;: 0.56,<br>    &quot;long_term_outlook&quot;: 0.515<br>  },<br>  &quot;messages_analyzed&quot;: 119,<br>  &quot;analysis_type&quot;: &quot;Stock Market Daily Analysis&quot;<br>}<br></code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396356021815087126">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/20/2025 05:00 AM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396356023597662371">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/20/2025 05:00 AM</span>
+                    </div>
+                    <div class="message-text">``<code>json<br>{<br>  &quot;timestamp&quot;: &quot;2025-07-20T05:00:18.386820+00:00&quot;,<br>  &quot;ai_raw_response&quot;: {<br>    &quot;parameters&quot;: {<br>      &quot;long_term_outlook&quot;: 0.52,<br>      &quot;market_sentiment&quot;: 0.57,<br>      &quot;momentum&quot;: 0.71,<br>      &quot;trend_direction&quot;: 0.05,<br>      &quot;volatility&quot;: 1.05<br>    },<br>    &quot;reasoning&quot;: {<br>      &quot;market_outlook&quot;: &quot;The market is facing inflationary pressures, but GDP growth and low unemployment provide some support. Discord activity suggests a slightly positive sentiment, but overall uncertainty remains high. The trend direction is slightly positive due to GDP growth, but volatility is increased due to inflation. Long-term outlook is cautiously optimistic.&quot;<br>    }<br>  },<br>  &quot;parsed_analysis&quot;: {<br>    &quot;market_params&quot;: {},<br>    &quot;invisible_factors&quot;: {},<br>    &quot;daily_ranges&quot;: {},<br>    &quot;sector_outlooks&quot;: {}<br>  },<br>  &quot;previous_market_params&quot;: {<br>    &quot;trend_direction&quot;: 0.04,<br>    &quot;volatility&quot;: 1.0,<br>    &quot;momentum&quot;: 0.69,<br>    &quot;market_sentiment&quot;: 0.56,<br>    &quot;long_term_outlook&quot;: 0.515<br>  },<br>  &quot;messages_analyzed&quot;: 128,<br>  &quot;analysis_type&quot;: &quot;Stock Market Daily Analysis&quot;<br>}<br></code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396471772735471626">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/20/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396471773775659171">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/20/2025 12:40 PM</span>
+                    </div>
+                    <div class="message-text">``<code>json<br>{<br>  &quot;timestamp&quot;: &quot;2025-07-20T12:40:15.517382+00:00&quot;,<br>  &quot;ai_raw_response&quot;: {<br>    &quot;parameters&quot;: {<br>      &quot;long_term_outlook&quot;: 0.52,<br>      &quot;market_sentiment&quot;: 0.57,<br>      &quot;momentum&quot;: 0.71,<br>      &quot;trend_direction&quot;: 0.05,<br>      &quot;volatility&quot;: 1.1<br>    },<br>    &quot;reasoning&quot;: {<br>      &quot;market_outlook&quot;: &quot;The market is facing headwinds from high inflation, but GDP growth and a relatively low unemployment rate provide some support. Discord activity is moderately positive, reflecting some optimism. The trend direction is slightly positive, but volatility is increased due to economic uncertainty. Long-term outlook is cautiously optimistic, with a slight upward adjustment.&quot;<br>    }<br>  },<br>  &quot;parsed_analysis&quot;: {<br>    &quot;market_params&quot;: {},<br>    &quot;invisible_factors&quot;: {},<br>    &quot;daily_ranges&quot;: {},<br>    &quot;sector_outlooks&quot;: {}<br>  },<br>  &quot;previous_market_params&quot;: {<br>    &quot;trend_direction&quot;: 0.04,<br>    &quot;volatility&quot;: 1.0,<br>    &quot;momentum&quot;: 0.69,<br>    &quot;market_sentiment&quot;: 0.56,<br>    &quot;long_term_outlook&quot;: 0.515<br>  },<br>  &quot;messages_analyzed&quot;: 126,<br>  &quot;analysis_type&quot;: &quot;Stock Market Daily Analysis&quot;<br>}<br></code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396535931569180814">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/20/2025 04:55 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1396535931632091357/stock_market_analysis_hourly_analysis.json?ex=68df5730&is=68de05b0&hm=b40f4d3a657aebc472eb6e71064d3cde06bec3f0cc2d93e6b7ce66d76568987c&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.7 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396718441632895009">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/21/2025 05:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1396718442114977846/stock_market_analysis_hourly_analysis.json?ex=68df586a&is=68de06ea&hm=7cd5497640a967e5f090d7b5ebba771b8ac027f8607c29df73bc66fa3d9d91a6&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.9 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1396834203072729229">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/21/2025 12:40 PM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1396834203424788662/stock_market_analysis_hourly_analysis.json?ex=68df1b7a&is=68ddc9fa&hm=df064d0d10a30f1fa582e91d34459a0591e0c777e034b36ce4f7dfa7198b4e83&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.5 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1397065718402646237">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/22/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1397065718461108284/stock_market_analysis_hourly_analysis.json?ex=68df4a57&is=68ddf8d7&hm=9e6f579ee951924f5c359d787d786686c0445c733d76dbaef5ec489d8c7696d0&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.7 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1397428134101651559">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/23/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1397428134348849252/stock_market_analysis_hourly_analysis.json?ex=68df4a5e&is=68ddf8de&hm=121fc6c63dbab778b38e020a656499f6edbd5e8831e73a1b8baf498c79472b63&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.5 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1397790511582150783">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1383951043339227167/7e3369fad892d357f67c363b76fe5e75.png?size=1024" alt="VCBot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">VCBot</span>
+                        <span class="message-timestamp">07/24/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+            <div class="attachment file-attachment">
+                <div class="attachment-info">
+                    <a href="https://cdn.discordapp.com/attachments/1385322968803971244/1397790512043266240/stock_market_analysis_hourly_analysis.json?ex=68df4a5b&is=68ddf8db&hm=48b29ebaead2d7eeaf657aedabfe6ef4427d10580fe41f407875f08b76fda181&" target="_blank" class="attachment-link">
+                        📎 stock_market_analysis_hourly_analysis.json
+                    </a>
+                    <span class="attachment-size">4.9 KB</span>
+                </div>
+            </div>
+            
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Stock Market Analysis (Hourly) JSON Output</div><div class="embed-description">Full analysis data from Stock Market Analysis (Hourly)</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1398708375314759872">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/26/2025 04:47 PM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Daily Market Analysis JSON Output</div><div class="embed-description">Full analysis data from Daily Market Analysis</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1398708377626083418">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/26/2025 04:47 PM</span>
+                    </div>
+                    <div class="message-text">``<code>json<br>{<br>  &quot;parameters&quot;: {<br>    &quot;trend_direction&quot;: -0.035446799713515054,<br>    &quot;volatility&quot;: 0.5118261604721799,<br>    &quot;momentum&quot;: 0.34274694972264047,<br>    &quot;market_sentiment&quot;: 0.40693550879334034,<br>    &quot;long_term_outlook&quot;: 0.432576538863701<br>  },<br>  &quot;invisible_factors&quot;: {<br>    &quot;institutional_flow&quot;: 0.0,<br>    &quot;liquidity_factor&quot;: 0.7,<br>    &quot;news_velocity&quot;: 0.3,<br>    &quot;sector_rotation&quot;: 0.0,<br>    &quot;risk_appetite&quot;: 0.5<br>  },<br>  &quot;reasoning&quot;: {<br>    &quot;market_outlook&quot;: &quot;Baseline analysis - gradual parameter evolution without external data&quot;,<br>    &quot;confidence&quot;: &quot;low&quot;<br>  },<br>  &quot;stocks&quot;: {}<br>}<br></code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1398877628030779442">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/27/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Daily Market Analysis JSON Output</div><div class="embed-description">Full analysis data from Daily Market Analysis</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1398877629322363052">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/27/2025 04:00 AM</span>
+                    </div>
+                    <div class="message-text">``<code>json<br>{<br>  &quot;parameters&quot;: {<br>    &quot;trend_direction&quot;: -0.03,<br>    &quot;volatility&quot;: 0.58,<br>    &quot;momentum&quot;: 0.28,<br>    &quot;market_sentiment&quot;: 0.38,<br>    &quot;long_term_outlook&quot;: 0.43<br>  },<br>  &quot;invisible_factors&quot;: {<br>    &quot;institutional_flow&quot;: 0.0,<br>    &quot;liquidity_factor&quot;: 0.7,<br>    &quot;news_velocity&quot;: 0.3,<br>    &quot;sector_rotation&quot;: 0.0,<br>    &quot;risk_appetite&quot;: 0.5<br>  },<br>  &quot;reasoning&quot;: {<br>    &quot;market_outlook&quot;: &quot;Activity revolves around political simulations with the introduction of IR sites and election news. Discussions around bills and infrastructure could increase investor interest, but general uncertainty and the role-playing nature of the discussion temper strong reactions. I have increased volatility and market sentiment slightly due to announcements, while the slight adjustments elsewhere accommodate the overall feel.&quot;,<br>    &quot;confidence&quot;: &quot;medium&quot;<br>  },<br>  &quot;stocks&quot;: {},<br>  &quot;ai_enhanced&quot;: true,<br>  &quot;messages_analyzed&quot;: 50<br>}<br></code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1399240001031508008">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/28/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Daily Market Analysis JSON Output</div><div class="embed-description">Full analysis data from Daily Market Analysis</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1399240001811648542">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/28/2025 04:00 AM</span>
+                    </div>
+                    <div class="message-text">``<code>json<br>{<br>  &quot;parameters&quot;: {<br>    &quot;trend_direction&quot;: -0.032,<br>    &quot;volatility&quot;: 0.5033772399266134,<br>    &quot;momentum&quot;: 0.229,<br>    &quot;market_sentiment&quot;: 0.35526817881920925,<br>    &quot;long_term_outlook&quot;: 0.42<br>  },<br>  &quot;invisible_factors&quot;: {<br>    &quot;institutional_flow&quot;: 0.0,<br>    &quot;liquidity_factor&quot;: 0.7,<br>    &quot;news_velocity&quot;: 0.3,<br>    &quot;sector_rotation&quot;: 0.0,<br>    &quot;risk_appetite&quot;: 0.5<br>  },<br>  &quot;reasoning&quot;: {<br>    &quot;market_outlook&quot;: &quot;Discord activity reflects significant political debate and infighting, particularly regarding S.7. Staff changes could introduce uncertainty. Increased political tension typically increases volatility and decreases overall market sentiment/long-term outlook slightly. Slightly lowered trend direction to reflect the increased uncertainty.&quot;,<br>    &quot;confidence&quot;: &quot;medium&quot;<br>  },<br>  &quot;stocks&quot;: {},<br>  &quot;ai_enhanced&quot;: true,<br>  &quot;messages_analyzed&quot;: 94<br>}<br></code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1399602416235581562">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/29/2025 04:00 AM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #00aaff;"><div class="embed-title">📈 Daily Market Analysis JSON Output</div><div class="embed-description">Full analysis data from Daily Market Analysis</div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1399602417279959100">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/29/2025 04:00 AM</span>
+                    </div>
+                    <div class="message-text">``<code>json<br>{<br>  &quot;parameters&quot;: {<br>    &quot;trend_direction&quot;: -0.033800000000000004,<br>    &quot;volatility&quot;: 0.5439051664607146,<br>    &quot;momentum&quot;: 0.18820000000000003,<br>    &quot;market_sentiment&quot;: 0.3229747325998096,<br>    &quot;long_term_outlook&quot;: 0.41<br>  },<br>  &quot;invisible_factors&quot;: {<br>    &quot;institutional_flow&quot;: 0.0,<br>    &quot;liquidity_factor&quot;: 0.7,<br>    &quot;news_velocity&quot;: 0.3,<br>    &quot;sector_rotation&quot;: 0.0,<br>    &quot;risk_appetite&quot;: 0.5<br>  },<br>  &quot;reasoning&quot;: {<br>    &quot;market_outlook&quot;: &quot;The Discord data indicates a slightly negative sentiment due to lower approval ratings of federal figures and states approval, as well as general dissatisfaction within the country. Increased discussion about potential candidates increases volatility while decreasing the long term outlook. Momentum is slightly up due to upcoming elections.&quot;,<br>    &quot;confidence&quot;: &quot;medium&quot;<br>  },<br>  &quot;stocks&quot;: {},<br>  &quot;ai_enhanced&quot;: true,<br>  &quot;messages_analyzed&quot;: 137<br>}<br></code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1400026255704719381">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">07/30/2025 08:04 AM</span>
+                    </div>
+                    
+                    
+                    <div class="embed" style="border-left: 4px solid #ff6b6b;"><div class="embed-title">📊 Economic Report - 2025-07-30</div><div class="embed-description"><strong>High Inflation Crisis</strong></div><div class="embed-fields">
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🏛️ GDP</div>
+                    <div class="embed-field-value"><strong>N/A</strong></div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">🔥 Inflation Crisis</div>
+                    <div class="embed-field-value"><strong>8.82%</strong> YoY<br>Fed Rate: 0.00%<br>Status: 🚨 Critical</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">😐 Market Sentiment</div>
+                    <div class="embed-field-value">Confidence: 70% (Moderate)<br>Inflation Anxiety: 60%<br>Outlook: Cautious</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">👥 Labor Market</div>
+                    <div class="embed-field-value"><strong>2.7%</strong> Unemployment<br>Status: Tight</div>
+                </div>
+                
+                <div class="embed-field inline">
+                    <div class="embed-field-name">📈 Stock Market</div>
+                    <div class="embed-field-value">Trend: 📉 Bearish<br>Volatility: 🌊 High<br>Stocks: 25 active</div>
+                </div>
+                </div>
+            <div class="embed-footer">
+                
+                <span>Real economic data • Integrated with stock market system</span>
+            </div>
+            </div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1423233237064613979">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">10/02/2025 09:00 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <script>
+        // Add click handlers for images
+        document.querySelectorAll('.attachment img, .embed-image').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

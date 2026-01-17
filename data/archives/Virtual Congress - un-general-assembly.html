@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#un-general-assembly - Virtual Congress</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #36393f; color: #dcddde; font-family: Arial, sans-serif; font-size: 16px; }
+        .header { background-color: #2f3136; padding: 16px; border-bottom: 1px solid #202225; }
+        .channel-name { font-size: 24px; font-weight: bold; color: #ffffff; }
+        .guild-name { font-size: 14px; color: #b9bbbe; margin-top: 4px; }
+        .archive-info { font-size: 12px; color: #72767d; margin-top: 8px; padding: 8px; background-color: #202225; border-radius: 4px; }
+        .messages { padding: 16px; max-width: 1200px; margin: 0 auto; }
+        .message { padding: 8px 16px 8px 72px; margin-top: 8px; position: relative; min-height: 40px; }
+        .message:hover { background-color: rgba(4, 4, 5, 0.07); }
+        .avatar { position: absolute; left: 16px; top: 8px; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        .username { font-weight: 500; color: #ffffff; font-size: 16px; margin-right: 8px; }
+        .bot-badge { background-color: #5865f2; color: #ffffff; font-size: 10px; padding: 2px 4px; border-radius: 3px; margin-left: 4px; font-weight: 600; }
+        .timestamp { color: #72767d; font-size: 12px; cursor: help; }
+        .edited { color: #72767d; font-size: 10px; margin-left: 4px; }
+        .content { color: #dcddde; margin-top: 4px; word-wrap: break-word; }
+        .reply { background-color: #2e3338; border-left: 4px solid #4e5058; padding: 4px 8px; margin-bottom: 4px; border-radius: 3px; font-size: 14px; }
+        .reply .reply-author { color: #00b0f4; font-weight: 500; }
+        .reply .reply-content { color: #b9bbbe; margin-top: 2px; }
+        .attachment { margin-top: 8px; max-width: 400px; }
+        .attachment img { max-width: 100%; border-radius: 4px; }
+        .reactions { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+        .reaction { background-color: #2f3136; border: 1px solid #202225; border-radius: 4px; padding: 4px 8px; font-size: 14px; display: inline-flex; align-items: center; gap: 4px; }
+        .reaction:hover { background-color: #36393f; border-color: #72767d; }
+        .reaction-count { color: #b9bbbe; font-size: 12px; }
+        .embed { background-color: #2f3136; border-left: 4px solid #202225; border-radius: 4px; padding: 8px 12px; margin-top: 8px; max-width: 520px; }
+        .embed-author { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .embed-author-icon { width: 24px; height: 24px; border-radius: 50%; }
+        .embed-author-name { color: #ffffff; font-weight: 500; font-size: 14px; }
+        .embed-title { color: #00b0f4; font-weight: 600; font-size: 16px; margin-bottom: 4px; }
+        .embed-description { color: #dcddde; font-size: 14px; margin-bottom: 8px; }
+        .embed-field { margin-bottom: 8px; }
+        .embed-field-name { color: #ffffff; font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+        .embed-field-value { color: #b9bbbe; font-size: 14px; }
+        .embed-footer { color: #72767d; font-size: 12px; margin-top: 8px; }
+        .embed-image { max-width: 100%; border-radius: 4px; margin-top: 8px; }
+        .embed-thumbnail { max-width: 80px; max-height: 80px; border-radius: 4px; float: right; margin-left: 16px; }
+        .sticker { margin-top: 8px; }
+        .sticker img { max-width: 160px; max-height: 160px; }
+        .message-id { color: #72767d; font-size: 10px; margin-top: 4px; font-family: monospace; }
+        a { color: #00b0f4; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background-color: #2f3136; padding: 2px 4px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="channel-name">#un-general-assembly</div>
+        <div class="guild-name">Virtual Congress</div>
+        
+        <div class="archive-info">
+            📁 Archive created by chloe on November 26, 2025 at 10:29 AM • 77 messages
+        </div>
+        
+    </div>
+    <div class="messages">
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 12:40:09 AM">12:40 AM</span>
+  <div class="content"><strong>General Assembly Called to Order</strong></div>
+  <div class="message-id">ID: 1092609521463074876</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 12:40:41 AM">12:40 AM</span>
+  <div class="content">Excellencies, Ladies and Gentlemen, the 1st plenary meeting of this General Assembly is called to order. &lt;:Hammertime2:919612128376283156&gt;</div>
+  <div class="reactions">
+    <div class="reaction" title="2 reaction(s)">
+      <span>&lt;:emoji_8:688234047201214690&gt;</span>
+      <span class="reaction-count">2</span>
+    </div>
+  </div>
+  <div class="message-id">ID: 1092609653155840042</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 12:41:11 AM">12:41 AM</span>
+  <div class="content">Delegates are kindly requested to take their seats.</div>
+  <div class="message-id">ID: 1092609779563761786</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 12:45:14 AM">12:45 AM</span>
+  <div class="content">Before proceeding to the general debate, as announced in the Journal, the General Assembly will hear an introduction by the Secretary-General. Under agenda item 113, in accordance with resolution 51/241, and notwithstanding of provisions in decision 77/504, we shall proceed accordingly. :HammerTime:</div>
+  <div class="message-id">ID: 1092610798272135228</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 12:46:07 AM">12:46 AM</span>
+  <div class="content">Now I give the floor to His Excellency, the Secretary General of the United Nations, Mr. António Guterres.</div>
+  <div class="message-id">ID: 1092611020717051904</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 12:54:56 AM">12:54 AM</span>
+  <div class="content">Excellencies, ladies and gentlemen. I thank you all for attending our first general debate period in many years. Unfortunately, after the mass political turmoil in December of 2019, this assembly was unable to meet for quite some time. However, I am more than proud to welcome you all back to this hallowed hall here in New York.<br><br>This world is in trouble. With divisions growing deeper, and conflicts becoming more violent, we must work together to ensure a peace for our children and our children&#x27;s children. Hopefully, the United Nations can be a forum for all of our member states to discuss and compromise, and find a way forward together, as opposed to continual opposition. Climate change is not stopping, food inequality is worsening, and human rights abuses continue to increase. Together, and not alone, we can put an end to this.<br><br>I hope that the United Nations can be a beacon of hope for those seeking peace and compromise, to put an end to the turmoil of the international stage of this troubled world. Thank you and I yield back.</div>
+  <div class="message-id">ID: 1092613241257078866</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 12:59:49 AM">12:59 AM</span>
+  <div class="content">Thank you, your Excellency.</div>
+  <div class="message-id">ID: 1092614470272032879</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 01:06:05 AM">01:06 AM</span>
+  <div class="content">I now recognize His Excellency, the Minister of External Affairs of India, Subrahmanyam Jaishankar.</div>
+  <div class="message-id">ID: 1092616046382415902</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/28d6513ee8f53ca8423c939ed270277f.png?size=1024" alt="Minister Jaishankar">
+  <div class="username">Minister Jaishankar<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 01:15:56 AM">01:15 AM</span>
+  <div class="content">Thank you Mr. President.</div>
+  <div class="message-id">ID: 1092618524100407448</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/28d6513ee8f53ca8423c939ed270277f.png?size=1024" alt="Minister Jaishankar">
+  <div class="username">Minister Jaishankar<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 01:27:40 AM">01:27 AM</span>
+  <div class="content">Your excellencies, and honorable delegates.</div>
+  <div class="message-id">ID: 1092621479646081166</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/28d6513ee8f53ca8423c939ed270277f.png?size=1024" alt="Minister Jaishankar">
+  <div class="username">Minister Jaishankar<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 01:28:13 AM">01:28 AM</span>
+  <div class="content">All member states of this august body have given the Security Council the primary responsibility for the maintenance of international peace and security. The Security Council acts on this body&#x27;s behalf. Empowered to protect international peace and security, the Council has embraced this role with the powers given to it by the Charter. As you all know, in recent years the power of the veto has taken the attention of the world, being used more and more to the likings of the Permanent Members. The veto power comes with the responsibility to work to achieve the purposes and principles of the UN Charter at all times. On behalf of the Republic of India and the non-aligned nations of the world, we express our growing concern that the Council has begun to face incredible difficulties in its work and line of duty. Of these difficulties, politiking, political maneuvering, and of which the increase in the use of the veto is but the most obvious expression. We are, therefore, of the view that the membership as a whole should be given a voice when the Security Council is unable to act, in accordance with this Assembly&#x27;s functions and powers reflected in the Charter. This is why the Republic of India is proposing a resolution which will be brought forward to a vote in this Assembly mandating that the General Assembly meet at least ten days after a veto is issued by the Permanent Members, both to comment and express formal disapproval or approval to the Security Council, making the voices of the silenced nations loud once more. This however, should not be seen as a permanent solution, as it is the opinion of the Republic of India that the only way to remedy what ails the Security Council is to make it more representative, credible and legitimate by including more underrepresented voices, including from developing countries and Africa. I sincerely hope other nations will join with us in our goals of reform. <br><br>Thank you, and I yield back.</div>
+  <div class="message-id">ID: 1092621617965826130</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 01:44:02 AM">01:44 AM</span>
+  <div class="content">Thank you, your Excellency.</div>
+  <div class="message-id">ID: 1092625597001384056</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="April 04, 2023 at 02:25:59 AM">02:25 AM</span>
+  <div class="content">I now recognize His Excellency, the Secretary of State of the United States of America, José Battle.</div>
+  <div class="message-id">ID: 1092636155293466654</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/307697755646722048/eba4ba4acce6e826a725f285ec02e4ac.png?size=1024" alt="Battleaxzes">
+  <div class="username">Battleaxzes</div>
+  <span class="timestamp" title="April 04, 2023 at 02:29:59 AM">02:29 AM</span>
+  <span class="edited" title="Edited: April 04, 2023 at 02:33:24 AM">(edited)</span>
+  <div class="content">Representatives, diplomats, ladies and gentlemen of the great United Nations, I am humbled and honored to be speaking before a gathering of the worlds greatest heads of state and leaders, in an assembly to bolster diplomacy around the globe. I’d like to open this by speaking briefly on some of the major issues plaguing the world, the Ukraine-Russia skirmishes need to be brought to an end before these conflicts turn into a deadly invasion. I call on Sergey Lavrov to act on this encroachment executed by Russia, and speak with the Russian President immediately. <br><br>The next matter I’d like to speak on is the Ugandan Genocide of the LGBTQ+ individuals, regardless of what you claim to be culture, this is a blatant violation of human rights, and the United States will not stand for it. Minister Odongo, it’s time for action, we made you an offer and you completely rejected it without a passing glance, your country will cease this malevolent regard for human rights, this is not the end of discussion. <br><br>    <br>Thank you, your excellencies, ladies, and gentlemen for allowing me to speak before you all, and I look forward to week ahead, a week of diplomacy and action.<br><br>I yield back.</div>
+  <div class="message-id">ID: 1092637159707639818</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="August 23, 2023 at 05:28:29 AM">05:28 AM</span>
+  <div class="content"><strong>General Assembly Called to Order</strong></div>
+  <div class="message-id">ID: 1143778770369654804</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="August 23, 2023 at 05:30:45 AM">05:30 AM</span>
+  <div class="content">_sits near podium_</div>
+  <div class="message-id">ID: 1143779340438478888</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="August 23, 2023 at 05:34:29 AM">05:34 AM</span>
+  <div class="content">Excellencies, Ladies and Gentlemen, the 2nd plenary meeting of this General Assembly is called to order. &lt;:HammerTime:712031635331219586&gt; <br><br>Delegates are kindly requested to take their seats. Before proceeding to the general debate, this body may hear any proposed resolutions to be brought before the General Assembly, we shall proceed accordingly. &lt;:HammerTime:712031635331219586&gt;<br><br>Now I give the floor to His Excellency, the Secretary General of the United Nations, Mr. António Guterres.</div>
+  <div class="message-id">ID: 1143780283125076088</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="August 23, 2023 at 05:43:23 AM">05:43 AM</span>
+  <div class="content">Excellencies, ladies and gentlemen. I thank you all for attending the second general debate period after being apart for some time. However, I am more than proud and grateful to welcome you all back to this hallowed hall here in New York.<br><br>Excellencies, our world is facing a deepening divide with conflicts erupting and hostilities being incurred- the potential for more conflicts to come into reality is growing and we all must do our part to ensure peace and stability for our all our posterity. The United Nations can and must be a forum for all our member states to promote compromise, peace, and stability for our time. Climate change must be stopped, inequality from foodstuffs to materialistic goods is worsening and must be addressed, and ever increasing human rights abuses appear before us. Together, we can put an end to the suffering that has plagued our ancestors for centuries. Do it alone, and we all wither and perish. <br><br>Let us be a beacon of greatness and peace for all. Let this United Nations General Assembly do the hard-work to do what must be done for all our children&#x27;s sakes. <br><br>Thank you all and I yield.</div>
+  <div class="message-id">ID: 1143782519989350501</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="August 23, 2023 at 05:43:48 AM">05:43 AM</span>
+  <div class="content">Thank you, your Excellency.</div>
+  <div class="message-id">ID: 1143782626843430922</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/773162875455668234/e6745a6ac1b035c4c46bdec5dde66ca8.png?size=1024" alt="Fmr. Speaker Lockhart">
+  <div class="username">Fmr. Speaker Lockhart</div>
+  <span class="timestamp" title="August 23, 2023 at 08:22:55 AM">08:22 AM</span>
+  <div class="reply">
+    <span class="reply-author">@United Nations Secretariat</span>
+    <div class="reply-content">Thank you, your Excellency.</div>
+  </div>
+  <div class="content">*while sitting near podium presses button asking for recognition*</div>
+  <div class="message-id">ID: 1143822669951795260</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="August 23, 2023 at 08:43:07 AM">08:43 AM</span>
+  <div class="content">I now recognize His Excellency, the United States Ambassador to the United Nations, Daniel Lockhart.</div>
+  <div class="message-id">ID: 1143827752810717305</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/773162875455668234/e6745a6ac1b035c4c46bdec5dde66ca8.png?size=1024" alt="Fmr. Speaker Lockhart">
+  <div class="username">Fmr. Speaker Lockhart</div>
+  <span class="timestamp" title="August 23, 2023 at 10:48:23 AM">10:48 AM</span>
+  <div class="reply">
+    <span class="reply-author">@United Nations Secretariat</span>
+    <div class="reply-content">I now recognize His Excellency, the United States Ambassador to the United Nations, Daniel Lockhart.</div>
+  </div>
+  <div class="content">Excellencies , ladies and gentleman.It is good to be once again assembled so we can focus on solving world problems.I thank Secretary-General for once again reminding us of our goals.We will one day solve them I am absolutely sure.<br><br>Problems arise when our citizens, and by our I mean citizens from almost every part of the world, doubt that our intentions aren’t good when we push our agendas.Even though problems like global warming and inequality from foodstuffs and materialistic goods require immediate and radical actions, citizens aren’t prepared for it and are sceptic their rights would be taken.As the example most of them are scared especially about no-car and limited flight policy.Maybe I am wrong but when the time to execute our agendas, remember Excellencies from all around the world, we would also live under those terms because <strong>we are all equal</strong>.<br><br>Next thing I want to address is the expansion of People’s Republic of China on American continent and economic scene.China is strengthening Yen and trying to depreciate dollar through world trade and I say it openly that we have information of suspicious PRC activity near the United States of America especially Nicaragua. We would like to know what is exactly happening there or If we don’t get transparent information I would be forced to request Security Council Session.</div>
+  <div class="message-id">ID: 1143859276968886332</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/773162875455668234/e6745a6ac1b035c4c46bdec5dde66ca8.png?size=1024" alt="Fmr. Speaker Lockhart">
+  <div class="username">Fmr. Speaker Lockhart</div>
+  <span class="timestamp" title="August 23, 2023 at 10:48:28 AM">10:48 AM</span>
+  <span class="edited" title="Edited: August 23, 2023 at 10:52:36 AM">(edited)</span>
+  <div class="content">Thank you all ,I yield.</div>
+  <div class="message-id">ID: 1143859296266891377</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/773162875455668234/e6745a6ac1b035c4c46bdec5dde66ca8.png?size=1024" alt="Fmr. Speaker Lockhart">
+  <div class="username">Fmr. Speaker Lockhart</div>
+  <span class="timestamp" title="August 23, 2023 at 05:07:01 PM">05:07 PM</span>
+  <div class="content"><span style="color: #00b0f4;">@deleted account</span></div>
+  <div class="message-id">ID: 1143954562298953789</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="September 01, 2023 at 06:37:54 PM">06:37 PM</span>
+  <div class="content">Thank you, your Excellency.</div>
+  <div class="message-id">ID: 1147238925983821854</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="September 01, 2023 at 06:39:06 PM">06:39 PM</span>
+  <div class="content">The United Nations Secretariat wishes to inform this honorable body that the United States has chosen to sign the Rome Convention and wishes to become a member of the International Criminal Court. We are waiting for notification on whether or not the United States Senate has ratified the treaty for the United States to become a full member of the ICC.</div>
+  <div class="message-id">ID: 1147239229429133392</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="February 23, 2024 at 12:00:47 AM">12:00 AM</span>
+  <div class="content"><strong>General Assembly Called to Order</strong></div>
+  <div class="reactions">
+    <div class="reaction" title="2 reaction(s)">
+      <span>💀</span>
+      <span class="reaction-count">2</span>
+    </div>
+  </div>
+  <div class="message-id">ID: 1210375671369433089</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="February 23, 2024 at 12:01:36 AM">12:01 AM</span>
+  <div class="content">Excellencies, Ladies and Gentlemen, the 3rd plenary meeting of this General Assembly is called to order. &lt;:HammerTime:712031635331219586&gt; <br><br>Delegates are kindly requested to take their seats. Before proceeding to the general debate, this body may hear any proposed resolutions to be brought before the General Assembly, we shall proceed accordingly. &lt;:HammerTime:712031635331219586&gt; <br><br>Now I give the floor to His Excellency, the Secretary General of the United Nations, Mr. António Guterres.</div>
+  <div class="message-id">ID: 1210375876760576110</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/d9603dfc230475f1aa19d8a454e500c2.png?size=1024" alt="Sec. Gen. António Guterres">
+  <div class="username">Sec. Gen. António Guterres<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="February 23, 2024 at 12:06:04 AM">12:06 AM</span>
+  <div class="content">Excellencies, ladies and gentlemen. I thank you all for attending the third general debate period after being apart for some time. I am proud and grateful to welcome all of you back to this hallowed hall, here in New York City. <br><br>Excellencies, our world demands peace in the face of ever dividing and fracturing conflicts, but peace is still an option out there. We must fight as one world against economic injustices, aggressive military actions, climate change, and human rights abuses. We can achieve this together, as long as we work together.<br><br>Let this session go forth in the spirit of determination, hard work, and cooperation! <br><br>Thank you and I yield.</div>
+  <div class="message-id">ID: 1210377001202884670</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="February 23, 2024 at 12:06:41 AM">12:06 AM</span>
+  <div class="content">Thank you, your Excellency. The Secretary-General yields.</div>
+  <div class="message-id">ID: 1210377156882993162</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="Ducky Anka">
+  <div class="username">Ducky Anka</div>
+  <span class="timestamp" title="February 23, 2024 at 02:59:33 AM">02:59 AM</span>
+  <span class="edited" title="Edited: February 23, 2024 at 03:16:20 AM">(edited)</span>
+  <div class="content">*presses button to seek recognition* <br><br>President of the General Assembly, I rise to seek recognition to deliver a speech before the body.</div>
+  <div class="message-id">ID: 1210420660510396476</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="February 23, 2024 at 03:56:09 AM">03:56 AM</span>
+  <div class="content">I recognize His Excellency, the United States Ambassador to the United Nations, Ducky Anka.</div>
+  <div class="message-id">ID: 1210434902978465814</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="Ducky Anka">
+  <div class="username">Ducky Anka</div>
+  <span class="timestamp" title="February 23, 2024 at 04:10:11 AM">04:10 AM</span>
+  <span class="edited" title="Edited: February 23, 2024 at 04:11:29 AM">(edited)</span>
+  <div class="content">Excellencies, ladies and gentlemen! It is a pleasure to be able to speak before you in this treasured venue of dialogue, diplomacy, and international cooperation. However, I take no pleasure in delivering my remarks today, but rather a solemn pursuit to memorialize and recognize the actions of a vessel for democracy and peace, Alexei Navalny. <br><br>Alexei ushered in an era of hope for political stability and discourse that is not afforded to those under Putin’s autocratic regime. He enraged local authorities for simply galvanizing  people to voice their concerns against the state, like wasteful pursuits of warfare and virulent corruption <br><br>Alexei survived a 2020 assassination attempt spearheaded by Putin and the KGB via the nerve agent, Novichok, and lived to fight another day. Navalny soon reentered his home country after treatment in Germany and was immediately apprehended by authorities. He began a 19-year sentence at a penal colony far above the arctic circle, far-far away from the cameras and media that gave him a chance to push back against Putin’s incessant lies. <br><br>The United States condemns the unjust, political persecution of Alexei Navalny under the Putin regime. The United States condemns any state that silences, imprisons, or otherwise abuses political dissidents. The United States will not stay silent on this horror perpetrated by a dictator who knows no bounds—knows no truths—and knows no humanity. <br><br>Nations and excellencies before this body, please consider my upcoming resolution to condemn the treatment of Alexei Navalny at the hands of the Russian state. President of the General Assembly, I yield.</div>
+  <div class="message-id">ID: 1210438434859257896</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="February 23, 2024 at 04:13:32 AM">04:13 AM</span>
+  <div class="content">Thank you, Your Excellency, the Ambassador has yielded.</div>
+  <div class="message-id">ID: 1210439275376808017</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="Ducky Anka">
+  <div class="username">Ducky Anka</div>
+  <span class="timestamp" title="March 22, 2024 at 01:29:26 AM">01:29 AM</span>
+  <div class="content">*presses button to seek recognition* <br><br>President of the General Assembly, I rise to seek recognition to deliver a speech before the body. <br><br>&lt;@&amp;966135033050067035&gt;</div>
+  <div class="message-id">ID: 1220544839188222062</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 22, 2024 at 01:30:06 AM">01:30 AM</span>
+  <div class="content">The United States is recognized</div>
+  <div class="message-id">ID: 1220545006700597298</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="Ducky Anka">
+  <div class="username">Ducky Anka</div>
+  <span class="timestamp" title="March 22, 2024 at 01:32:54 AM">01:32 AM</span>
+  <div class="content">Thank you, your excellency. <br><br>As promised, members of this body: the United States has produced a resolution to condemn the Russian state for the false detention, torture, and passive killing of Alexei Navalny. <br><br>This body *must* take swift action to shut this ruthless behavior down. No nation has the right to deprive someone of their security—and Alexei *always had to be on alert.* <br><br>I urge you to vote in the affirmative and send a lesson to the Russian state *not* to torture dissidents. <br><br>I move to open debate on the following resolution: <a href="https://docs." target="_blank">https://docs.</a>google.com/document/d/196leaPOyH3k5vDIXgDndtzaZ3WCJCVtep_yfcW3qYlE/edit</div>
+  <div class="embed" style="border-left-color: #202225;">
+    <a href="https://docs.google.com/document/d/196leaPOyH3k5vDIXgDndtzaZ3WCJCVtep_yfcW3qYlE/edit" class="embed-title">Condemnation of the Russian Federation for the Detention and Passiv...</a>
+    <img class="embed-thumbnail" src="https://lh7-us.googleusercontent.com/docs/AHkbwyJvs23N7EBc1t8Qb142pGERKOFFBSRjvPnBXqkAJCiBtNog-zZcw7mnI9exzUlYqPaYupid5T4LhE3pQJrEfzPwu-sEx_ktTbysV8zhjhjNRx8=w1200-h630-p">
+  </div>
+  <div class="message-id">ID: 1220545713688023170</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="Ducky Anka">
+  <div class="username">Ducky Anka</div>
+  <span class="timestamp" title="March 22, 2024 at 01:33:05 AM">01:33 AM</span>
+  <div class="content">&lt;@&amp;966135033050067035&gt;</div>
+  <div class="message-id">ID: 1220545760580337724</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 22, 2024 at 01:34:30 AM">01:34 AM</span>
+  <div class="content">Debate will be opened.</div>
+  <div class="message-id">ID: 1220546115208876084</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="Ducky Anka">
+  <div class="username">Ducky Anka</div>
+  <span class="timestamp" title="March 22, 2024 at 11:50:34 PM">11:50 PM</span>
+  <div class="content">*rises* <br><br>Seeing no debate: I move to close debate and initiate a general vote on the resolution, your excellency! <br><br>&lt;@&amp;966135033050067035&gt;</div>
+  <div class="message-id">ID: 1220882346455072838</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:22:57 PM">05:22 PM</span>
+  <div class="content">Debate is now closed</div>
+  <div class="message-id">ID: 1221509578206875750</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:24:01 PM">05:24 PM</span>
+  <div class="content">All members have voted, totaling in the affirmative</div>
+  <div class="message-id">ID: 1221509845937557695</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:24:26 PM">05:24 PM</span>
+  <div class="content">Afghanistan votes nay</div>
+  <div class="message-id">ID: 1221509949511696475</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:24:44 PM">05:24 PM</span>
+  <div class="content">Albania votes aye</div>
+  <div class="message-id">ID: 1221510025667805285</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:25:17 PM">05:25 PM</span>
+  <div class="content">Algeria votes nay</div>
+  <div class="message-id">ID: 1221510164113260675</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:25:38 PM">05:25 PM</span>
+  <div class="content">Andorra votes aye</div>
+  <div class="message-id">ID: 1221510250641887318</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:27:32 PM">05:27 PM</span>
+  <div class="content">Angola abstains</div>
+  <div class="message-id">ID: 1221510729098596513</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:28:40 PM">05:28 PM</span>
+  <div class="content">Antigua and Barbuda votes aye</div>
+  <div class="message-id">ID: 1221511014991007787</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:28:55 PM">05:28 PM</span>
+  <div class="content">Argentina votes aye</div>
+  <div class="message-id">ID: 1221511075896365139</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:30:30 PM">05:30 PM</span>
+  <div class="content">Armenia abstains</div>
+  <div class="message-id">ID: 1221511477874135151</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:30:38 PM">05:30 PM</span>
+  <div class="content">Australia votes aye</div>
+  <div class="message-id">ID: 1221511509444792508</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:30:44 PM">05:30 PM</span>
+  <div class="content">Austria votes aye</div>
+  <div class="message-id">ID: 1221511535336099980</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:04 PM">05:31 PM</span>
+  <div class="content">Azerbaijan abstains</div>
+  <div class="message-id">ID: 1221511619834679416</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:14 PM">05:31 PM</span>
+  <div class="content">Bahamas votes aye</div>
+  <div class="message-id">ID: 1221511660804771900</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:24 PM">05:31 PM</span>
+  <div class="content">Bahrain votes aye</div>
+  <div class="message-id">ID: 1221511703238541515</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:30 PM">05:31 PM</span>
+  <div class="content">Bangladesh votes aye</div>
+  <div class="message-id">ID: 1221511728920002581</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:38 PM">05:31 PM</span>
+  <div class="content">Barbados votes aye</div>
+  <div class="message-id">ID: 1221511762180964513</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:45 PM">05:31 PM</span>
+  <div class="content">Belarus votes nay</div>
+  <div class="message-id">ID: 1221511791943618561</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:53 PM">05:31 PM</span>
+  <div class="content">Belgium votes aye</div>
+  <div class="message-id">ID: 1221511824286154805</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:31:59 PM">05:31 PM</span>
+  <div class="content">Belize votes aye</div>
+  <div class="message-id">ID: 1221511849552511066</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:32:08 PM">05:32 PM</span>
+  <div class="content">Benin votes aye</div>
+  <div class="message-id">ID: 1221511886206537808</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:33:42 PM">05:33 PM</span>
+  <div class="content">Bhutan votes aye</div>
+  <div class="message-id">ID: 1221512281385603112</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:33:59 PM">05:33 PM</span>
+  <div class="content">The Plurinational State of Bolivia votes aye</div>
+  <div class="message-id">ID: 1221512351300194314</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:34:34 PM">05:34 PM</span>
+  <div class="content">Bosnia and Herzegovina votes aye</div>
+  <div class="message-id">ID: 1221512497983651922</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:35:01 PM">05:35 PM</span>
+  <div class="content">Botswana votes aye</div>
+  <div class="message-id">ID: 1221512611435384872</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:35:05 PM">05:35 PM</span>
+  <div class="content">Brazil abstains</div>
+  <div class="message-id">ID: 1221512630926049421</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:40:59 PM">05:40 PM</span>
+  <div class="content">Brunei votes aye<br>Bulgaria abstains<br>Burkina Faso votes aye<br>Burundi votes aye<br>Cabo Verde votes aye<br>Cambodia votes aye<br>Cameroon votes aye<br>Canada votes aye<br>Central African Republic votes nay<br>Chad votes aye<br>Chile votes aye<br>China votes nay</div>
+  <div class="message-id">ID: 1221514112521998378</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:49:09 PM">05:49 PM</span>
+  <div class="content">Colombia votes aye<br>Comoros votes aye<br>Congo abstains<br>Costa Rica votes aye<br>Côte D&#x27;Ivoire votes aye<br>Croatia votes aye <br>Cuba votes nay<br>Cyprus votes aye<br>Czechia votes aye<br>Democratic People&#x27;s Republic of Korea votes nay<br>Democratic Republic of the Congo votes nay<br>Denmark votes aye<br>Dijoubti votes aye<br>Dominica votes aye<br>Dominican Republic votes aye<br>Ecuador votes aye<br>Egypt votes aye</div>
+  <div class="message-id">ID: 1221516168292995193</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 05:58:12 PM">05:58 PM</span>
+  <div class="content">El Salvador votes aye <br>Equatorial Guinea votes aye<br>Eritrea votes aye<br>Estonia votes aye<br>Eswatini votes aye<br>Ethiopia votes aye<br>Fiji votes aye<br>Finland votes aye<br>France votes aye<br>Gabon votes aye<br>Gambia votes aye<br>Georgia abstains<br>Germany votes aye<br>Ghana votes aye<br>Greece votes aye <br>Grenada votes aye<br>Guatemala votes aye <br>Guinea votes aye<br>Guinea-Bissau votes aye<br>Guyana votes aye<br>Haiti votes nay<br>Honduras votes aye<br>Hungary votes aye<br>Iceland votes aye<br>India votes aye<br>Indonesia votes aye<br>Iran votes nay<br>Iraq votes nay<br>Ireland votes aye<br>Israel votes aye<br>Italy votes aye<br>Jamaica votes aye<br>Japan votes aye<br>Jordan abstains<br>Kazakhstan votes nay<br>Kenya votes aye<br>Kiribati votes aye<br>Kuwait votes aye<br>Kyrgyzstan abstains<br>Lao People&#x27;s Democratic Republic votes aye<br>Latvia votes aye <br>Lebanon abstains<br>Lesotho votes aye<br>Liberia votes aye<br>Libya votes nay<br>Liechtenstein votes aye<br>Lithuania votes aye<br>Luxembourg votes aye<br>Madagascar votes aye<br>Malawi votes aye<br>Malaysia votes aye <br>Maldives votes aye<br>Mali votes aye<br>Malta votes aye<br>Marshall Islands votes aye<br>Mauritania votes aye</div>
+  <div class="message-id">ID: 1221518446991376404</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 06:05:30 PM">06:05 PM</span>
+  <div class="content">Mauritius votes aye<br>Mexico votes aye<br>Micronesia votes aye<br>Monaco votes aye<br>Mongolia abstains<br>Montenegro votes aye<br>Morocco votes aye<br>Mozambique votes aye<br>Myanmar votes aye<br>Namibia votes aye<br>Nauru votes aye<br>Nepal votes aye<br>Netherlands votes aye<br>New Zealand votes aye<br>Nicaragua abstains<br>Niger votes aye<br>Nigeria votes aye<br>North Macedonia votes aye<br>Norway votes aye<br>Oman votes aye<br>Pakistan abstains<br>Palau votes aye<br>Panama votes aye<br>Papua New Guinea votes aye<br>Paraguay votes aye<br>Peru vote aye<br>Philippines votes aye<br>Poland votes aye<br>Portugal votes aye <br>Qatar votes aye<br>Republic of Korea (South Korea) votes aye<br>Republic of Moldova votes aye<br>Romania votes aye<br>Russian Federation votes nay<br>Rwanda votes aye<br>Saint Kitts and Nevis votes aye<br>Saint Lucia votes aye<br>Saint Vincent and the Grenadines votes aye<br>Samoa votes aye<br>San Marino votes aye<br>Sao Tome and Principe votes aye<br>Saudi Arabia votes aye<br>Senegal votes aye<br>Serbia abstains<br>Seychelles votes aye<br>Sierra Leone votes aye<br>Singapore votes aye<br>Slovakia votes aye<br>Slovenia votes aye<br>Solomon Islands votes aye<br>Somalia votes nay<br>South Africa votes aye<br>South Sudan votes aye<br>Spain votes aye<br>Sri Lanka votes aye<br>Sudan abstains<br>Suriname votes aye<br>Sweden votes aye<br>Switzerland votes aye<br>Syrian Arab Republic votes nay<br>Tajikistan abstains<br>Thailand votes aye<br>Timor-Leste votes aye <br>Togo votes aye<br>Tonga votes aye <br>Trinidad and Tobago votes aye<br>Tunisia votes aye <br>Turkey votes aye <br>Turkmenistan abstains<br>Tuvalu votes aye <br>Uganda votes aye <br>Ukraine votes aye <br>United Arab Emirates votes aye <br>United Kingdom votes aye<br>United Republic of Tanzania votes aye<br>United States of America votes aye <br>Uruguay votes aye <br>Uzbekistan abstains <br>Vanuatu votes aye <br>Venezuela votes aye <br>Vietnam votes aye <br>Yemen votes aye <br>Zambia votes aye<br>Zimbabwe votes aye</div>
+  <div class="message-id">ID: 1221520286076244090</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609519269453946/9a293b99d06e775e9450683a5cdcad7e.png?size=1024" alt="Yamazaki Kazuyuki">
+  <div class="username">Yamazaki Kazuyuki<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="March 24, 2024 at 06:15:23 PM">06:15 PM</span>
+  <div class="content">with 2/3rds voting in the affirmative, the resolution is adopted</div>
+  <div class="reactions">
+    <div class="reaction" title="7 reaction(s)">
+      <span>⭐</span>
+      <span class="reaction-count">7</span>
+    </div>
+    <div class="reaction" title="1 reaction(s)">
+      <span>&lt;:trolllaugh:1068728637634904075&gt;</span>
+      <span class="reaction-count">1</span>
+    </div>
+  </div>
+  <div class="message-id">ID: 1221522769909383241</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1098361223369728101/50d1154c5da132224245c5ed0cc09589.png?size=1024" alt="Harmon Rabb (D-RU-1)">
+  <div class="username">Harmon Rabb (D-RU-1)</div>
+  <span class="timestamp" title="September 28, 2024 at 05:11:58 AM">05:11 AM</span>
+  <div class="content"><code>`</code>General assembly called and the other stuff happenned<code>`</code></div>
+  <div class="message-id">ID: 1289454537702248509</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1092609511061213184/bad44caf7644554ba10608ce2438409a.png?size=1024" alt="United Nations Secretariat">
+  <div class="username">United Nations Secretariat<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="September 28, 2024 at 05:13:12 AM">05:13 AM</span>
+  <div class="content">Her Excellency, <span style="color: #00b0f4;">@President</span> of the United States of America, Diana Allar.</div>
+  <div class="message-id">ID: 1289454846218604635</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1098361223369728101/50d1154c5da132224245c5ed0cc09589.png?size=1024" alt="Harmon Rabb (D-RU-1)">
+  <div class="username">Harmon Rabb (D-RU-1)</div>
+  <span class="timestamp" title="September 29, 2024 at 07:19:46 AM">07:19 AM</span>
+  <div class="content">// <span style="color: #00b0f4;">@President</span> Failure to give a speech by today will mean that US didnt send anyone to UNGA</div>
+  <div class="message-id">ID: 1289849085846884414</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1113613253134790686/f5ae92ea8177151c0050f365eb57675c.png?size=1024" alt="Pres. Diana Allar (D-JK)">
+  <div class="username">Pres. Diana Allar (D-JK)</div>
+  <span class="timestamp" title="September 29, 2024 at 03:02:23 PM">03:02 PM</span>
+  <div class="reply">
+    <span class="reply-author">@Harmon Rabb (D-RU-1)</span>
+    <div class="reply-content">// &lt;@&amp;654503695983312918&gt; Failure to give a speech by today will mean that US didnt send anyone to U</div>
+  </div>
+  <div class="content">// Okay, I&#x27;ll try to get one done</div>
+  <div class="message-id">ID: 1289965506413203588</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1113613253134790686/f5ae92ea8177151c0050f365eb57675c.png?size=1024" alt="Pres. Diana Allar (D-JK)">
+  <div class="username">Pres. Diana Allar (D-JK)</div>
+  <span class="timestamp" title="September 30, 2024 at 07:10:52 PM">07:10 PM</span>
+  <div class="content">Mr President, your Excellencies, ladies and gentlemen,<br><br>I address this Assembly for the first time since being elected as President of the United States and would like to take this opportunity to thank the international community for their congratulations on my election. <br><br>I address this Assembly as someone with a deep respect for this institution and the way it has preserved international peace and security since the horror of the Second World War. I am proud of the role that my forebears as President played a key role in it’s development.<br><br>Which is why I would like to use this speech as an opportunity to rebuild my relationship with this institution, to bring in a new era of American internationalism in the United States’s foreign policy, where the United States uses it’s power and capital for the international common good. <br><br>I hope that the United States will play a role as an international convener to encourage dialogue and debate to resolve the collective challenges that the world faces, on the environment, on human rights and on the global economy. <br><br>We also want to encourage a new peace in the Middle East, including working with international partners to come to a deal that culminates in a two state solution and a good quality of life for the innocent people in both nations. As Bill Clinton said about the conflict in Northern Ireland, “Have the patience to work for a just and lasting peace. Reach for it. The United States will reach with you.” We will have this same approach in the Middle East as we did in Northern Ireland. <br><br>The United States will also now play an active role in the international humanitarian system, including a renewed commitment to UNRWA to support refugees in Israel and Palestine, as well as other humanitarian crises around the world.<br><br>The United States will also play a renewed role in aiming to complete the United States Sustainable Development Goals, leading and converting to ensure progress on the goal of dignity and a good life for the present and future generations. <br><br>Most importantly, the United States will rebuild its relationships around the globe. In this institution, in NATO, in IPTO and in the G7/G20. We will work together to achieve these goals because as one of the founding mothers, Eleanor Roosevelt, of this institution said “The future belongs to those who believe in the beauty of their dreams.”    <br><br>Thank you.</div>
+  <div class="reactions">
+    <div class="reaction" title="1 reaction(s)">
+      <span>💀</span>
+      <span class="reaction-count">1</span>
+    </div>
+  </div>
+  <div class="message-id">ID: 1290390429304361015</div>
+</div>
+<div class="message">
+  <img class="avatar" src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot">
+  <div class="username">VC Bot<span class="bot-badge">BOT</span></div>
+  <span class="timestamp" title="November 26, 2025 at 10:29:41 AM">10:29 AM</span>
+  <div class="message-id">ID: 1443186946883981313</div>
+</div>
+
+    </div>
+</body>
+</html>

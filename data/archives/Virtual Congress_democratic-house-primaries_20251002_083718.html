@@ -1,0 +1,3374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#democratic-house-primaries - Virtual Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.375;
+        }
+        
+        .channel-header {
+            background-color: #2f3136;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7289da;
+        }
+        
+        .channel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .channel-info {
+            color: #b9bbbe;
+            font-size: 14px;
+        }
+        
+        .messages-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .message {
+            display: flex;
+            padding: 8px 16px;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        
+        .message:hover {
+            background-color: rgba(4, 4, 5, 0.07);
+        }
+        
+        .message-avatar {
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .message-author {
+            font-weight: 500;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .message-timestamp {
+            font-size: 12px;
+            color: #72767d;
+            font-weight: 500;
+        }
+        
+        .message-text {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message-text strong {
+            font-weight: 700;
+        }
+        
+        .message-text em {
+            font-style: italic;
+        }
+        
+        .message-text u {
+            text-decoration: underline;
+        }
+        
+        .message-text del {
+            text-decoration: line-through;
+        }
+        
+        .message-text code {
+            background-color: #2f3136;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+        
+        .message-text pre {
+            background-color: #2f3136;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 4px 0;
+        }
+        
+        .message-text pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .message-text a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .attachment {
+            margin: 8px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .attachment img {
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .attachment-info {
+            padding: 8px;
+            background-color: #2f3136;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .attachment-link {
+            color: #00aff4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attachment-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+        
+        .embed {
+            max-width: 520px;
+            margin: 8px 0;
+            padding: 12px 16px;
+            background-color: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-author-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .embed-author-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .embed-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .embed-description {
+            margin-bottom: 8px;
+        }
+        
+        .embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .embed-field {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        
+        .embed-field.inline {
+            flex: 1 1 150px;
+            min-width: 150px;
+        }
+        
+        .embed-field-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .embed-field-value {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .embed-image {
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            float: right;
+            margin: 8px 0 8px 16px;
+        }
+        
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #72767d;
+        }
+        
+        .embed-footer-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .reaction {
+            background-color: rgba(79, 84, 92, 0.16);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .reaction-emoji {
+            line-height: 1;
+        }
+        
+        .reaction-count {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .message {
+                padding: 8px 8px;
+            }
+            
+            .embed {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="channel-header">
+        <div class="channel-title">#democratic-house-primaries</div>
+        <div class="channel-info">Archived from Virtual Congress on October 02, 2025 at 08:37 AM UTC</div>
+    </div>
+    
+    <div class="messages-container">
+        
+            <div class="message" data-message-id="1335392174065319988">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/01/2025 11:31 PM</span>
+                    </div>
+                    <div class="message-text">Please announce your candidacies for the following roles:<br>``<code>Governor – All states<br>Olympia Class III Senate<br>Lincoln Class III Senate <br>Jackson Class III Senate <br>Frontier Class III Senate<br></code>``<br><br>&lt;@&amp;707784620678316093&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335392322950791208">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/01/2025 11:32 PM</span>
+                    </div>
+                    <div class="message-text"># Please note that this for the PARTY PRIMARIES. Use &lt;#805878116211097600&gt; to officially declare candidacy in the race!</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335392360653131847">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/866682219926126592/68b447b9ef77bd42ff09dcd67dfea21f.png?size=1024" alt="Adam Salinger" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Adam Salinger</span>
+                        <span class="message-timestamp">02/01/2025 11:32 PM</span>
+                    </div>
+                    <div class="message-text">I announce my candidacy for Olympia Senate</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335393267034099885">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1113613253134790686/305d216651158a8552d155cffc87d2ba.png?size=1024" alt="Fmr. Pres. Diana Allar (D-UT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Fmr. Pres. Diana Allar (D-UT)</span>
+                        <span class="message-timestamp">02/01/2025 11:36 PM</span>
+                    </div>
+                    <div class="message-text">I announce my candidacy for Governor of Olympia</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335396543737368657">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1242301311181914145/b65403ecd5f4e7cf64f97a077325ab23.png?size=1024" alt="𝐓𝐇𝐈𝐍 𝐖𝐇𝐈𝐓𝐄 𝐃𝐔𝐊𝐄" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">𝐓𝐇𝐈𝐍 𝐖𝐇𝐈𝐓𝐄 𝐃𝐔𝐊𝐄</span>
+                        <span class="message-timestamp">02/01/2025 11:49 PM</span>
+                    </div>
+                    <div class="message-text">I announce my candidacy for Governor of Olympia</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335402936926343188">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1042993516843909200/fc982171b27bda38599e5a1032a25112.png?size=1024" alt="Senor Woofers" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Senor Woofers</span>
+                        <span class="message-timestamp">02/02/2025 12:14 AM</span>
+                    </div>
+                    <div class="message-text">I announce my candidacy for Lincoln Senate</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335430695786643579">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/933331289031974982/3cde7c04f9d5b253e6b1ff0696124545.png?size=1024" alt="10$Taco" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">10$Taco</span>
+                        <span class="message-timestamp">02/02/2025 02:04 AM</span>
+                    </div>
+                    <div class="message-text">I announce my candidacy for Jackson Senate</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335756969436516403">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:41 PM</span>
+                    </div>
+                    <div class="message-text">``<code>Closed</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757163825598597">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:42 PM</span>
+                    </div>
+                    <div class="message-text">Olympia Senate III Feb &#x27;25 Debates</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757218670186496">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:42 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;693144405451735070&gt; ^ Debates above</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757377026130022">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:42 PM</span>
+                    </div>
+                    <div class="message-text">Olympia Governor Feb &#x27;25 Debates</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757420613603338">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:43 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;693144405451735070&gt; ^Debates above</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757590688305184">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:43 PM</span>
+                    </div>
+                    <div class="message-text">Lincoln Senate III Feb &#x27;25 Debates</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757638163497000">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:43 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;693144496166273154&gt; ^Debates above</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757728970309683">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:44 PM</span>
+                    </div>
+                    <div class="message-text">Jackson Senate III Feb &#x27;25 Debates</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335757781432533084">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:44 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;693144529796071474&gt;  ^Debates above</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335759731536433164">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">02/02/2025 11:52 PM</span>
+                    </div>
+                    <div class="message-text">I announce my candidacy for Jackson Governor</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335759882921443328">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:52 PM</span>
+                    </div>
+                    <div class="message-text">Ill make an exeption yes</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335759992036397077">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:53 PM</span>
+                    </div>
+                    <div class="message-text">Jackson Governor Feb &#x27;25 Debates</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1335760072319438939">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/02/2025 11:53 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;693144529796071474&gt; ^Debates above</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336157564030947421">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/04/2025 02:13 AM</span>
+                    </div>
+                    <div class="message-text">``<code>Closed</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336157862833164353">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/04/2025 02:14 AM</span>
+                    </div>
+                    <div class="message-text">## Democratic Primary, February 2025<br><br>Members of the Democratic Party,<br><br>Please vote here for the primaries.<br><br>Whipping is forbidden and may result in consequences including but not limited to candidacy disqualification. Please send a message here to confirm your vote. Best of luck to all candidates!<br><br>[<strong>Ballot here</strong>](<a href="https://forms.gle/rJoj2ZpNoUwzD7J38)" target="_blank">https://forms.gle/rJoj2ZpNoUwzD7J38)</a><br><br>( &lt;@&amp;707784620678316093&gt;  )</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/rJoj2ZpNoUwzD7J38" target="_blank">Democratic Primary | February</a></div><img src="https://lh6.googleusercontent.com/KBHKolJWXAgFlZr3N10Kaq1XVl0zAcnD-HwX-BFJOe3XZ-KsjGX_qQoeknarRrh0-q60tc20zms=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336158482595844268">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">02/04/2025 02:16 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336158598409097236">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/866682219926126592/68b447b9ef77bd42ff09dcd67dfea21f.png?size=1024" alt="Adam Salinger" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Adam Salinger</span>
+                        <span class="message-timestamp">02/04/2025 02:17 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336158824742125709">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/04/2025 02:18 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336159130033066075">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">02/04/2025 02:19 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336161755222511649">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">02/04/2025 02:29 AM</span>
+                    </div>
+                    <div class="message-text">i voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336164166112772137">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1042993516843909200/fc982171b27bda38599e5a1032a25112.png?size=1024" alt="Senor Woofers" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Senor Woofers</span>
+                        <span class="message-timestamp">02/04/2025 02:39 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336165283429220434">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/837725791524618241/4d27d206b75c974d7097774f3460229a.png?size=1024" alt="the devil" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">the devil</span>
+                        <span class="message-timestamp">02/04/2025 02:43 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336166132440367186">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/933331289031974982/3cde7c04f9d5b253e6b1ff0696124545.png?size=1024" alt="10$Taco" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">10$Taco</span>
+                        <span class="message-timestamp">02/04/2025 02:47 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336170533527617611">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/539264464189521952/2000489008adba4b2deefa2ee310b406.png?size=1024" alt="James Carter, PhD, AB" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fe9cff">James Carter, PhD, AB</span>
+                        <span class="message-timestamp">02/04/2025 03:04 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336187945635549225">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="#FreeRudd or I Leave" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #006747">#FreeRudd or I Leave</span>
+                        <span class="message-timestamp">02/04/2025 04:13 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@726123652579590164&gt; was I too late to make the ballot??</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336192506261405750">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1316443240173666340/674a12b6b49aa8f2f98bd686aacc66ab.png?size=1024" alt="hotelnevada" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">hotelnevada</span>
+                        <span class="message-timestamp">02/04/2025 04:31 AM</span>
+                    </div>
+                    <div class="message-text">i voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336219301966778398">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">02/04/2025 06:18 AM</span>
+                    </div>
+                    <div class="message-text">Voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336312738108145707">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/04/2025 12:29 PM</span>
+                    </div>
+                    <div class="message-text">Unfortunately yes</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336312800678776843">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/04/2025 12:29 PM</span>
+                    </div>
+                    <div class="message-text">You never put out ur candidacy</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336350118512824450">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1113613253134790686/305d216651158a8552d155cffc87d2ba.png?size=1024" alt="Fmr. Pres. Diana Allar (D-UT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Fmr. Pres. Diana Allar (D-UT)</span>
+                        <span class="message-timestamp">02/04/2025 02:58 PM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336374515558514819">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/924950278522957824/a_9d7a8379d4f2c62e82b82ab6ded1dafa.gif?size=1024" alt="𝐾𝑎𝑖𝑗" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">𝐾𝑎𝑖𝑗</span>
+                        <span class="message-timestamp">02/04/2025 04:35 PM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336860352691961866">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/06/2025 12:45 AM</span>
+                    </div>
+                    <div class="message-text">Olympia Gubernatorial<br><em>4 for quota</em><br><br><strong>Round 1</strong><br>Diana Allar 🟩🟩🟩🟩🟩🟩  (6 votes)<br>Joseph R. Biden Jr 🟥 (1 vote)<br>Diana Allar has been duly elected as the Democratic Nominee</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336860667977928735">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/06/2025 12:47 AM</span>
+                    </div>
+                    <div class="message-text">---<br><br>U.S. Senate Primary | Olympia<br><em>4 for quota</em><br><br><strong>Round 1</strong><br>Adam Salinger 🟩🟩🟩🟩🟩🟩🟩 (7 votes)<br>Adam Salinger has been duly elected as the Democratic Nominee<br>--<br><br>U.S. Senate Primary | Lincoln<br><em>1 for quota</em><br><br><strong>Round 1</strong><br>Tony Evers 🟦🟦 (2 votes)<br>Tony Evers has been duly elected as the Democratic Nominee<br>--<br><br>Gubernatorial | Jackson<br><em>1 for quota</em><br><br><strong>Round 1+2</strong><br>Jimmy McCarter 🟦🟦 (2 votes)<br>No Candidate 🟥🟥 (2 votes)<br>Please DM me for a coin toss &lt;@539264464189521952&gt; <br>--<br><br>U.S. Senate Primary | Jackson<br><em>2 for quota</em><br><br><strong>Round 1</strong><br>John Cheems 🟦🟦 (2 votes)<br>No Candidate 🟥 (1 vote)<br>John Cheems has been duly elected as the Democratic Nominee</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336860680866758666">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/06/2025 12:47 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;707784620678316093&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336864399968964688">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/06/2025 01:01 AM</span>
+                    </div>
+                    <div class="message-text">I will transmit the results once the DNC has concluding voting</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1336881175825748069">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/06/2025 02:08 AM</span>
+                    </div>
+                    <div class="message-text">``<code>Feb 25 Primaries</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338579361649135727">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/10/2025 06:36 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;707784620678316093&gt; members that are interested in running for <strong>Speaker of the House</strong> or <strong>Majority Leader</strong>, please announce your candidacy here.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338579438903890080">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/10/2025 06:36 PM</span>
+                    </div>
+                    <div class="message-text">There will be 24 hours for candidacies followed by a 24 hour vote.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338580074441605180">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">02/10/2025 06:39 PM</span>
+                    </div>
+                    <div class="message-text">I announce for Speaker of the House.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338580134520684665">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">02/10/2025 06:39 PM</span>
+                    </div>
+                    <div class="message-text">I announce for speaker of the house</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338580149121191936">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Governor Flynn" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Governor Flynn</span>
+                        <span class="message-timestamp">02/10/2025 06:39 PM</span>
+                    </div>
+                    <div class="message-text">I announce for Majority Leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338583791454781440">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1004004337892196402/fbd636dcb07bf36240e9758cbbfb66fe.png?size=1024" alt="LeBressan" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">LeBressan</span>
+                        <span class="message-timestamp">02/10/2025 06:54 PM</span>
+                    </div>
+                    <div class="message-text">I announce for speaker of the house</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338583929153650709">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/766760092485812255/c1fcabc0abbdaf60c5ee93ce0444f925.png?size=1024" alt="Andy🫡" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Andy🫡</span>
+                        <span class="message-timestamp">02/10/2025 06:54 PM</span>
+                    </div>
+                    <div class="message-text">I announce for speaker of the house</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338587100215246950">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">02/10/2025 07:07 PM</span>
+                    </div>
+                    <div class="message-text">i announce for majority leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338599283745624088">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/474109523737444352/34bd06f32ca98cc3698d3cd9717390c3.png?size=1024" alt="awsomeman" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">awsomeman</span>
+                        <span class="message-timestamp">02/10/2025 07:55 PM</span>
+                    </div>
+                    <div class="message-text">I’m running for majority leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338623287244095519">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1316443240173666340/674a12b6b49aa8f2f98bd686aacc66ab.png?size=1024" alt="hotelnevada" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">hotelnevada</span>
+                        <span class="message-timestamp">02/10/2025 09:31 PM</span>
+                    </div>
+                    <div class="message-text">I, Dana Fabe, announce for Speaker of the House of Representatives.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338655815149813902">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/10/2025 11:40 PM</span>
+                    </div>
+                    <div class="message-text">I announce for Majority Leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1338800413830549516">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/988086090256764949/e13f82620ac59513930cc77366402084.png?size=1024" alt="Rep. Gavin Newsom (D-CA-17)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Gavin Newsom (D-CA-17)</span>
+                        <span class="message-timestamp">02/11/2025 09:14 AM</span>
+                    </div>
+                    <div class="message-text">I announce for Majority Leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339023546202062929">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 12:01 AM</span>
+                    </div>
+                    <div class="message-text">CLOSED</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339024967018479710">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 12:07 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;1202305508963516446&gt; <br><br>&gt; <a href="https://forms.gle/BKigeBD3ECqQ9giFA" target="_blank">https://forms.gle/BKigeBD3ECqQ9giFA</a><br><br><strong>WHIPPING IS STRICTLY PROHIBITED AND WILL LEAD TO DISQUALIFICATION</strong><br><br><code>Confirm your vote by saying &quot;I voted&quot; here</code></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/BKigeBD3ECqQ9giFA" target="_blank">Democratic Primary | February</a></div><img src="https://lh6.googleusercontent.com/IUHODqcdDMFkTV1fg_9odaiGd2LFsswaXvpbc0wZ_gvL-T1x7PKhkOeo9coBJRosJyZL9ye-4Io=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339025135658860624">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 12:07 AM</span>
+                    </div>
+                    <div class="message-text">I voted.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339026310378422342">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">02/12/2025 12:12 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339026609616715817">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">02/12/2025 12:13 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339027254834892883">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1113613253134790686/305d216651158a8552d155cffc87d2ba.png?size=1024" alt="Fmr. Pres. Diana Allar (D-UT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Fmr. Pres. Diana Allar (D-UT)</span>
+                        <span class="message-timestamp">02/12/2025 12:16 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339027432757395476">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Deleted User" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Deleted User</span>
+                        <span class="message-timestamp">02/12/2025 12:16 AM</span>
+                    </div>
+                    <div class="message-text">voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339040470726217824">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">02/12/2025 01:08 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339042858870771743">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">02/12/2025 01:18 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339053300791775293">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/974331254793175151/71cca1792ccec402b074e8109f69cfb9.png?size=1024" alt="FEC CHAIR jake" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #8799ae">FEC CHAIR jake</span>
+                        <span class="message-timestamp">02/12/2025 01:59 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339116228824010814">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1316443240173666340/674a12b6b49aa8f2f98bd686aacc66ab.png?size=1024" alt="hotelnevada" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">hotelnevada</span>
+                        <span class="message-timestamp">02/12/2025 06:09 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339118934602809447">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1004004337892196402/fbd636dcb07bf36240e9758cbbfb66fe.png?size=1024" alt="LeBressan" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">LeBressan</span>
+                        <span class="message-timestamp">02/12/2025 06:20 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339206135919546418">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1084160746079928410/da3ace097c9f41bd7fc65a6680950e51.png?size=1024" alt="Armine" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Armine</span>
+                        <span class="message-timestamp">02/12/2025 12:07 PM</span>
+                    </div>
+                    <div class="message-text">I</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339338242235043984">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 08:52 PM</span>
+                    </div>
+                    <div class="message-text">I am closing the ballot at 4 due to time constraints</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339339467223334912">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/722175970458599449/a2122281eca45d4d428f196f7855b22f.png?size=1024" alt="SOD. Raymond Reddington" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">SOD. Raymond Reddington</span>
+                        <span class="message-timestamp">02/12/2025 08:56 PM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339340531725238395">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:01 PM</span>
+                    </div>
+                    <div class="message-text">==========================<br><br><strong>Speaker of the House Primary Results | Round 1</strong><br>12 votes cast, 7 for quota<br>12/12 counted<br><br>Matthew Fields - 5 votes<br>Dana Fabe - 2 votes<br>Kamala Harris - 3 votes<br>Richard Blumenthal - 1 vote<br>No Candidate - 1 vote<br><br>==========================<br>Richard Blumenthal is eliminated.<br><br>==========================<br><br><strong>Speaker of the House Primary Results | Round 2</strong><br>12 votes cast, 7 for quota<br>12/12 counted<br>1 candidate eliminated<br><br>Matthew Fields - 5 votes<br>Dana Fabe - 2 votes<br>Kamala Harris - 4 votes<br>No Candidate - 1 vote<br><br>==========================<br>Dana Fabe is eliminated.<br><br>==========================<br><br><strong>Speaker of the House Primary Results | Round 3</strong><br>12 votes cast, 7 for quota<br>12/12 counted<br>2 candidates eliminated<br><br>Matthew Fields - 5 votes<br>Kamala Harris - 4 votes<br>No Candidate - 3 votes<br><br>==========================<br>Kamala Harris is eliminated.<br><br>==========================<br><br><strong>Speaker of the House Primary Results | Round 4</strong><br>12 votes cast, 7 for quota<br>12/12 counted<br>3 candidates eliminated<br><br>Matthew Fields - 9 votes ✅ <br>No Candidate - 3 votes<br><br>==========================<br>&lt;@169221337880068096&gt; is our candidate for Speaker of the House</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339341754331172864">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:05 PM</span>
+                    </div>
+                    <div class="message-text">==========================<br><br><strong>Majority Leader Primary Results | Round 1</strong><br>12 votes cast, 7 for quota<br>12/12 counted<br><br>Pickle Hersey - 6 votes<br>Rishi Sunak - 3 votes<br>Awesomeman - 1 vote<br>Flynn - 2 votes<br>No Candidate - 0 votes<br><br>==========================<br>Awesomeman is eliminated.<br><br>==========================<br><br><strong>Majority Leader Primary Results | Round 2</strong><br>12 votes cast, 7 for quota<br>12/12 counted<br>1 candidate eliminated<br><br>Pickle Hersey - 6 votes<br>Rishi Sunak - 3 votes<br>Flynn - 3 votes<br>No Candidate - 0 votes<br><br>==========================<br>A coin flip will be done to break the tie</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339341818516475964">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:06 PM</span>
+                    </div>
+                    <div class="message-text">Sunak is Heads, Flynn is Tails</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339341828129951805">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:06 PM</span>
+                    </div>
+                    <div class="message-text">?coin</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339341838225772626">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:06 PM</span>
+                    </div>
+                    <div class="message-text">?flip</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339341839001718919">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/155149108183695360/b4fdfc64edff74c37e1574d34fad66c2.png?size=1024" alt="The Second Coming of Christ" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">The Second Coming of Christ</span>
+                        <span class="message-timestamp">02/12/2025 09:06 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@254723307788697602&gt; heads</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339341890138538014">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:06 PM</span>
+                    </div>
+                    <div class="message-text">Flynn is eliminated</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339342286315720776">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:08 PM</span>
+                    </div>
+                    <div class="message-text">==========================<br><br><strong>Majority Leader Primary Results | Round 3</strong><br>12 votes cast, 7 for quota<br>12/12 counted<br>3 candidates eliminated<br><br>Pickle Hersey - 7 votes ✅ <br>Rishi Sunak - 5 votes<br>No Candidate - 0 votes<br><br>==========================<br>&lt;@726123652579590164&gt; is our candidate for Majority Leader</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1339342463650758748">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">02/12/2025 09:08 PM</span>
+                    </div>
+                    <div class="message-text">For clarification purposes, Pickle Hersey would still have won had the coin flip gone the other way.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1348834117495689247">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">03/11/2025 01:45 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;707784620678316093&gt; <br><br>Candidacies to be the party&#x27;s nominee for <strong>Speaker of the House</strong> or <strong>Majority Leader</strong> are now open for a period 24 hours. Please announce your candidacy here.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1348834231140352073">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">03/11/2025 01:45 AM</span>
+                    </div>
+                    <div class="message-text">I announce for majority leader</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1348834348144656424">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1100488941691490387/379b85bb6430f0c507faf53d06595fa9.png?size=1024" alt="Rep. Tim Chateau (D-TX-30)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Tim Chateau (D-TX-30)</span>
+                        <span class="message-timestamp">03/11/2025 01:46 AM</span>
+                    </div>
+                    <div class="message-text">i announce my candidacy for majority leader.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1348835459609923624">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">03/11/2025 01:50 AM</span>
+                    </div>
+                    <div class="message-text">I announce for Speaker of the House.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1348836331475963954">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">03/11/2025 01:54 AM</span>
+                    </div>
+                    <div class="message-text">I announce for Majority Leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1348839997176025160">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/474109523737444352/34bd06f32ca98cc3698d3cd9717390c3.png?size=1024" alt="awsomeman" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">awsomeman</span>
+                        <span class="message-timestamp">03/11/2025 02:08 AM</span>
+                    </div>
+                    <div class="message-text">Running for speaker</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1348959053057097839">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/988086090256764949/e13f82620ac59513930cc77366402084.png?size=1024" alt="Rep. Gavin Newsom (D-CA-17)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Gavin Newsom (D-CA-17)</span>
+                        <span class="message-timestamp">03/11/2025 10:01 AM</span>
+                    </div>
+                    <div class="message-text">I announce for Majority leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349038526905319475">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">03/11/2025 03:17 PM</span>
+                    </div>
+                    <div class="message-text">I withdraw</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349178836989907014">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">03/12/2025 12:35 AM</span>
+                    </div>
+                    <div class="message-text">Closed</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349179260203565096">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">03/12/2025 12:36 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;1202305508963516446&gt; Please confirm your vote here.<br><a href="https://forms.gle/ZgeBwkHmJhp5vEy8A" target="_blank">https://forms.gle/ZgeBwkHmJhp5vEy8A</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/ZgeBwkHmJhp5vEy8A" target="_blank">Democratic Primary | March</a></div><img src="https://lh3.googleusercontent.com/X69Qt31NATIUfZ1K1NA1Ul3P4meT27BuPKscP_zReeYzm5fzOccxAz8JVPxsthmw4dpYFtdLrjw=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349182982023282708">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">03/12/2025 12:51 AM</span>
+                    </div>
+                    <div class="message-text">I voted.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349183839733551184">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">03/12/2025 12:54 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349184377648713759">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1284318926339309660/f7f2e9361e8a54ce6e72580ac7b967af.png?size=1024" alt="Cooper" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Cooper</span>
+                        <span class="message-timestamp">03/12/2025 12:57 AM</span>
+                    </div>
+                    <div class="message-text">I’m new to this server and announcing that I’m running for speaker on a progressive platform</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349184824862183435">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1284318926339309660/f7f2e9361e8a54ce6e72580ac7b967af.png?size=1024" alt="Cooper" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Cooper</span>
+                        <span class="message-timestamp">03/12/2025 12:58 AM</span>
+                    </div>
+                    <div class="message-text">Nvm</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349184844336201870">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1284318926339309660/f7f2e9361e8a54ce6e72580ac7b967af.png?size=1024" alt="Cooper" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Cooper</span>
+                        <span class="message-timestamp">03/12/2025 12:58 AM</span>
+                    </div>
+                    <div class="message-text">To late I guess</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349186720733728909">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">03/12/2025 01:06 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349186977341247499">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1065769651574935603/468448c8b5ca3017f54af7790f28d411.png?size=1024" alt="DO NOT WHIP" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #9778d1">DO NOT WHIP</span>
+                        <span class="message-timestamp">03/12/2025 01:07 AM</span>
+                    </div>
+                    <div class="message-text">I voted.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349190147127640155">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">03/12/2025 01:19 AM</span>
+                    </div>
+                    <div class="message-text">Will the election be a full 24 hours</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349190923682316359">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">03/12/2025 01:23 AM</span>
+                    </div>
+                    <div class="message-text">I am unsure, it will depend on house deadlines</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349190942598496327">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1113613253134790686/305d216651158a8552d155cffc87d2ba.png?size=1024" alt="Fmr. Pres. Diana Allar (D-UT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">Fmr. Pres. Diana Allar (D-UT)</span>
+                        <span class="message-timestamp">03/12/2025 01:23 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349210913600962613">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">03/12/2025 02:42 AM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349401841972281394">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="#FreeRudd or I Leave" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #006747">#FreeRudd or I Leave</span>
+                        <span class="message-timestamp">03/12/2025 03:21 PM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349407641280970853">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/974331254793175151/71cca1792ccec402b074e8109f69cfb9.png?size=1024" alt="FEC CHAIR jake" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #8799ae">FEC CHAIR jake</span>
+                        <span class="message-timestamp">03/12/2025 03:44 PM</span>
+                    </div>
+                    <div class="message-text">Voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349489441785254008">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">03/12/2025 09:09 PM</span>
+                    </div>
+                    <div class="message-text">==========================<br><br><strong>Speaker of the House Primary Results | Round 1</strong><br>8 votes cast, 5 for quota<br>8/8 counted<br><br>Matthew Fields - 8 votes ✅ <br>Awesomeman - 0 votes<br>No Candidate - 0 votes<br><br>==========================<br>&lt;@169221337880068096&gt; is our candidate for Speaker.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349489670593187840">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">03/12/2025 09:10 PM</span>
+                    </div>
+                    <div class="message-text">==========================<br><br><strong>Majority Leader Primary Results | Round 1</strong><br>8 votes cast, 5 for quota<br>8/8 counted<br><br>Pickle Hersey - 8 votes ✅ <br>Nikolas - 0 votes<br>zayexoxo -  0 votes<br>No Candidate - 0 votes<br><br>==========================<br>&lt;@726123652579590164&gt; is our candidate for Majority Leader.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349490472246186054">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">03/12/2025 09:13 PM</span>
+                    </div>
+                    <div class="message-text">Omg i won! Hooray!!!!</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349495916817809488">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">03/12/2025 09:34 PM</span>
+                    </div>
+                    <div class="message-text">boy it wasnt even aa competition &#x27;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349585348241391637">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1338025814138294332/3eb69596a10fe454c8efe4f1b574e411.png?size=1024" alt="Sen Maddie Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Sen Maddie Clark</span>
+                        <span class="message-timestamp">03/13/2025 03:30 AM</span>
+                    </div>
+                    <div class="message-text">Can I run</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1349585367610818632">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1338025814138294332/3eb69596a10fe454c8efe4f1b574e411.png?size=1024" alt="Sen Maddie Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Sen Maddie Clark</span>
+                        <span class="message-timestamp">03/13/2025 03:30 AM</span>
+                    </div>
+                    <div class="message-text">for whip</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1350172900467937431">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121682111783501834/e0231efbb803d36c123562dcb8846044.png?size=1024" alt="goffyahhcoolaarav69" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">goffyahhcoolaarav69</span>
+                        <span class="message-timestamp">03/14/2025 06:25 PM</span>
+                    </div>
+                    <div class="message-text">okay, when is  the presidental election</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1350181685152710697">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">03/14/2025 06:59 PM</span>
+                    </div>
+                    <div class="message-text">Too late girl</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1350181702298898503">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">03/14/2025 07:00 PM</span>
+                    </div>
+                    <div class="message-text">May</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1350367526160433255">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1243954773821231138/3eada823b88c4130b1f0a84cde5da1ac.png?size=1024" alt="lmaximum" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">lmaximum</span>
+                        <span class="message-timestamp">03/15/2025 07:18 AM</span>
+                    </div>
+                    <div class="message-text">hello</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371227163529056288">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">05/11/2025 08:47 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;707784620678316093&gt; do you thing cuzzo if u wanna run for speaker or maj ldr</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371227266268270622">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">05/11/2025 08:47 PM</span>
+                    </div>
+                    <div class="message-text">Candidacies to be the party&#x27;s nominee for <strong>Speaker of the House</strong> or <strong>Majority Leader</strong> are now open for a period 6 hours. Please announce your candidacy here.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371227316671217864">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1338025814138294332/3eb69596a10fe454c8efe4f1b574e411.png?size=1024" alt="Sen Maddie Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Sen Maddie Clark</span>
+                        <span class="message-timestamp">05/11/2025 08:47 PM</span>
+                    </div>
+                    <div class="message-text">I want to run for speaker</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371228065484767372">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">05/11/2025 08:50 PM</span>
+                    </div>
+                    <div class="message-text">I want to run for Speaker.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371232960312774789">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="#FreeRudd or I Leave" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #006747">#FreeRudd or I Leave</span>
+                        <span class="message-timestamp">05/11/2025 09:10 PM</span>
+                    </div>
+                    <div class="message-text">I am running for Majority Leader.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371243857932456056">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">05/11/2025 09:53 PM</span>
+                    </div>
+                    <div class="message-text">Youre vp?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371243914107027457">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/669576268957876248/a_212163623bce1a53a44fa720ecc0aa26.gif?size=1024" alt="KUNDALINI" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #24fd93">KUNDALINI</span>
+                        <span class="message-timestamp">05/11/2025 09:53 PM</span>
+                    </div>
+                    <div class="message-text">I announce for speaker</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371245994234216479">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">05/11/2025 10:02 PM</span>
+                    </div>
+                    <div class="message-text">I no longer want to run for Speaker. &lt;@726123652579590164&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371255014676238396">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/432320481245528064/d57a6285361e506135a57093a33d8333.png?size=1024" alt="Citizen Xavier Koley" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Citizen Xavier Koley</span>
+                        <span class="message-timestamp">05/11/2025 10:37 PM</span>
+                    </div>
+                    <div class="message-text">I am running for Majority Leader.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371295970209566720">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/406666726210535445/c20bdb9303bca46ad42c50478f65164d.png?size=1024" alt="The GOAT Blakemore (DEM-J)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">The GOAT Blakemore (DEM-J)</span>
+                        <span class="message-timestamp">05/12/2025 01:20 AM</span>
+                    </div>
+                    <div class="message-text">I announce for Speaker of the House.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    
+                    <div class="reaction">
+                        <span class="reaction-emoji"><:duckychad:1356646907711066334></span>
+                        <span class="reaction-count">3</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371494396133904524">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">05/12/2025 02:29 PM</span>
+                    </div>
+                    <div class="message-text">Closed</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371614754652688505">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:27 PM</span>
+                    </div>
+                    <div class="message-text">Hi, noting that Pickle should have put up the vote this morning, there&#x27;s not enough time to conduct a normal primary anymore.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371614777234952214">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:27 PM</span>
+                    </div>
+                    <div class="message-text">So here&#x27;s what we&#x27;ll do:</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371615283021611050">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:29 PM</span>
+                    </div>
+                    <div class="message-text">1. I&#x27;ll put up two channels for everyone to cast their votes for Speaker and Majority Leader, by putting down their name.<br>2. If candidates intend to drop out if they don&#x27;t win the primary, can you go to &lt;#1037456371072913458&gt; and say `<code>&quot;I delegate authority for @lightkyan to withdraw my candidacy for [Speaker/Majority Leader], if I do not win the Democratic primary.&quot;</code>`</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371615786770366524">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:31 PM</span>
+                    </div>
+                    <div class="message-text">Speaker election, May 2025</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371616062029693009">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:32 PM</span>
+                    </div>
+                    <div class="message-text">Speaker election, May 2025</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371616259187409009">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:33 PM</span>
+                    </div>
+                    <div class="message-text">Majority Leader election, May 2025</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371616484140257380">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:34 PM</span>
+                    </div>
+                    <div class="message-text"># Please cast your votes in the above two threads.<br><br>1. <a href="https://discord.com/channels/654458344781774879/1371616062029693009" target="_blank">https://discord.com/channels/654458344781774879/1371616062029693009</a><br>2. <a href="https://discord.com/channels/654458344781774879/1371616259187409009" target="_blank">https://discord.com/channels/654458344781774879/1371616259187409009</a><br><br>&lt;@&amp;707784620678316093&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371616703099703306">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:35 PM</span>
+                    </div>
+                    <div class="message-text">This will close in 12 hours from opening.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371618511629320362">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:42 PM</span>
+                    </div>
+                    <div class="message-text">Oh and no whipping.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1371618546668273764">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">05/12/2025 10:42 PM</span>
+                    </div>
+                    <div class="message-text">&lt;#701437653035515914&gt; allowed.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1372620305725390941">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1243954773821231138/3eada823b88c4130b1f0a84cde5da1ac.png?size=1024" alt="lmaximum" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">lmaximum</span>
+                        <span class="message-timestamp">05/15/2025 05:03 PM</span>
+                    </div>
+                    <div class="message-text">Hello</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381293232079769692">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/08/2025 03:26 PM</span>
+                    </div>
+                    <div class="message-text">Candidacies to be the party&#x27;s nominee for <strong>Speaker of the House </strong>or <strong>Majority Leader</strong> are now open for a period 24 hours. Please announce your candidacy here.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381293242737229904">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/08/2025 03:26 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;707784620678316093&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381293819869266031">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1224384000789844153/712c06c283cbbd98693b5cc5a9c97abe.png?size=1024" alt="Script!" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Script!</span>
+                        <span class="message-timestamp">06/08/2025 03:28 PM</span>
+                    </div>
+                    <div class="message-text">I&#x27;d like to be our nominee for Speaker of the House.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381294464240455752">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/406666726210535445/c20bdb9303bca46ad42c50478f65164d.png?size=1024" alt="The GOAT Blakemore (DEM-J)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">The GOAT Blakemore (DEM-J)</span>
+                        <span class="message-timestamp">06/08/2025 03:31 PM</span>
+                    </div>
+                    <div class="message-text">I announce my candidacy for the nomination for Speaker of the House.</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381695588680208504">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/932348874012635186/24541d24adedc190ca628417d4a35c35.png?size=1024" alt="clara ♱" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">clara ♱</span>
+                        <span class="message-timestamp">06/09/2025 06:04 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@107257156750811136&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381695689523855521">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/932348874012635186/24541d24adedc190ca628417d4a35c35.png?size=1024" alt="clara ♱" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">clara ♱</span>
+                        <span class="message-timestamp">06/09/2025 06:05 PM</span>
+                    </div>
+                    <div class="message-text">you are who gives committes right?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381695748902748211">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/932348874012635186/24541d24adedc190ca628417d4a35c35.png?size=1024" alt="clara ♱" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">clara ♱</span>
+                        <span class="message-timestamp">06/09/2025 06:05 PM</span>
+                    </div>
+                    <div class="message-text">they told me come to you so i can get a bit involved here</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381721933933969590">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="#FreeRudd or I Leave" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #006747">#FreeRudd or I Leave</span>
+                        <span class="message-timestamp">06/09/2025 07:49 PM</span>
+                    </div>
+                    <div class="message-text">Majority Leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381783971846951083">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/09/2025 11:56 PM</span>
+                    </div>
+                    <div class="message-text">Canidacies have already passed. If there is a reason why you could not submit in time, please DM me it.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381784883042451546">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/09/2025 11:59 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;707784620678316093&gt; Polls are open for 24 hours.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381786961303572632">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/10/2025 12:08 AM</span>
+                    </div>
+                    <div class="message-text">I was mistaken of the date this nomination period is null and void. However, I can note your candidacies until the 11th.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382440287464591363">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/11/2025 07:24 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;707784620678316093&gt; REOPENED, FOR 24 HOURS CANDIDACIES ARE REOPENED (IF YOU HAVE ALREADY ANNOUNCED YOUR CANDIDACY YOU DO NOT NEED TO DO IT AGAIN)</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382607046679072879">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">06/12/2025 06:26 AM</span>
+                    </div>
+                    <div class="message-text">// since I will soon be a representative again, can I run for this?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382607146843115611">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">06/12/2025 06:27 AM</span>
+                    </div>
+                    <div class="message-text">// &lt;@726123652579590164&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382704134981029949">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/12/2025 12:52 PM</span>
+                    </div>
+                    <div class="message-text">Yes</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382746570465874030">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">06/12/2025 03:41 PM</span>
+                    </div>
+                    <div class="message-text">Majority Leader</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382814047833030656">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="#FreeRudd or I Leave" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #006747">#FreeRudd or I Leave</span>
+                        <span class="message-timestamp">06/12/2025 08:09 PM</span>
+                    </div>
+                    <div class="message-text">I withdraw &lt;:duckychad:1356646907711066334&gt;</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">✅</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382855535090601994">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1338025814138294332/3eb69596a10fe454c8efe4f1b574e411.png?size=1024" alt="Sen Maddie Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Sen Maddie Clark</span>
+                        <span class="message-timestamp">06/12/2025 10:54 PM</span>
+                    </div>
+                    <div class="message-text">I annouce my running for Party Whip</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382870074095960205">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/12/2025 11:51 PM</span>
+                    </div>
+                    <div class="message-text">``<code>Closed</code>``</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382871062601142424">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/12/2025 11:55 PM</span>
+                    </div>
+                    <div class="message-text"><a href="https://forms.gle/p6t635sDUmPUFCVQ9" target="_blank">https://forms.gle/p6t635sDUmPUFCVQ9</a><br>&lt;@&amp;707784620678316093&gt; VOTE FOR YOUR MAJORITY LEADER AND SPEAKER PRIMARY CANDIDATE.</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://forms.gle/p6t635sDUmPUFCVQ9" target="_blank">June House Election</a></div><img src="https://lh4.googleusercontent.com/iJxg4FLZ4-xOKMBdhq6i1ctvZnG0S7nTsnmJdT9CQEkdETp6PuqOEYIwfLpnhRFg7hDnklxYGIwrHL0=w1200-h630-p" class="embed-thumbnail"></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382871133996585010">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/12/2025 11:56 PM</span>
+                    </div>
+                    <div class="message-text"><strong>This is an internal election to determine who the Democratic Party nominee will be</strong></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382871998975443035">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1379813194821931078/43d0336094661294e087255bfbef7977.png?size=1024" alt="sashadc_114" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">sashadc_114</span>
+                        <span class="message-timestamp">06/12/2025 11:59 PM</span>
+                    </div>
+                    <div class="message-text">I voted</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382872119507030067">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1167617800106414085/9aa6d4de5ff0ca8173fe275bfd8bd47e.png?size=1024" alt="Sunny" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Sunny</span>
+                        <span class="message-timestamp">06/13/2025 12:00 AM</span>
+                    </div>
+                    <div class="message-text">Wrong channel you say it in &lt;#838890524832170064&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382873208704860243">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1379813194821931078/43d0336094661294e087255bfbef7977.png?size=1024" alt="sashadc_114" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">sashadc_114</span>
+                        <span class="message-timestamp">06/13/2025 12:04 AM</span>
+                    </div>
+                    <div class="message-text">i mean he didn&#x27;t say where to put it but ok</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382884360012824688">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/13/2025 12:48 AM</span>
+                    </div>
+                    <div class="message-text">Not wrong channel</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382884416367628319">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/13/2025 12:48 AM</span>
+                    </div>
+                    <div class="message-text">No ur fine</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382911830216671253">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/13/2025 02:37 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@726123652579590164&gt; just so you know, the only democrats allowed to vote in the House primaries according to the party constitution are Representatives</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382911897958875276">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/13/2025 02:38 AM</span>
+                    </div>
+                    <div class="message-text">so votes by non-Reps will have to be discarded</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382916339051528314">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/13/2025 02:55 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@726123652579590164&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382916364141985842">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/13/2025 02:55 AM</span>
+                    </div>
+                    <div class="message-text">I’m so confused on what you did</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382916370911727666">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/13/2025 02:55 AM</span>
+                    </div>
+                    <div class="message-text">But like</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382916407783723268">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/13/2025 02:56 AM</span>
+                    </div>
+                    <div class="message-text">House candidacy ends in less than an hour</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382916430239891546">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/13/2025 02:56 AM</span>
+                    </div>
+                    <div class="message-text">So this election is pointless</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382952374137520178">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">06/13/2025 05:19 AM</span>
+                    </div>
+                    <div class="message-text">Why am I not on the ballot for majority leader</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382952544149442621">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/850787062235922463/7d2396ac4a2216df1f70ac0409ab9317.png?size=1024" alt="Bizcra" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #dcddde">Bizcra</span>
+                        <span class="message-timestamp">06/13/2025 05:19 AM</span>
+                    </div>
+                    <div class="message-text">Nvmd</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383067441588080754">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/13/2025 12:56 PM</span>
+                    </div>
+                    <div class="message-text">Yes</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383067503034499155">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/13/2025 12:56 PM</span>
+                    </div>
+                    <div class="message-text">The constitution said the election should start on the 11th</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383067512161304586">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/13/2025 12:56 PM</span>
+                    </div>
+                    <div class="message-text">the primary</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383067533535477872">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/726123652579590164/43acb58b52d8cf08a0b7f4698fd20a4b.png?size=1024" alt="Mangos=6 Mustard=7 67 6+7 13" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Mangos=6 Mustard=7 67 6+7 13</span>
+                        <span class="message-timestamp">06/13/2025 12:56 PM</span>
+                    </div>
+                    <div class="message-text">and end on the 12th</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383070871366795375">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/13/2025 01:09 PM</span>
+                    </div>
+                    <div class="message-text">So why was the ballot posted on the 12th</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383625096450805811">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1338025814138294332/3eb69596a10fe454c8efe4f1b574e411.png?size=1024" alt="Sen Maddie Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Sen Maddie Clark</span>
+                        <span class="message-timestamp">06/15/2025 01:52 AM</span>
+                    </div>
+                    <div class="message-text">Can I get some cosponsors on my bills</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1385770142121594880">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1177610785346818090/89c756ef05767fb0f78be018a2336a8d.png?size=1024" alt="Agir Ahmad (D-PC)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Agir Ahmad (D-PC)</span>
+                        <span class="message-timestamp">06/20/2025 11:55 PM</span>
+                    </div>
+                    <div class="message-text">What</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1386455828378157208">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/22/2025 09:20 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;654477469004595221&gt; plz archive</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1386455865560666133">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/22/2025 09:20 PM</span>
+                    </div>
+                    <div class="message-text">thanks in advance besties!</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1398057422257393764">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1177610785346818090/89c756ef05767fb0f78be018a2336a8d.png?size=1024" alt="Agir Ahmad (D-PC)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Agir Ahmad (D-PC)</span>
+                        <span class="message-timestamp">07/24/2025 09:41 PM</span>
+                    </div>
+                    <div class="message-text">What</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1423227328510558209">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">10/02/2025 08:37 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <script>
+        // Add click handlers for images
+        document.querySelectorAll('.attachment img, .embed-image').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

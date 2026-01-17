@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#the-fields-commission - Virtual Congress</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            margin: 0;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.375;
+        }
+        
+        .channel-header {
+            background-color: #2f3136;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #7289da;
+        }
+        
+        .channel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .channel-info {
+            color: #b9bbbe;
+            font-size: 14px;
+        }
+        
+        .messages-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .message {
+            display: flex;
+            padding: 8px 16px;
+            margin-bottom: 4px;
+            position: relative;
+        }
+        
+        .message:hover {
+            background-color: rgba(4, 4, 5, 0.07);
+        }
+        
+        .message-avatar {
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        
+        .message-author {
+            font-weight: 500;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .message-timestamp {
+            font-size: 12px;
+            color: #72767d;
+            font-weight: 500;
+        }
+        
+        .message-text {
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message-text strong {
+            font-weight: 700;
+        }
+        
+        .message-text em {
+            font-style: italic;
+        }
+        
+        .message-text u {
+            text-decoration: underline;
+        }
+        
+        .message-text del {
+            text-decoration: line-through;
+        }
+        
+        .message-text code {
+            background-color: #2f3136;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+            font-size: 14px;
+        }
+        
+        .message-text pre {
+            background-color: #2f3136;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 4px 0;
+        }
+        
+        .message-text pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .message-text a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .message-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .attachment {
+            margin: 8px 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .attachment img {
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .attachment-info {
+            padding: 8px;
+            background-color: #2f3136;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .attachment-link {
+            color: #00aff4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .attachment-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+        
+        .embed {
+            max-width: 520px;
+            margin: 8px 0;
+            padding: 12px 16px;
+            background-color: #2f3136;
+            border-radius: 4px;
+        }
+        
+        .embed-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .embed-author-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .embed-author-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .embed-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .embed-title a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+        
+        .embed-description {
+            margin-bottom: 8px;
+        }
+        
+        .embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .embed-field {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        
+        .embed-field.inline {
+            flex: 1 1 150px;
+            min-width: 150px;
+        }
+        
+        .embed-field-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .embed-field-value {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        
+        .embed-image {
+            border-radius: 4px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .embed-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            float: right;
+            margin: 8px 0 8px 16px;
+        }
+        
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #72767d;
+        }
+        
+        .embed-footer-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .reaction {
+            background-color: rgba(79, 84, 92, 0.16);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .reaction-emoji {
+            line-height: 1;
+        }
+        
+        .reaction-count {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .message {
+                padding: 8px 8px;
+            }
+            
+            .embed {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="channel-header">
+        <div class="channel-title">#the-fields-commission</div>
+        <div class="channel-info">Archived from Virtual Congress on October 02, 2025 at 09:02 AM UTC</div>
+    </div>
+    
+    <div class="messages-container">
+        
+            <div class="message" data-message-id="1380614181648203828">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 06:27 PM</span>
+                    </div>
+                    <div class="message-text">@everyone Welcome, one and all, to the Fields Commission, as established by the recently published executive order: <a href="https://drive.google.com/file/d/1uw4LxHkSKguDaNNXQPHkhgmYa_3U2G2N/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1uw4LxHkSKguDaNNXQPHkhgmYa_3U2G2N/view?usp=sharing</a></div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/1uw4LxHkSKguDaNNXQPHkhgmYa_3U2G2N/view?usp=sharing" target="_blank">MF-98-001.pdf</a></div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380615013646991470">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 06:31 PM</span>
+                    </div>
+                    <div class="message-text">I believe to start out, we should address the immediate needs of Pacifican citizens by proceeding to discussions of aid relief and repair/replacement of infrastructure in such condition that it contributes to the diminishment of the Pacifican quality of life.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380615102054662357">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 06:31 PM</span>
+                    </div>
+                    <div class="message-text">In pursuance of that, I&#x27;m going to be inviting the Governor of Pacifica to speak to us on what they believe their state needs most in these matters.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380615221135278100">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 06:31 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@701838733812695150&gt; Governor Francis, welcome to the Fields Commission.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380615591882395759">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 06:33 PM</span>
+                    </div>
+                    <div class="message-text">Since March, I understand that a number of Pacificans have continued to suffer under conditions of inadequate infrastructure and disruptions as a result of the cyberattack, and I would like to ask you what you believe the federal government may be able to do for your state in this respect, specifically in reference to providing aid to ordinary citizens and to repairing the unfortunate condition of the affected infrastructure.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380618907681030287">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="#FreeRudd or I Leave" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #006747">#FreeRudd or I Leave</span>
+                        <span class="message-timestamp">06/06/2025 06:46 PM</span>
+                    </div>
+                    <div class="message-text"><em>sits down with a nice notebook I got from the Barnes &amp; Nobles</em></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380622106282430596">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 06:59 PM</span>
+                    </div>
+                    <div class="message-text">And, if anyone would like to ask questions of the Governor or would like to comment on the present topic, they are free to do so.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380622486877638697">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/542034226061508608/aec247d1df5778b1b12128bed9c77e31.png?size=1024" alt="Curtis Langley (I-AK)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Curtis Langley (I-AK)</span>
+                        <span class="message-timestamp">06/06/2025 07:00 PM</span>
+                    </div>
+                    <div class="message-text">I&#x27;d like to not that we can make a direct appropriation to FEMA of budget but we can&#x27;t give money to the State directly with an instruction</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380622643119657012">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/542034226061508608/aec247d1df5778b1b12128bed9c77e31.png?size=1024" alt="Curtis Langley (I-AK)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Curtis Langley (I-AK)</span>
+                        <span class="message-timestamp">06/06/2025 07:01 PM</span>
+                    </div>
+                    <div class="message-text">Possibly an intervention from the DoE but the question is of jurisdiction: Was the grid managed by the state or the feds?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380622694495682724">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/542034226061508608/aec247d1df5778b1b12128bed9c77e31.png?size=1024" alt="Curtis Langley (I-AK)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Curtis Langley (I-AK)</span>
+                        <span class="message-timestamp">06/06/2025 07:01 PM</span>
+                    </div>
+                    <div class="message-text">If a contractor, again, State or feds</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380628283074547844">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:23 PM</span>
+                    </div>
+                    <div class="message-text">I would argue that due to the national security impacts, infrastructure built under this bill should be left in perpetual federal ownership, with state management during times of regular operation.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380628666039402516">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/542034226061508608/aec247d1df5778b1b12128bed9c77e31.png?size=1024" alt="Curtis Langley (I-AK)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Curtis Langley (I-AK)</span>
+                        <span class="message-timestamp">06/06/2025 07:25 PM</span>
+                    </div>
+                    <div class="message-text">Then do we want to build new infrastructure? Because we cannot directly repair the State&#x27;s grid nor can we acquire it without consent from the Governor and probably the Assembly.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380629183784423434">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:27 PM</span>
+                    </div>
+                    <div class="message-text">I would disagree, personally. Eminent domain would allow, provided just compensation, for the federal government to take control of really any part of the State&#x27;s property.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380629439951540317">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:28 PM</span>
+                    </div>
+                    <div class="message-text">Including any part of its infrastructure.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380629809880760440">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/542034226061508608/aec247d1df5778b1b12128bed9c77e31.png?size=1024" alt="Curtis Langley (I-AK)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Curtis Langley (I-AK)</span>
+                        <span class="message-timestamp">06/06/2025 07:29 PM</span>
+                    </div>
+                    <div class="message-text">I suppose this is one approach that can work</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380630106950598706">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:31 PM</span>
+                    </div>
+                    <div class="message-text">To clarify, though, I do prefer working with the state government, but I doubt that they will have any objections to us coming in and spending money to make the lives of their citizens better.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380630458056048782">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/542034226061508608/aec247d1df5778b1b12128bed9c77e31.png?size=1024" alt="Curtis Langley (I-AK)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Curtis Langley (I-AK)</span>
+                        <span class="message-timestamp">06/06/2025 07:32 PM</span>
+                    </div>
+                    <div class="message-text">You never know...</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380630557653860406">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:32 PM</span>
+                    </div>
+                    <div class="message-text">We shall have to cross that bridge when we get to it.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380630697110147152">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/877944038395899914/47f75e3dce1ee8e0b8b873e1a1a8c3c5.png?size=1024" alt="Ancient VC artifact Iron" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Ancient VC artifact Iron</span>
+                        <span class="message-timestamp">06/06/2025 07:33 PM</span>
+                    </div>
+                    <div class="message-text">We could additionally set some of the money for private firms to create parallel grids for emergencies</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380630785324748870">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/877944038395899914/47f75e3dce1ee8e0b8b873e1a1a8c3c5.png?size=1024" alt="Ancient VC artifact Iron" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Ancient VC artifact Iron</span>
+                        <span class="message-timestamp">06/06/2025 07:33 PM</span>
+                    </div>
+                    <div class="message-text">Or to upgrade already existing ones to better weather any issues</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380630941474492436">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:34 PM</span>
+                    </div>
+                    <div class="message-text">I&#x27;d say yes, but we should make it conditional upon the firms, say, employing workers affected by the cyberattacks.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380631047422611629">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:34 PM</span>
+                    </div>
+                    <div class="message-text">That way we can simultaneously improve the infrastructure <em>and</em> put money in the pockets of suffering Pacificans.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380631070650662912">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/877944038395899914/47f75e3dce1ee8e0b8b873e1a1a8c3c5.png?size=1024" alt="Ancient VC artifact Iron" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Ancient VC artifact Iron</span>
+                        <span class="message-timestamp">06/06/2025 07:34 PM</span>
+                    </div>
+                    <div class="message-text">Agreed <br>Additionally we should get priority usage on these grids during emergencies</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380631094843670529">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 07:35 PM</span>
+                    </div>
+                    <div class="message-text">Absolutely.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380671885955829882">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 10:17 PM</span>
+                    </div>
+                    <div class="message-text"><strong>Current State</strong><br><br>- Infrastructure under this bill to be federally owned, state operated.<br>- Eminent domain to be used for repaired/replaced infrastructure.<br>- Provide conditional grants to private companies to create parallel grids or upgrade existent infrastructure, to be conditioned on employing citizens from affected areas of Pacifica and for priority usage privileges for the federal government during emergencies.<br>- Create a FEMA program to provide emergency generators to the Pacifica grid and point-to-point directional antennas for residential Pacifica areas in order to facilitate WiFi access.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380671991887167581">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 10:17 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;654477469004595221&gt; Ping this for me?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380672019602866350">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/06/2025 10:17 PM</span>
+                    </div>
+                    <div class="message-text">Pin*</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380672776221884466">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/763796772337352704/4ff60103af4aab42da09f934f81c718b.png?size=1024" alt="Empy" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Empy</span>
+                        <span class="message-timestamp">06/06/2025 10:20 PM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380859467851366410">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 10:42 AM</span>
+                    </div>
+                    <div class="message-text">@everyone Given that the Governor has not yet had time to respond, let’s open up the floor. What aid is needed for Pacificans?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380859736186163273">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 10:43 AM</span>
+                    </div>
+                    <div class="message-text">The primarily affected infrastructure, from my understanding, was electric utilities and network connections. Both are required for a reasonable quality of life in the region, and they cannot continue with the present rolling blackout regime.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380860289922240593">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 10:45 AM</span>
+                    </div>
+                    <div class="message-text">I believe the solution here is aid that addresses immediate need while we repair and expand the existing infrastructure.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380861588701057034">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 10:50 AM</span>
+                    </div>
+                    <div class="message-text">I would propose that we provide funding for a FEMA-operated program to provide emergency generators for power and point-to-point directional antennas for the purpose of temporary distribution of network access for affected Pacificans. The antennas would be placed on affected properties, and emergency generators would be hooked into the Pacifican grid to stabilize the situation and reduce or eliminate entirely the need for rolling blackouts.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380920667918176266">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 02:45 PM</span>
+                    </div>
+                    <div class="message-text">With no one raising objections, I’ll assume that’s alright and include it in our current status.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380925407074713631">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/107257156750811136/96d1d3d846cb5d7ea60be29fc2741230.png?size=1024" alt="#FreeRudd or I Leave" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #006747">#FreeRudd or I Leave</span>
+                        <span class="message-timestamp">06/07/2025 03:04 PM</span>
+                    </div>
+                    <div class="message-text">We need the same thing for solar-powered WiFi mesh nodes.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380925655406874644">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 03:05 PM</span>
+                    </div>
+                    <div class="message-text">I’d like a costing on that, as I’m unsure how the solar-powered component factors into the relative unit cost.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380925882725695558">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 03:06 PM</span>
+                    </div>
+                    <div class="message-text">(( &lt;@&amp;654477469004595221&gt; question: how do I get a cost quota again?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380926382728548512">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/763796772337352704/4ff60103af4aab42da09f934f81c718b.png?size=1024" alt="Empy" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Empy</span>
+                        <span class="message-timestamp">06/07/2025 03:08 PM</span>
+                    </div>
+                    <div class="message-text">// idk how they did it in the past but i would say that use IRL prices but account for inflation using the provided inflation statistics</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380926689801932840">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 03:09 PM</span>
+                    </div>
+                    <div class="message-text">(( do we have an up to date counter on the relative value of the VC dollar to the real dollar</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380926807322394774">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/763796772337352704/4ff60103af4aab42da09f934f81c718b.png?size=1024" alt="Empy" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Empy</span>
+                        <span class="message-timestamp">06/07/2025 03:10 PM</span>
+                    </div>
+                    <div class="message-text">// no</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380926996665597952">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/763796772337352704/4ff60103af4aab42da09f934f81c718b.png?size=1024" alt="Empy" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Empy</span>
+                        <span class="message-timestamp">06/07/2025 03:10 PM</span>
+                    </div>
+                    <div class="message-text">// just use irl price and multiply it by the inflation percentage thing<br><br>e.g if inflation is 9.4%<br><br>IRL price * 1.094</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1380927192585867275">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/07/2025 03:11 PM</span>
+                    </div>
+                    <div class="message-text">(( ah ok</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381055644857143367">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1121620369799917618/c49d95d5710421b803b51473372083b8.png?size=1024" alt="kyouko" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">kyouko</span>
+                        <span class="message-timestamp">06/07/2025 11:42 PM</span>
+                    </div>
+                    <div class="message-text">// you can just assume its the same</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381412880586375178">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/701838733812695150/9b2d92828c6dee1f33eedc16435ea348.png?size=1024" alt="Jack Francis" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fc4d1d">Jack Francis</span>
+                        <span class="message-timestamp">06/08/2025 11:21 PM</span>
+                    </div>
+                    <div class="message-text">Mr. President, just to clarify, you intend to use eminent domain exclusively for already existing public infrastructure?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381413118906863860">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/701838733812695150/9b2d92828c6dee1f33eedc16435ea348.png?size=1024" alt="Jack Francis" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fc4d1d">Jack Francis</span>
+                        <span class="message-timestamp">06/08/2025 11:22 PM</span>
+                    </div>
+                    <div class="message-text">Apologies for my absence, doing my best to catch up.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381413168995368980">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/701838733812695150/9b2d92828c6dee1f33eedc16435ea348.png?size=1024" alt="Jack Francis" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #fc4d1d">Jack Francis</span>
+                        <span class="message-timestamp">06/08/2025 11:22 PM</span>
+                    </div>
+                    <div class="message-text">I appreciate this commission being made and it will lead us to a brighter future.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381505061967888434">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/09/2025 05:27 AM</span>
+                    </div>
+                    <div class="message-text">These plans extremely subject to change, not to worry. I and, I believe, my fellow Commission members, are much, much more preferable to a federal-state partnership informed by your expertise.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381505437345517628">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/09/2025 05:29 AM</span>
+                    </div>
+                    <div class="message-text">After all, we are coming in and helping Pacifica; as noble as our aims may be, the rights of the states are no time more important than when the federal government wishes to help in extraordinary extent.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381611534786105344">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/311573063235797003/2a5f1081864d1ed1e5c93059f63cfd04.png?size=1024" alt="Mr. Hull" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Mr. Hull</span>
+                        <span class="message-timestamp">06/09/2025 12:30 PM</span>
+                    </div>
+                    <div class="message-text">Please let me know if there is any support I can provide. We managed to get canada to get aid during the initial stages of the crisis, I can contact them or mexico again if requred</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381615286092042261">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/09/2025 12:45 PM</span>
+                    </div>
+                    <div class="message-text">I think we should work out a joint treaty with Mexico and Canada regarding cybersecurity cooperation and mutual disaster relief, but that will be more for you and I than the Commission, I feel.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381615641731272744">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/09/2025 12:47 PM</span>
+                    </div>
+                    <div class="message-text">So far, we haven’t yet addressed the security of the nation.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381615715827580938">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/09/2025 12:47 PM</span>
+                    </div>
+                    <div class="message-text">To do so, I’m going to be inviting the Secretary of Defense and discuss with him our needs with respect to cybersecurity.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381616071047381152">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/09/2025 12:49 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@792117332184006677&gt; Mr. Secretary, welcome to the Commission. Among others, one of the goals of this Commission is to improve our cybersecurity and cyberattack capability with respect to our military. Where do you believe we need to work the hardest with respect to this goal?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381616498551947307">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/311573063235797003/2a5f1081864d1ed1e5c93059f63cfd04.png?size=1024" alt="Mr. Hull" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Mr. Hull</span>
+                        <span class="message-timestamp">06/09/2025 12:50 PM</span>
+                    </div>
+                    <div class="message-text">Canada makes more sense than mexico as we share broad parts of our power grids</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381618086158798972">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/311573063235797003/2a5f1081864d1ed1e5c93059f63cfd04.png?size=1024" alt="Mr. Hull" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Mr. Hull</span>
+                        <span class="message-timestamp">06/09/2025 12:57 PM</span>
+                    </div>
+                    <div class="message-text">I could call a NATO summit for in a few weeks to discuss a cyber security agreement.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1381621393598316694">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/09/2025 01:10 PM</span>
+                    </div>
+                    <div class="message-text">Works with me.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382669910697705484">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/12/2025 10:36 AM</span>
+                    </div>
+                    <div class="message-text">So.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382669987193294889">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/12/2025 10:36 AM</span>
+                    </div>
+                    <div class="message-text">The Commission opened six days ago.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382670075898892318">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/12/2025 10:37 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@542034226061508608&gt; is working on a draft for us, but I’d like to sum up where we are right now.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382670134392655952">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/12/2025 10:37 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382670215254642688">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/12/2025 10:37 AM</span>
+                    </div>
+                    <div class="message-text">@everyone Does anyone have any objections to the plan as it currently stands?</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382670415301705769">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/12/2025 10:38 AM</span>
+                    </div>
+                    <div class="message-text">Not included within those points is money to increase our cybersecurity capacities and to repair infrastructure; I have asked Mr. Langley to include such in the bill.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382682771742392452">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/877944038395899914/47f75e3dce1ee8e0b8b873e1a1a8c3c5.png?size=1024" alt="Ancient VC artifact Iron" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #e81b23">Ancient VC artifact Iron</span>
+                        <span class="message-timestamp">06/12/2025 11:27 AM</span>
+                    </div>
+                    <div class="message-text">Looks good to me</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382824397710037032">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/12/2025 08:50 PM</span>
+                    </div>
+                    <div class="message-text">Good afternoon Mr. President. I was informed of my temporary membership on this commission recently due to my status as Acting Speaker. With that being said, I feel it most appropriate to abstain from its proceedings due to the nature of my acting capacity. I hope you will understand 🙂</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382824556053397625">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/12/2025 08:51 PM</span>
+                    </div>
+                    <div class="message-text">I understand, thank you for the notification.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382824604149485649">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/254723307788697602/e6a8598b995361dfdeeed1806a3bcc68.png?size=1024" alt="Corey Clark" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Corey Clark</span>
+                        <span class="message-timestamp">06/12/2025 08:51 PM</span>
+                    </div>
+                    <div class="message-text">Of course</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1382967366446485514">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/13/2025 06:18 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@542034226061508608&gt;</div>
+                    
+                    
+                    <div class="message-reactions">
+                    <div class="reaction">
+                        <span class="reaction-emoji">👍</span>
+                        <span class="reaction-count">1</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383355161514213486">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/542034226061508608/aec247d1df5778b1b12128bed9c77e31.png?size=1024" alt="Curtis Langley (I-AK)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #05d15d">Curtis Langley (I-AK)</span>
+                        <span class="message-timestamp">06/14/2025 07:59 AM</span>
+                    </div>
+                    <div class="message-text"># Draft of the <em>Restoration Act of 2025</em><br><br>The following provisions were included:<br>- Reconstruction, repairs and new construction of energy infrastructure in the District of Pacifica<br>- Use of eminent domain under 28 U.S.C. §1403 with compensation stipulated in 42 U.S.C. §4651<br>- Grant programs for construction of parallel girds, conditional upon &gt;60% employment from the affected ZIP-codes and others<br>- Emergency generators will be provided by FEMA to what I approximate to be (following current appropriation levels)<br>  - 100 hospitals<br>  - 250 substations or utility nodes <br>  - 200 water/wastewater treatment facilities<br>  - 500 shelters or community resilience centres<br>- Residential Connectivity Program to provide internet access to what I approximate to be 25,000 households by current appropriation levels<br>- Enhanced periodical appropriation for cybersecurity in energy grids purposes<br><br><a href="https://drive.google.com/file/d/1nj9OMnX3N1mVb8_mDfmWDmDMpzbOVEbf/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1nj9OMnX3N1mVb8_mDfmWDmDMpzbOVEbf/view?usp=sharing</a><br><br>CC: &lt;@169221337880068096&gt;</div>
+                    
+                    <div class="embed" style="border-left: 4px solid #202225;"><div class="embed-title"><a href="https://drive.google.com/file/d/1nj9OMnX3N1mVb8_mDfmWDmDMpzbOVEbf/view?usp=sharing" target="_blank">S. 4 - Restoration Act of 2025.pdf</a></div></div>
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383360155860598785">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 08:19 AM</span>
+                    </div>
+                    <div class="message-text">Alright. @everyone</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383360230804557864">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 08:19 AM</span>
+                    </div>
+                    <div class="message-text">Senate Majority Leader and House Majority Leader in particular, please review.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383360409284644887">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 08:20 AM</span>
+                    </div>
+                    <div class="message-text">Provided we are comfortable with this copy, we will proceed working together on passing it through Congress expeditiously, preferably through companion bills.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383374427282083922">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 09:16 AM</span>
+                    </div>
+                    <div class="message-text">&lt;@254723307788697602&gt; &lt;@358420871355957250&gt;</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383382002723455116">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/406666726210535445/c20bdb9303bca46ad42c50478f65164d.png?size=1024" alt="The GOAT Blakemore (DEM-J)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">The GOAT Blakemore (DEM-J)</span>
+                        <span class="message-timestamp">06/14/2025 09:46 AM</span>
+                    </div>
+                    <div class="message-text">Hello my fellow Americans</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383393378137411584">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 10:31 AM</span>
+                    </div>
+                    <div class="message-text">Hullo.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383393420441288724">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 10:31 AM</span>
+                    </div>
+                    <div class="message-text">Review that copy, if you’d like, and let me know how you like it.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383393512946401361">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 10:31 AM</span>
+                    </div>
+                    <div class="message-text">I want to make this thing law ASAP.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383482810265767956">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/358420871355957250/2f39e7d585561503d396fdc8ffc92648.png?size=1024" alt="Senator Axel! ⭐" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">Senator Axel! ⭐</span>
+                        <span class="message-timestamp">06/14/2025 04:26 PM</span>
+                    </div>
+                    <div class="message-text">I am a yea on this</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383482836748603413">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/358420871355957250/2f39e7d585561503d396fdc8ffc92648.png?size=1024" alt="Senator Axel! ⭐" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #7ecbfe">Senator Axel! ⭐</span>
+                        <span class="message-timestamp">06/14/2025 04:26 PM</span>
+                    </div>
+                    <div class="message-text">The bill looks clean and enforceable</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383489563292467241">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/14/2025 04:53 PM</span>
+                    </div>
+                    <div class="message-text">We will move forward with it then.</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383866386924965928">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/975873526923931699/d47e90f2729a0b44fdb14a1660fab82c.png?size=1024" alt="posting" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">posting</span>
+                        <span class="message-timestamp">06/15/2025 05:50 PM</span>
+                    </div>
+                    <div class="message-text"><code>this also pings all the admins. smh</code></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383866455690444830">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/15/2025 05:51 PM</span>
+                    </div>
+                    <div class="message-text">you guys are used to it</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1383866557163110533">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/975873526923931699/d47e90f2729a0b44fdb14a1660fab82c.png?size=1024" alt="posting" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #a9c9ff">posting</span>
+                        <span class="message-timestamp">06/15/2025 05:51 PM</span>
+                    </div>
+                    <div class="message-text"><code>smh</code></div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1387205545051557888">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/169221337880068096/52817ae47fa2a696bc191fcd03e4bdec.png?size=1024" alt="Rep. Matthew Fields (OL-CT)" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #00aef3">Rep. Matthew Fields (OL-CT)</span>
+                        <span class="message-timestamp">06/24/2025 10:59 PM</span>
+                    </div>
+                    <div class="message-text">&lt;@&amp;654477469004595221&gt; this channel no longer needs to be used so idk if you guys archive or delete channels like this but wanted to lyk</div>
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="message" data-message-id="1423233646331953197">
+                <div class="message-avatar">
+                    <img src="https://cdn.discordapp.com/avatars/1398273706890887260/0fa8117743e3ce20356528da8c0cbd94.png?size=1024" alt="VC Bot" class="avatar">
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author" style="color: #5765f2">VC Bot</span>
+                        <span class="message-timestamp">10/02/2025 09:02 AM</span>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+    </div>
+    
+    <script>
+        // Add click handlers for images
+        document.querySelectorAll('.attachment img, .embed-image').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

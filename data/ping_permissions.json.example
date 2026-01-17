@@ -1,0 +1,10 @@
+{
+  "example_admin_ping": {
+    "name": "Admin Alert",
+    "target_role": 123456789012345678,
+    "allowed_users": [987654321098765432],
+    "allowed_roles": [111222333444555666],
+    "created_by": 987654321098765432,
+    "created_at": "2025-10-04T12:00:00+00:00"
+  }
+}
